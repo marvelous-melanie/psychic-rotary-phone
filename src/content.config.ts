@@ -9,7 +9,7 @@ const galleries = defineCollection({
   }),
   schema: z.object({
     title: z.string(),
-    type: z.enum(['wedding', 'engagement', 'portrait', 'event', 'personal']),
+    type: z.enum(['wedding', 'engagement', 'portrait', 'event', 'personal', 'graduation']),
     date: z.coerce.date(),
     location: z.string(),
     cover: z.string(),

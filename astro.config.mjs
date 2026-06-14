@@ -4,8 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://marvelous-melanie.github.io',
-  base: '/psychic-rotary-phone',
+  site: 'https://elmcityphotography.com',
   output: 'static',
   trailingSlash: 'always',
   integrations: [mdx(), sitemap()],
