@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { title, description, image, canonicalUrl } = Astro.props;
-const canonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://elmcityphotography.com').toString();
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site ?? 'https://marvelous-melanie.github.io').toString();
 ---
 
 <!doctype html>
