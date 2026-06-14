@@ -1,8 +1,55 @@
 ---
+import { Image } from 'astro:assets';
 import MarketingPageLayout from '../layouts/MarketingPageLayout.astro';
+import aboutPhoto from '../assets/about-photo.jpg';
+import { withBase } from '../lib/paths';
 ---
 
 <MarketingPageLayout title="About" description="About Elm City Photography.">
-  <h1 class="text-4xl font-medium">About</h1>
-  <p class="mt-4 max-w-2xl text-sm text-muted">Placeholder about section with editable copy.</p>
+  <section class="relative -mx-4 h-[60vh] overflow-hidden">
+    <Image
+      src={aboutPhoto}
+      alt="Couple on coastal cliffs for Elm City Photography"
+      width={853}
+      height={1280}
+      class="h-full w-full object-cover"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-green-deep/35"></div>
+  </section>
+
+  <section class="mx-auto mt-14 max-w-2xl px-4 pb-16">
+    <p class="text-sm uppercase tracking-[0.24em] text-muted">About Elm City Photography</p>
+    <h1 class="mt-2 text-5xl">OUR STORY</h1>
+    <p class="mt-6 text-lg leading-8 font-semibold">
+      Founded in New Haven, Elm City Photography is built around the belief that modern portraiture should feel graceful,
+      intimate, and deeply personal from first hello to final edit.
+    </p>
+    <div class="mt-6 space-y-5 text-sm leading-7 text-muted">
+      <p>
+        We are drawn to unguarded glances and quiet spaces — the moments in between the posed portrait and the candid smile.
+        Our sessions are guided by light, connection, and storytelling, with locations chosen to match each couple’s rhythm.
+      </p>
+      <p>
+        For each engagement and graduation session we keep the process calm and collaborative, allowing you to
+        move with the day instead of moving to the camera. That approach lets the photos reflect who you are, not just
+        how you looked in front of a lens.
+      </p>
+      <p>
+        We photograph what matters most: your laugh line, the glance at the same pace as the wind, and the way joy fills the
+        frame when people are present with one another. Every edited photo is handled with careful color, balanced contrast,
+        and a refined, editorial finish inspired by the natural landscape of New England.
+      </p>
+      <p>
+        Our work balances natural portraiture with elegant composition, offering timeless imagery that feels lived-in, cinematic,
+        and unmistakably yours.
+      </p>
+    </div>
+    <a
+      href={withBase('/contact/')}
+      class="mt-8 inline-flex text-sm uppercase tracking-[0.2em] text-green-deep underline decoration-green-mid underline-offset-4"
+    >
+      Get in Touch →
+    </a>
+  </section>
 </MarketingPageLayout>

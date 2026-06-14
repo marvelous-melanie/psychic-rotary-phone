@@ -1,26 +1,111 @@
 ---
+import { Image } from 'astro:assets';
 import { withBase } from '../lib/paths';
+import logo from '../assets/logo.jpg';
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/engagements/', label: 'Engagements' },
-  { href: '/graduations/', label: 'Graduations' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
-];
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/';
+
+const isActive = (path: string) => normalizePath(path) === currentPath;
+const isPortfolioActive = ['/engagements/', '/graduations/'].some((path) => isActive(path));
 ---
 
-<header class="border-b border-black/10 bg-cream px-4 py-4">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between" aria-label="Primary">
-    <a class="text-lg font-semibold" href={withBase('/')}>
-      Elm City Photography
+<header class="bg-green-deep px-4 text-cream">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 py-5">
+    <a href={withBase('/')} aria-label="Elm City Photography home">
+      <Image
+        src={logo}
+        alt="Elm City Photography"
+        width={64}
+        height={64}
+        class="h-16 w-16 rounded-full object-cover"
+      />
     </a>
-    <ul class="flex items-center gap-4 text-sm">
-      {links.map((link) => (
+    <nav aria-label="Primary">
+      <ul class="flex flex-wrap items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.24em] sm:text-sm">
         <li>
-          <a href={withBase(link.href)}>{link.label}</a>
+          <a
+            href={withBase('/')}
+            class:list={[
+              'inline-flex border-b px-2 py-1',
+              'border-transparent transition-colors',
+              isActive('/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
+            ]}
+          >
+            Home
+          </a>
         </li>
-      ))}
-    </ul>
-  </nav>
+        <li class="text-cream/60">·</li>
+        <li>
+          <a
+            href={withBase('/about/')}
+            class:list={[
+              'inline-flex border-b px-2 py-1',
+              'border-transparent transition-colors',
+              isActive('/about/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
+            ]}
+          >
+            About
+          </a>
+        </li>
+        <li class="text-cream/60">·</li>
+        <li class="relative group">
+          <button
+            type="button"
+            class:list={[
+              'inline-flex cursor-default items-center border-b border-transparent px-2 py-1 transition-colors',
+              isPortfolioActive ? 'text-gold border-gold' : 'text-cream/95',
+            ]}
+          >
+            Portfolio ▾
+          </button>
+          <ul class="absolute left-1/2 top-full z-20 mt-3 hidden w-44 -translate-x-1/2 rounded-sm border border-green-mid bg-green-deep p-2 shadow-lg group-hover:block group-focus-within:block">
+            <li>
+              <a
+                href={withBase('/engagements/')}
+                class="block rounded-sm px-3 py-2 text-sm uppercase tracking-[0.24em] text-cream hover:bg-green-mid/70"
+              >
+                Engagements
+              </a>
+            </li>
+            <li>
+              <a
+                href={withBase('/graduations/')}
+                class="block rounded-sm px-3 py-2 text-sm uppercase tracking-[0.24em] text-cream hover:bg-green-mid/70"
+              >
+                Graduations
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="text-cream/60">·</li>
+        <li>
+          <a
+            href={withBase('/pricing/')}
+            class:list={[
+              'inline-flex border-b px-2 py-1',
+              'border-transparent transition-colors',
+              isActive('/pricing/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
+            ]}
+          >
+            Pricing
+          </a>
+        </li>
+        <li class="text-cream/60">·</li>
+        <li>
+          <a
+            href={withBase('/contact/')}
+            class:list={[
+              'inline-flex border-b px-2 py-1',
+              'border-transparent transition-colors',
+              isActive('/contact/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
+            ]}
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </header>
