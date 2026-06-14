@@ -1,6 +1,20 @@
+---
+import { Instagram } from 'lucide-astro';
+---
+
 <footer class="border-t border-black/10 px-4 py-6 text-sm">
   <div class="mx-auto flex max-w-6xl items-center justify-between">
     <p>Elm City Photography</p>
+    <a
+      href="https://www.instagram.com/elm.city.photography"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center gap-2 hover:opacity-70 transition-opacity"
+      aria-label="Follow us on Instagram"
+    >
+      <Instagram size={16} />
+      <span>@elm.city.photography</span>
+    </a>
     <p>{new Date().getFullYear()}</p>
   </div>
 </footer>
