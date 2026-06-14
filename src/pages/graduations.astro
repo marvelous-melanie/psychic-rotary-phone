@@ -8,13 +8,17 @@ const galleries = (await getCollection('galleries'))
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title="Graduations — Elm City Photography" description="Graduation portrait photography in New Haven, CT by Elm City Photography.">
+<BaseLayout
+  title="Graduations — Elm City Photography"
+  description="Graduation portrait photography in New Haven, CT. Milestone portraits celebrating the class of 2026."
+>
 
-  <div class="bg-green-deep px-6 py-20 text-center">
+  <div class="bg-green-deep px-6 py-24 text-center">
     <p class="text-[10px] uppercase tracking-[0.38em] text-green-light/70">Portfolio</p>
     <h1 class="mt-4 font-serif text-5xl italic text-cream md:text-6xl">Graduations</h1>
-    <p class="mx-auto mt-5 max-w-sm text-sm text-green-light/70">
-      Milestone portraits celebrating the class of 2026.
+    <p class="mx-auto mt-5 max-w-sm text-sm leading-7 text-green-light/70">
+      You worked for this. Let's make sure you have the photos to prove it — portraits that feel
+      like you, on one of the best days of your life.
     </p>
   </div>
 

@@ -5,66 +5,74 @@ import { withBase } from '../lib/paths';
 const packages = [
   {
     name: 'The Essential',
-    price: '$350',
-    description: 'A focused session for those who want beautiful, edited portraits without the extras.',
+    price: '$1,400',
+    tagline: 'Coverage for the moments that matter most.',
+    description: 'Perfect for intimate ceremonies, elopements, and couples who want beautiful, edited wedding photos without a full-day commitment.',
     items: [
-      '1-hour session',
-      '30 edited digital photos',
-      'Online gallery delivery',
+      '6 hours of coverage',
+      '1 photographer',
+      '300+ edited digital photos',
+      'Online gallery delivery (4–6 weeks)',
       'Personal print release',
+      'Engagement session add-on available',
     ],
     featured: false,
   },
   {
     name: 'The Story',
-    price: '$650',
-    description: 'Our most popular package — time and space to tell your story with depth and ease.',
+    price: '$2,200',
+    tagline: 'Our most complete wedding experience.',
+    description: 'Full wedding day coverage with a second photographer — because the best moments happen in two places at once. Includes an engagement session to get comfortable in front of the camera before the big day.',
     items: [
-      '2-hour session',
-      '75+ edited digital photos',
-      'Online gallery delivery',
+      '8 hours of coverage',
+      '2nd photographer included',
+      '500+ edited digital photos',
+      'Engagement session included',
+      'Online gallery delivery (4–6 weeks)',
       'Personal print release',
       'One 5×7 fine-art print',
     ],
     featured: true,
   },
   {
-    name: 'The Full Day',
-    price: '$1,100',
-    description: 'For milestones that deserve to be documented from every angle, in every light.',
+    name: 'The Full Journey',
+    price: '$3,200',
+    tagline: 'For the couples who want it all documented.',
+    description: 'From the rehearsal dinner to the last song. Extended coverage, a second photographer, and a premium print to mark the occasion.',
     items: [
-      'Up to 6 hours',
-      '150+ edited digital photos',
-      'Online gallery delivery',
+      'Up to 12 hours of coverage',
+      '2nd photographer included',
+      'Rehearsal dinner coverage (up to 2 hours)',
+      '600+ edited digital photos',
+      'Engagement session included',
+      'Online gallery delivery (4–6 weeks)',
       'Personal print release',
       '8×10 framed fine-art print',
-      'Second location included',
     ],
     featured: false,
   },
 ];
 ---
 
-<BaseLayout title="Pricing — Elm City Photography" description="Session packages and pricing for Elm City Photography in New Haven, CT.">
+<BaseLayout title="Pricing — Elm City Photography" description="Wedding and portrait photography packages from Elm City Photography in New Haven, CT.">
 
   <div class="bg-cream">
+
     <!-- Page header -->
     <div class="mx-auto max-w-2xl px-6 pb-16 pt-24 text-center">
       <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Investment</p>
       <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Packages</h1>
-      <p class="mx-auto mt-5 max-w-sm text-sm leading-7 text-muted">
-        Three thoughtful options for engagements, graduations, and portrait sessions in the New Haven area.
+      <p class="mx-auto mt-6 max-w-sm text-sm leading-7 text-muted">
+        Straightforward pricing with no hidden fees. Every package includes a fully edited online gallery and a personal print release. Travel within Connecticut is always included.
       </p>
     </div>
 
     <!-- Package cards -->
-    <div class="mx-auto grid max-w-5xl gap-px px-6 pb-6 sm:grid-cols-3 sm:px-6">
+    <div class="mx-auto grid max-w-5xl gap-px bg-green-light/30 px-6 sm:grid-cols-3 sm:px-0">
       {packages.map((pkg) => (
         <article class:list={[
-          'flex flex-col px-8 py-12',
-          pkg.featured
-            ? 'bg-green-deep text-cream'
-            : 'bg-white text-ink',
+          'relative flex flex-col bg-cream px-8 py-12',
+          pkg.featured && 'bg-green-deep text-cream',
         ]}>
           {pkg.featured && (
             <p class="mb-6 self-start border border-gold/60 px-3 py-1 text-[9px] uppercase tracking-[0.3em] text-gold">
@@ -84,8 +92,14 @@ const packages = [
             {pkg.price}
           </p>
           <p class:list={[
-            'mt-4 text-xs leading-6',
-            pkg.featured ? 'text-green-light/80' : 'text-muted',
+            'mt-2 text-xs font-medium',
+            pkg.featured ? 'text-green-light/80' : 'text-green-mid',
+          ]}>
+            {pkg.tagline}
+          </p>
+          <p class:list={[
+            'mt-4 text-xs leading-7',
+            pkg.featured ? 'text-green-light/70' : 'text-muted',
           ]}>
             {pkg.description}
           </p>
@@ -95,7 +109,7 @@ const packages = [
           ]}>
             {pkg.items.map((item) => (
               <li class="flex items-start gap-3">
-                <span class:list={['mt-px text-base leading-none', pkg.featured ? 'text-gold' : 'text-green-mid']}>·</span>
+                <span class:list={['mt-px shrink-0 text-base leading-none', pkg.featured ? 'text-gold' : 'text-green-mid']}>·</span>
                 {item}
               </li>
             ))}
@@ -110,26 +124,30 @@ const packages = [
                   : 'border-b border-ink/30 pb-px text-ink hover:border-ink',
               ]}
             >
-              Book This →
+              Inquire →
             </a>
           </div>
         </article>
       ))}
     </div>
 
-    <!-- Footer note -->
-    <div class="mx-auto max-w-5xl px-6 pb-24 pt-10 text-center">
-      <p class="text-xs leading-7 text-muted">
-        All packages include travel within the New Haven, CT area.<br />
-        Reach out for destination sessions, custom requests, or wedding inquiries.
-      </p>
+    <!-- FAQ / note -->
+    <div class="mx-auto max-w-2xl px-6 py-20 text-center">
+      <p class="text-[10px] uppercase tracking-[0.35em] text-muted">A few things to know</p>
+      <div class="mt-8 space-y-6 text-sm leading-8 text-muted text-left">
+        <p><strong class="text-ink font-medium">Travel.</strong> All packages include travel anywhere in Connecticut. Sessions in Rhode Island, Massachusetts, and New York are available for a small travel fee — just ask.</p>
+        <p><strong class="text-ink font-medium">Second shooter.</strong> The Story and The Full Journey packages include a second photographer as standard. This isn't an add-on — it's built in, because weddings deserve two sets of eyes.</p>
+        <p><strong class="text-ink font-medium">Gallery delivery.</strong> Your full gallery is delivered via a private online link within 4–6 weeks. You'll receive a sneak peek of a handful of images within 48 hours of your wedding.</p>
+        <p><strong class="text-ink font-medium">Custom work.</strong> Engagements, graduations, and portrait sessions are priced separately. Reach out and we'll put together something that fits.</p>
+      </div>
       <a
         href={withBase('/contact/')}
-        class="mt-8 inline-block bg-green-deep px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
+        class="mt-12 inline-block bg-green-deep px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
       >
         Start the Conversation
       </a>
     </div>
+
   </div>
 
 </BaseLayout>

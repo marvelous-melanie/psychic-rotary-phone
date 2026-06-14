@@ -5,10 +5,12 @@ import aboutPhoto from '../assets/about-photo.jpg';
 import { withBase } from '../lib/paths';
 ---
 
-<BaseLayout title="About — Elm City Photography" description="About Elm City Photography, based in New Haven, CT.">
+<BaseLayout
+  title="About — Elm City Photography"
+  description="Elm City Photography is a wedding and portrait photography studio based in New Haven, CT."
+>
 
-  <!-- Full-bleed hero image -->
-  <div class="relative h-[70vh] min-h-[420px] w-full overflow-hidden">
+  <div class="relative h-[72vh] min-h-[440px] w-full overflow-hidden">
     <Image
       src={aboutPhoto}
       alt="Couple walking hand in hand along coastal cliffs at golden hour"
@@ -17,31 +19,39 @@ import { withBase } from '../lib/paths';
       class="h-full w-full object-cover object-center"
       loading="eager"
     />
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-green-deep/40 pointer-events-none"></div>
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-green-deep/40"></div>
   </div>
 
-  <!-- Bio section -->
   <section class="bg-cream">
     <div class="mx-auto max-w-2xl px-6 py-24 md:py-32">
       <p class="text-[10px] uppercase tracking-[0.38em] text-muted">About</p>
       <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Our Story</h1>
 
-      <p class="mt-10 text-base font-semibold leading-8 text-ink">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam.
+      <p class="mt-10 text-base font-medium leading-8 text-ink">
+        We're a small wedding and portrait photography studio based in New Haven, Connecticut — and we genuinely love what we do.
       </p>
 
       <div class="mt-8 space-y-6 text-sm leading-8 text-muted">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident.
+          We started Elm City Photography because we believe that the moments that matter most deserve to be captured honestly.
+          Not stiffly posed. Not over-directed. Just real — the way a wedding actually feels when you're in the middle of it,
+          laughing too hard at a toast or tearing up during vows you wrote yourself.
         </p>
         <p>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+          Our style is natural, warm, and editorial. We work mostly in available light, and we love locations that have
+          character — coastlines, city parks, old architecture, golden fields. We're based in New Haven, which means
+          we know every corner of this city and the surrounding Connecticut landscape, and we bring that familiarity
+          to every session.
         </p>
         <p>
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+          We photograph weddings, engagements, graduations, and portrait sessions throughout Connecticut and New England.
+          Whether you're planning an intimate elopement at the beach or a full celebration with two hundred guests,
+          we approach every job with the same level of care and attention.
         </p>
         <p>
-          Nam libero tempore cum soluta nobis eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint.
+          If you're the kind of person who cares about images that feel like they could live in a magazine but still
+          look exactly like you — we're probably the right fit. We're easy to work with, fast to respond,
+          and genuinely invested in getting your photos right.
         </p>
       </div>
 

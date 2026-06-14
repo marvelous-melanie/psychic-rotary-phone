@@ -23,13 +23,34 @@ const galleries = await getCollection('galleries');
 const engagements = galleries.find((g) => g.id === 'engagements-2026');
 const graduations = galleries.find((g) => g.id === 'graduations-2026');
 const engagementCover = engagements ? getGalleryCover(engagements.id, engagements.data.cover) : null;
-const graduationCover = graduations ? getGalleryCover(graduations.id, graduations.data.cover) : null;
+const graduationCover  = graduations  ? getGalleryCover(graduations.id,  graduations.data.cover)  : null;
+
+const testimonials = [
+  {
+    quote: "Working with Elm City Photography was the best decision we made for our entire wedding. They captured moments we didn't even know were happening — the look my grandmother gave during the vows, the way my husband laughed right before our first dance. We still ugly-cry looking through the gallery.",
+    name: "Sofia & Marco",
+    detail: "Wedding — Lighthouse Point Park, New Haven",
+  },
+  {
+    quote: "I genuinely hate being photographed. Like, will leave the room hate it. But our engagement session felt like a walk with a friend who happened to have a camera. The photos don't look like us trying to look good — they just look like us.",
+    name: "Jamie & Tess",
+    detail: "Engagement Session — East Rock, New Haven",
+  },
+  {
+    quote: "From our first email to the gallery delivery, everything was thoughtful and professional. Our photos are hanging all over the house now. We get compliments on them constantly — people always ask who the photographer was.",
+    name: "Priya & Daniel",
+    detail: "Wedding — New Haven County",
+  },
+];
 ---
 
-<BaseLayout title="Elm City Photography — New Haven, CT" description="Wedding, engagement, and portrait photography from New Haven, CT.">
+<BaseLayout
+  title="Elm City Photography — Wedding & Portrait Photographer, New Haven CT"
+  description="Wedding, engagement, and portrait photography rooted in New Haven, CT. Natural light, honest moments, and images you'll keep for a lifetime."
+>
 
-  <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="relative h-screen min-h-[540px] w-full overflow-hidden" aria-label="Hero">
+  <!-- ── HERO ─────────────────────────────────────────────────────── -->
+  <section class="relative h-screen min-h-[560px] w-full overflow-hidden" aria-label="Hero">
     {heroSlides.map((slide, i) => (
       <img
         src={slide.src}
@@ -43,16 +64,12 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
         loading={i === 0 ? 'eager' : 'lazy'}
       />
     ))}
-    <!-- gradient: subtle at top (for any UI), stronger at bottom for text -->
-    <div class="absolute inset-0 bg-gradient-to-b from-green-deep/20 via-transparent to-green-deep/55 pointer-events-none"></div>
-
-    <!-- tagline -->
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-green-deep/15 via-transparent to-green-deep/60"></div>
     <div class="absolute inset-x-0 bottom-0 flex flex-col items-center pb-16 text-center">
       <p class="text-[10px] uppercase tracking-[0.38em] text-cream/70">New Haven, Connecticut</p>
       <h1 class="mt-3 font-serif text-4xl italic leading-snug text-cream md:text-6xl">
         Love captured in every light.
       </h1>
-      <!-- slide indicators -->
       <div class="mt-8 flex gap-2" role="tablist" aria-label="Hero slides">
         {heroSlides.map((_, i) => (
           <button
@@ -70,12 +87,21 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
     </div>
   </section>
 
-  <!-- ── PORTFOLIO SPREAD ──────────────────────────────────── -->
-  <section aria-labelledby="portfolio-heading">
-    <div class="bg-cream py-20 text-center">
-      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Our Work</p>
-      <h2 id="portfolio-heading" class="mt-3 font-serif text-4xl italic text-ink md:text-5xl">Portfolio</h2>
+  <!-- ── INTRO ─────────────────────────────────────────────────────── -->
+  <section class="bg-cream px-6 py-24 text-center">
+    <div class="mx-auto max-w-xl">
+      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Elm City Photography</p>
+      <h2 class="mt-5 font-serif text-3xl italic leading-relaxed text-ink md:text-4xl">
+        We photograph weddings, engagements, and milestones for people who want images that feel real.
+      </h2>
+      <p class="mt-6 text-sm leading-8 text-muted">
+        Based in New Haven, CT. Available for weddings and portrait sessions throughout Connecticut, New England, and beyond.
+      </p>
     </div>
+  </section>
+
+  <!-- ── PORTFOLIO SPREAD ──────────────────────────────────────────── -->
+  <section>
     <div class="flex h-[65vh] min-h-[360px] w-full">
       <a href={withBase('/engagements/')} class="group relative flex-1 overflow-hidden">
         {engagementCover && (
@@ -113,9 +139,22 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
     </div>
   </section>
 
-  <!-- ── ABOUT TEASER ─────────────────────────────────────── -->
+  <!-- ── PHILOSOPHY QUOTE ──────────────────────────────────────────── -->
+  <section class="bg-green-deep px-6 py-28 text-center">
+    <blockquote class="mx-auto max-w-2xl">
+      <p class="font-serif text-2xl italic leading-relaxed text-cream md:text-3xl">
+        "The best wedding photos aren't the ones where everyone is perfectly posed.
+        They're the ones where you can feel the room."
+      </p>
+      <footer class="mt-8 text-[10px] uppercase tracking-[0.35em] text-green-light/60">
+        — Elm City Photography
+      </footer>
+    </blockquote>
+  </section>
+
+  <!-- ── ABOUT TEASER ──────────────────────────────────────────────── -->
   <section class="bg-cream" aria-labelledby="about-heading">
-    <div class="mx-auto grid max-w-7xl items-center gap-0 md:grid-cols-[5fr_6fr]">
+    <div class="mx-auto grid max-w-7xl items-center md:grid-cols-[5fr_6fr]">
       <div class="aspect-[3/4] overflow-hidden md:max-h-[640px]">
         <Image
           src={aboutPhoto}
@@ -127,33 +166,96 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
         />
       </div>
       <div class="px-10 py-16 md:px-16 md:py-24">
-        <p class="text-[10px] uppercase tracking-[0.35em] text-muted">Our Story</p>
+        <p class="text-[10px] uppercase tracking-[0.35em] text-muted">About Us</p>
         <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
-          The story<br />behind the lens.
+          We show up for<br />the small moments.
         </h2>
         <p class="mt-6 max-w-prose text-sm leading-8 text-muted">
-          We are a New Haven-based photography studio drawn to unguarded moments and quiet light —
-          the pause between the posed portrait and the real smile. Every session is an unhurried
-          collaboration guided by place, connection, and the honest beauty of the people in front of our lens.
+          We're a New Haven-based photography team that believes the best images come from genuine connection —
+          not direction. Our approach is calm, unhurried, and built around you. We'll follow the light,
+          give you space to breathe, and capture the moments you'll actually want to remember.
+        </p>
+        <p class="mt-4 max-w-prose text-sm leading-8 text-muted">
+          We photograph weddings, engagements, graduations, and portraits throughout Connecticut and New England.
+          If you're planning something meaningful, we'd love to be there.
         </p>
         <a
           href={withBase('/about/')}
           class="mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
         >
-          Read More <span aria-hidden="true">→</span>
+          Our Story <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ── INVESTMENT TEASER ─────────────────────────────────── -->
+  <!-- ── PROCESS ───────────────────────────────────────────────────── -->
+  <section class="bg-green-light/20 px-6 py-24" aria-labelledby="process-heading">
+    <div class="mx-auto max-w-4xl">
+      <div class="text-center">
+        <p class="text-[10px] uppercase tracking-[0.38em] text-muted">How It Works</p>
+        <h2 id="process-heading" class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">Simple from start to finish.</h2>
+      </div>
+      <div class="mt-16 grid gap-12 md:grid-cols-3">
+        {[
+          {
+            number: '01',
+            heading: 'Reach Out',
+            body: "Tell us a little about your day — the venue, the vibe, what matters most to you. We'll get back to you within 48 hours.",
+          },
+          {
+            number: '02',
+            heading: "Let's Talk",
+            body: "We'll hop on a quick call or trade emails to make sure we're the right fit. No pressure, no hard sell — just a conversation.",
+          },
+          {
+            number: '03',
+            heading: 'We Show Up',
+            body: "On your day, we handle everything. You stay present. We capture it. Your gallery arrives within six weeks.",
+          },
+        ].map((step) => (
+          <div>
+            <p class="font-serif text-5xl italic text-green-light">{step.number}</p>
+            <h3 class="mt-4 font-serif text-xl italic text-ink">{step.heading}</h3>
+            <p class="mt-3 text-sm leading-7 text-muted">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ──────────────────────────────────────────────── -->
+  <section class="bg-cream px-6 py-24" aria-labelledby="testimonials-heading">
+    <div class="mx-auto max-w-5xl">
+      <div class="text-center">
+        <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Kind Words</p>
+        <h2 id="testimonials-heading" class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">What couples are saying.</h2>
+      </div>
+      <div class="mt-16 grid gap-8 md:grid-cols-3">
+        {testimonials.map((t) => (
+          <figure class="flex flex-col">
+            <div class="mb-5 text-2xl text-green-light" aria-hidden="true">"</div>
+            <blockquote class="flex-1 text-sm leading-8 text-muted">
+              <p>{t.quote}</p>
+            </blockquote>
+            <figcaption class="mt-8 border-t border-green-light/40 pt-6">
+              <p class="font-serif italic text-ink">{t.name}</p>
+              <p class="mt-1 text-[10px] uppercase tracking-[0.22em] text-muted/70">{t.detail}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INVESTMENT TEASER ─────────────────────────────────────────── -->
   <section class="bg-green-deep py-28 text-center" aria-labelledby="investment-heading">
     <p class="text-[10px] uppercase tracking-[0.38em] text-green-light/70">Investment</p>
     <h2 id="investment-heading" class="mt-5 font-serif text-5xl italic text-cream md:text-6xl">
-      Sessions from $350
+      Wedding coverage from $1,400.
     </h2>
-    <p class="mx-auto mt-5 max-w-xs text-sm text-green-light/70">
-      Three packages for engagements, graduations, and milestone portraits.
+    <p class="mx-auto mt-5 max-w-sm text-sm text-green-light/70">
+      Full-day wedding packages include a second photographer. Portrait and engagement sessions available separately.
     </p>
     <a
       href={withBase('/pricing/')}
@@ -163,12 +265,15 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
     </a>
   </section>
 
-  <!-- ── CONTACT CTA ───────────────────────────────────────── -->
+  <!-- ── CONTACT CTA ───────────────────────────────────────────────── -->
   <section class="bg-cream py-32 text-center" aria-labelledby="contact-heading">
-    <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Get in Touch</p>
+    <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Let's Connect</p>
     <h2 id="contact-heading" class="mt-5 font-serif text-5xl italic leading-tight text-ink md:text-6xl lg:text-7xl">
       Let's make<br />something beautiful.
     </h2>
+    <p class="mx-auto mt-6 max-w-sm text-sm leading-7 text-muted">
+      We'd love to hear about your wedding, your engagement, or whatever milestone is coming up. Drop us a note — we get back to everyone.
+    </p>
     <a
       href="mailto:hello@elmcityphotography.com"
       class="mt-8 inline-block text-sm text-muted underline underline-offset-4 transition-colors hover:text-ink"
@@ -181,7 +286,7 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
 
 <script>
   const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-slide]'));
-  const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-dot]'));
+  const dots   = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-dot]'));
 
   if (slides.length > 1) {
     let current = 0;
@@ -199,7 +304,6 @@ const graduationCover = graduations ? getGalleryCover(graduations.id, graduation
     }
 
     dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-
     setInterval(() => goTo((current + 1) % slides.length), 5000);
   }
 </script>
