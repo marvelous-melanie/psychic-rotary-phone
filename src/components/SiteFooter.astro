@@ -2,29 +2,28 @@
 import { Instagram, Mail } from 'lucide-astro';
 ---
 
-<footer class="border-t border-green-light/30 bg-green-deep px-4 py-6 text-sm text-cream">
-  <div class="mx-auto flex max-w-6xl flex-col gap-4 text-center sm:flex-row sm:items-center sm:justify-between">
-    <p>Elm City Photography</p>
-    <div class="flex items-center gap-6">
+<footer class="bg-green-deep px-6 py-12 text-cream">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center sm:flex-row sm:justify-between sm:text-left">
+    <p class="font-serif text-sm italic text-green-light">Elm City Photography</p>
+    <div class="flex flex-col items-center gap-3 sm:flex-row sm:gap-8">
       <a
         href="mailto:hello@elmcityphotography.com"
-        class="flex items-center gap-2 text-green-light transition-colors hover:text-cream/80"
-        aria-label="Email us"
+        class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cream/60 transition-colors hover:text-cream"
       >
-        <Mail size={16} />
-        <span>hello@elmcityphotography.com</span>
+        <Mail size={14} aria-hidden="true" />
+        hello@elmcityphotography.com
       </a>
       <a
         href="https://www.instagram.com/elm.city.photography"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center gap-2 text-green-light transition-colors hover:text-cream/80"
-        aria-label="Follow us on Instagram"
+        class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cream/60 transition-colors hover:text-cream"
+        aria-label="Follow @elm.city.photography on Instagram"
       >
-        <Instagram size={16} />
-        <span>@elm.city.photography</span>
+        <Instagram size={14} aria-hidden="true" />
+        @elm.city.photography
       </a>
     </div>
-    <p class="text-green-light">{new Date().getFullYear()}</p>
+    <p class="text-xs text-cream/40">&copy; {new Date().getFullYear()}</p>
   </div>
 </footer>

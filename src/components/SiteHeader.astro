@@ -4,106 +4,70 @@ import { withBase } from '../lib/paths';
 import logo from '../assets/logo.jpg';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-
 const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/';
-
 const isActive = (path: string) => normalizePath(path) === currentPath;
-const isPortfolioActive = ['/engagements/', '/graduations/'].some((path) => isActive(path));
+const isPortfolioActive = ['/engagements/', '/graduations/'].some((p) => isActive(p));
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about/', label: 'About' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/contact/', label: 'Contact' },
+];
 ---
 
-<header class="bg-green-deep px-4 text-cream">
-  <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 py-5">
-    <a href={withBase('/')} aria-label="Elm City Photography home">
+<header class="bg-green-deep text-cream">
+  <div class="flex flex-col items-center px-4 pb-6 pt-8">
+    <a href={withBase('/')} aria-label="Elm City Photography — home">
       <Image
         src={logo}
         alt="Elm City Photography"
-        width={64}
-        height={64}
-        class="h-16 w-16 rounded-full object-cover"
+        width={88}
+        height={88}
+        class="h-22 w-22 rounded-full object-cover ring-2 ring-gold/40 transition-opacity hover:opacity-85"
       />
     </a>
-    <nav aria-label="Primary">
-      <ul class="flex flex-wrap items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.24em] sm:text-sm">
-        <li>
-          <a
-            href={withBase('/')}
-            class:list={[
-              'inline-flex border-b px-2 py-1',
-              'border-transparent transition-colors',
-              isActive('/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
-            ]}
-          >
-            Home
-          </a>
-        </li>
-        <li class="text-cream/60">·</li>
-        <li>
-          <a
-            href={withBase('/about/')}
-            class:list={[
-              'inline-flex border-b px-2 py-1',
-              'border-transparent transition-colors',
-              isActive('/about/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
-            ]}
-          >
-            About
-          </a>
-        </li>
-        <li class="text-cream/60">·</li>
+    <div class="mt-5 w-12 border-t border-gold/35"></div>
+    <nav aria-label="Primary" class="mt-5">
+      <ul class="flex flex-wrap items-center justify-center gap-x-2 text-[11px] font-medium uppercase tracking-[0.28em]">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={withBase(link.href)}
+              class:list={[
+                'px-3 py-1 transition-colors',
+                isActive(link.href) ? 'text-gold' : 'text-cream/80 hover:text-cream',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
         <li class="relative group">
           <button
             type="button"
             class:list={[
-              'inline-flex cursor-default items-center border-b border-transparent px-2 py-1 transition-colors',
-              isPortfolioActive ? 'text-gold border-gold' : 'text-cream/95',
+              'flex cursor-default items-center gap-1 px-3 py-1 transition-colors',
+              isPortfolioActive ? 'text-gold' : 'text-cream/80 group-hover:text-cream',
             ]}
           >
-            Portfolio ▾
+            Portfolio
+            <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor" aria-hidden="true">
+              <path d="M0 0l4 5 4-5z" />
+            </svg>
           </button>
-          <ul class="absolute left-1/2 top-full z-20 mt-3 hidden w-44 -translate-x-1/2 rounded-sm border border-green-mid bg-green-deep p-2 shadow-lg group-hover:block group-focus-within:block">
+          <ul class="pointer-events-none absolute left-1/2 top-full z-50 mt-2 w-40 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep py-1 opacity-0 shadow-xl transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
             <li>
-              <a
-                href={withBase('/engagements/')}
-                class="block rounded-sm px-3 py-2 text-sm uppercase tracking-[0.24em] text-cream hover:bg-green-mid/70"
-              >
+              <a href={withBase('/engagements/')} class="block px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Engagements
               </a>
             </li>
             <li>
-              <a
-                href={withBase('/graduations/')}
-                class="block rounded-sm px-3 py-2 text-sm uppercase tracking-[0.24em] text-cream hover:bg-green-mid/70"
-              >
+              <a href={withBase('/graduations/')} class="block px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Graduations
               </a>
             </li>
           </ul>
-        </li>
-        <li class="text-cream/60">·</li>
-        <li>
-          <a
-            href={withBase('/pricing/')}
-            class:list={[
-              'inline-flex border-b px-2 py-1',
-              'border-transparent transition-colors',
-              isActive('/pricing/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
-            ]}
-          >
-            Pricing
-          </a>
-        </li>
-        <li class="text-cream/60">·</li>
-        <li>
-          <a
-            href={withBase('/contact/')}
-            class:list={[
-              'inline-flex border-b px-2 py-1',
-              'border-transparent transition-colors',
-              isActive('/contact/') ? 'border-gold text-gold' : 'text-cream/95 hover:text-gold',
-            ]}
-          >
-            Contact
-          </a>
         </li>
       </ul>
     </nav>

@@ -3,179 +3,203 @@ import { Image, getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { withBase } from '../lib/paths';
 import { getGalleryCover } from '../lib/galleries';
-import MarketingPageLayout from '../layouts/MarketingPageLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import aboutPhoto from '../assets/about-photo.jpg';
-import hero0004 from '../assets/galleries/engagements-2026/0004.jpg';
 import hero0005 from '../assets/galleries/engagements-2026/0005.jpg';
 import hero0006 from '../assets/galleries/engagements-2026/0006.jpg';
 import hero0007 from '../assets/galleries/engagements-2026/0007.jpg';
 import hero0008 from '../assets/galleries/engagements-2026/0008.jpg';
-import hero0009 from '../assets/galleries/engagements-2026/0009.jpg';
 import hero0011 from '../assets/galleries/engagements-2026/0011.jpg';
-import hero0016 from '../assets/galleries/engagements-2026/0016.jpg';
 
-const galleryMeta = await getCollection('galleries');
-const engagementGallery = galleryMeta.find((gallery) => gallery.id === 'engagements-2026');
-const graduationGallery = galleryMeta.find((gallery) => gallery.id === 'graduations-2026');
-const engagementCover = engagementGallery ? getGalleryCover(engagementGallery.id, engagementGallery.data.cover) : null;
-const graduationCover = graduationGallery ? getGalleryCover(graduationGallery.id, graduationGallery.data.cover) : null;
+const heroSlides = await Promise.all([
+  getImage({ src: hero0005, width: 2400, format: 'webp', quality: 85 }),
+  getImage({ src: hero0008, width: 2400, format: 'webp', quality: 85 }),
+  getImage({ src: hero0006, width: 2400, format: 'webp', quality: 85 }),
+  getImage({ src: hero0011, width: 2400, format: 'webp', quality: 85 }),
+  getImage({ src: hero0007, width: 2400, format: 'webp', quality: 85 }),
+]);
 
-const heroSlides = (
-  await Promise.all([
-    getImage({ src: hero0004, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0005, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0006, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0007, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0008, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0009, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0011, width: 2400, format: 'webp', quality: 82 }),
-    getImage({ src: hero0016, width: 2400, format: 'webp', quality: 82 }),
-  ])
-).map((image) => image.src);
-
-const heroCaptions = [
-  'LOVE DOCUMENTED IN NEW HAVEN & BEYOND',
-  'MOMENTS FOR THE HEART',
-  'LIFE’S TENDER INSTANCES',
-  'WEDDING-LIKE INTIMACY IN EVERY LOOK',
-  'NATURAL LIGHT, LASTING MEMORY',
-  'TIMELESS PORTRAITS BY THE WATER',
-  'SOFT LIGHT, SINCERE JOY',
-  'THE DAY YOU LIVE FOR',
-];
+const galleries = await getCollection('galleries');
+const engagements = galleries.find((g) => g.id === 'engagements-2026');
+const graduations = galleries.find((g) => g.id === 'graduations-2026');
+const engagementCover = engagements ? getGalleryCover(engagements.id, engagements.data.cover) : null;
+const graduationCover = graduations ? getGalleryCover(graduations.id, graduations.data.cover) : null;
 ---
 
-<MarketingPageLayout title="Elm City Photography" description="Placeholder marketing homepage for Elm City Photography.">
-  <section class="relative w-full overflow-hidden" style="height: 70vh">
-    {heroSlides.map((slide, index) => (
+<BaseLayout title="Elm City Photography — New Haven, CT" description="Wedding, engagement, and portrait photography from New Haven, CT.">
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="relative h-screen min-h-[540px] w-full overflow-hidden" aria-label="Hero">
+    {heroSlides.map((slide, i) => (
       <img
-        src={slide}
-        alt={heroCaptions[index] || 'Elm City Photography engagement session'}
+        src={slide.src}
+        alt=""
+        role="presentation"
         class:list={[
           'absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out',
-          index === 0 ? 'opacity-100' : 'opacity-0',
+          i === 0 ? 'opacity-100' : 'opacity-0',
         ]}
-        data-hero-slide={index === 0 ? 'true' : 'false'}
+        data-hero-slide
+        loading={i === 0 ? 'eager' : 'lazy'}
       />
     ))}
-    <div class="absolute inset-0 bg-green-deep/35"></div>
-    <div class="relative z-10 flex h-full items-center justify-center px-6 text-center">
-      <p class="max-w-4xl text-3xl uppercase tracking-[0.3em] text-cream md:text-5xl">
-        LOVE DOCUMENTED IN NEW HAVEN &amp; BEYOND
-      </p>
-    </div>
-  </section>
+    <!-- gradient: subtle at top (for any UI), stronger at bottom for text -->
+    <div class="absolute inset-0 bg-gradient-to-b from-green-deep/20 via-transparent to-green-deep/55 pointer-events-none"></div>
 
-  <section class="mt-8 bg-green-deep px-4 py-16">
-    <div class="mx-auto max-w-6xl">
-      <h2 class="text-center text-5xl text-cream">PORTFOLIO</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        <a
-          href={withBase('/engagements/')}
-          class="group relative block h-96 overflow-hidden rounded-sm border border-green-light/30 bg-green-mid"
-        >
-          {engagementCover ? (
-            <Image
-              src={engagementCover.image}
-              alt={engagementCover.alt}
-              width={1200}
-              height={800}
-              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          ) : null}
-          <div class="absolute inset-0 flex items-end bg-gradient-to-t from-green-deep/75 to-black/0 p-6">
-            <h3 class="text-3xl text-cream">Engagements</h3>
-          </div>
-        </a>
-        <a
-          href={withBase('/graduations/')}
-          class="group relative block h-96 overflow-hidden rounded-sm border border-green-light/30 bg-green-mid"
-        >
-          {graduationCover ? (
-            <Image
-              src={graduationCover.image}
-              alt={graduationCover.alt}
-              width={1200}
-              height={800}
-              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          ) : null}
-          <div class="absolute inset-0 flex items-end bg-gradient-to-t from-green-deep/75 to-black/0 p-6">
-            <h3 class="text-3xl text-cream">Graduations</h3>
-          </div>
-        </a>
+    <!-- tagline -->
+    <div class="absolute inset-x-0 bottom-0 flex flex-col items-center pb-16 text-center">
+      <p class="text-[10px] uppercase tracking-[0.38em] text-cream/70">New Haven, Connecticut</p>
+      <h1 class="mt-3 font-serif text-4xl italic leading-snug text-cream md:text-6xl">
+        Love captured in every light.
+      </h1>
+      <!-- slide indicators -->
+      <div class="mt-8 flex gap-2" role="tablist" aria-label="Hero slides">
+        {heroSlides.map((_, i) => (
+          <button
+            type="button"
+            role="tab"
+            aria-label={`Slide ${i + 1}`}
+            data-hero-dot={i}
+            class:list={[
+              'h-0.5 rounded-full transition-all duration-300',
+              i === 0 ? 'w-8 bg-cream' : 'w-4 bg-cream/40',
+            ]}
+          />
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="mx-auto mt-12 max-w-6xl px-4">
-    <div class="grid gap-8 items-center md:grid-cols-[1.05fr_0.95fr]">
-      <Image
-        src={aboutPhoto}
-        alt="Couple on coastal cliffs at sunset"
-        width={853}
-        height={1280}
-        loading="lazy"
-        class="h-full w-full object-cover"
-      />
-      <div>
-        <p class="text-sm uppercase tracking-[0.24em] text-muted">About Elm City Photography</p>
-        <h2 class="mt-2 text-4xl text-ink">ABOUT THE PHOTOGRAPHER</h2>
-        <p class="mt-4 text-sm leading-7 text-muted">
-          We are a New Haven, CT-based team focused on intimate, heartfelt photography for life’s meaningful milestones. Our
-          lens seeks the quiet
-          moments that make weddings, graduations, and portraits feel expansive.
+  <!-- ── PORTFOLIO SPREAD ──────────────────────────────────── -->
+  <section aria-labelledby="portfolio-heading">
+    <div class="bg-cream py-20 text-center">
+      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Our Work</p>
+      <h2 id="portfolio-heading" class="mt-3 font-serif text-4xl italic text-ink md:text-5xl">Portfolio</h2>
+    </div>
+    <div class="flex h-[65vh] min-h-[360px] w-full">
+      <a href={withBase('/engagements/')} class="group relative flex-1 overflow-hidden">
+        {engagementCover && (
+          <Image
+            src={engagementCover.image}
+            alt="Engagement photography by Elm City Photography"
+            width={1200}
+            height={900}
+            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          />
+        )}
+        <div class="absolute inset-0 bg-gradient-to-t from-green-deep/70 via-green-deep/10 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
+          <p class="text-[10px] uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
+          <h3 class="mt-1 font-serif text-3xl italic text-cream md:text-4xl">Engagements</h3>
+        </div>
+      </a>
+      <div class="w-px bg-cream/10"></div>
+      <a href={withBase('/graduations/')} class="group relative flex-1 overflow-hidden">
+        {graduationCover && (
+          <Image
+            src={graduationCover.image}
+            alt="Graduation portrait photography by Elm City Photography"
+            width={1200}
+            height={900}
+            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          />
+        )}
+        <div class="absolute inset-0 bg-gradient-to-t from-green-deep/70 via-green-deep/10 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
+          <p class="text-[10px] uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
+          <h3 class="mt-1 font-serif text-3xl italic text-cream md:text-4xl">Graduations</h3>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── ABOUT TEASER ─────────────────────────────────────── -->
+  <section class="bg-cream" aria-labelledby="about-heading">
+    <div class="mx-auto grid max-w-7xl items-center gap-0 md:grid-cols-[5fr_6fr]">
+      <div class="aspect-[3/4] overflow-hidden md:max-h-[640px]">
+        <Image
+          src={aboutPhoto}
+          alt="Couple walking along coastal cliffs at golden hour"
+          width={680}
+          height={900}
+          class="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <div class="px-10 py-16 md:px-16 md:py-24">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-muted">Our Story</p>
+        <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
+          The story<br />behind the lens.
+        </h2>
+        <p class="mt-6 max-w-prose text-sm leading-8 text-muted">
+          We are a New Haven-based photography studio drawn to unguarded moments and quiet light —
+          the pause between the posed portrait and the real smile. Every session is an unhurried
+          collaboration guided by place, connection, and the honest beauty of the people in front of our lens.
         </p>
         <a
           href={withBase('/about/')}
-          class="mt-5 inline-flex items-center text-sm uppercase tracking-[0.2em] text-green-deep underline decoration-green-mid hover:text-green-mid"
+          class="mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
         >
-          Learn More →
+          Read More <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </section>
 
-  <section class="mt-16 bg-cream px-4 py-14">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="text-xs uppercase tracking-[0.28em] text-muted">Investment</p>
-      <h2 class="mt-3 text-4xl">INVESTMENT</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-sm text-muted">
-        Thoughtfully designed coverage packages for modern celebrations, with full gallery delivery and editorial styling.
-      </p>
-      <a
-        href={withBase('/pricing/')}
-        class="mt-7 inline-flex items-center rounded-sm bg-green-deep px-7 py-3 text-sm uppercase tracking-[0.2em] text-cream transition-colors hover:bg-green-mid"
-      >
-        View Packages →
-      </a>
-    </div>
+  <!-- ── INVESTMENT TEASER ─────────────────────────────────── -->
+  <section class="bg-green-deep py-28 text-center" aria-labelledby="investment-heading">
+    <p class="text-[10px] uppercase tracking-[0.38em] text-green-light/70">Investment</p>
+    <h2 id="investment-heading" class="mt-5 font-serif text-5xl italic text-cream md:text-6xl">
+      Sessions from $350
+    </h2>
+    <p class="mx-auto mt-5 max-w-xs text-sm text-green-light/70">
+      Three packages for engagements, graduations, and milestone portraits.
+    </p>
+    <a
+      href={withBase('/pricing/')}
+      class="mt-10 inline-block border-b border-gold/60 pb-px text-[11px] uppercase tracking-[0.3em] text-gold transition-colors hover:border-gold"
+    >
+      View Packages →
+    </a>
   </section>
 
-  <section class="mt-2 bg-green-deep px-4 py-14">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="text-4xl text-cream md:text-5xl">LET&apos;S CREATE SOMETHING BEAUTIFUL</p>
-      <a
-        href="mailto:hello@elmcityphotography.com"
-        class="mt-6 inline-block text-xl font-light tracking-[0.16em] text-cream underline decoration-gold underline-offset-4"
-      >
-        hello@elmcityphotography.com
-      </a>
-    </div>
+  <!-- ── CONTACT CTA ───────────────────────────────────────── -->
+  <section class="bg-cream py-32 text-center" aria-labelledby="contact-heading">
+    <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Get in Touch</p>
+    <h2 id="contact-heading" class="mt-5 font-serif text-5xl italic leading-tight text-ink md:text-6xl lg:text-7xl">
+      Let's make<br />something beautiful.
+    </h2>
+    <a
+      href="mailto:hello@elmcityphotography.com"
+      class="mt-8 inline-block text-sm text-muted underline underline-offset-4 transition-colors hover:text-ink"
+    >
+      hello@elmcityphotography.com
+    </a>
   </section>
-</MarketingPageLayout>
+
+</BaseLayout>
 
 <script>
-  const slides = Array.from(document.querySelectorAll('[data-hero-slide]'));
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-slide]'));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-dot]'));
+
   if (slides.length > 1) {
     let current = 0;
-    setInterval(() => {
-      const next = (current + 1) % slides.length;
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('opacity-100', index === next);
-        slide.classList.toggle('opacity-0', index !== next);
-      });
+
+    function goTo(next: number) {
+      slides[current].classList.replace('opacity-100', 'opacity-0');
+      dots[current].classList.replace('w-8', 'w-4');
+      dots[current].classList.replace('bg-cream', 'bg-cream/40');
+
+      slides[next].classList.replace('opacity-0', 'opacity-100');
+      dots[next].classList.replace('w-4', 'w-8');
+      dots[next].classList.replace('bg-cream/40', 'bg-cream');
+
       current = next;
-    }, 5000);
+    }
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+    setInterval(() => goTo((current + 1) % slides.length), 5000);
   }
 </script>

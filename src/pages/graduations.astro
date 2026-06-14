@@ -1,23 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
-import MarketingPageLayout from '../layouts/MarketingPageLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import GalleryGrid from '../components/GalleryGrid.astro';
 
 const galleries = (await getCollection('galleries'))
-  .filter((gallery) => gallery.data.type === 'graduation')
+  .filter((g) => g.data.type === 'graduation')
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<MarketingPageLayout title="Graduation Portraits — Elm City Photography" description="Graduation portrait photography in New Haven, CT.">
-  <section class="mb-8 -mx-4 bg-green-deep px-4 py-8">
-    <p class="text-xs uppercase tracking-[0.26em] text-green-light">Milestone portraits & celebrations</p>
-    <h1 class="mt-2 text-4xl text-cream">GRADUATION PORTFOLIO</h1>
-    <p class="mt-3 max-w-3xl text-sm text-green-light">
-      A celebration of achievement and transition, featuring expressive portraits crafted with editorial detail and a soft, natural
-      Connecticut backdrop.
+<BaseLayout title="Graduations — Elm City Photography" description="Graduation portrait photography in New Haven, CT by Elm City Photography.">
+
+  <div class="bg-green-deep px-6 py-20 text-center">
+    <p class="text-[10px] uppercase tracking-[0.38em] text-green-light/70">Portfolio</p>
+    <h1 class="mt-4 font-serif text-5xl italic text-cream md:text-6xl">Graduations</h1>
+    <p class="mx-auto mt-5 max-w-sm text-sm text-green-light/70">
+      Milestone portraits celebrating the class of 2026.
     </p>
-  </section>
-  <div class="mt-8">
-    <GalleryGrid galleries={galleries} />
   </div>
-</MarketingPageLayout>
+
+  <div class="bg-cream px-6 py-16">
+    <div class="mx-auto max-w-5xl">
+      <GalleryGrid galleries={galleries} />
+    </div>
+  </div>
+
+</BaseLayout>

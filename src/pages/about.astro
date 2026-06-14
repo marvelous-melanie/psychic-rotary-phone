@@ -1,55 +1,60 @@
 ---
 import { Image } from 'astro:assets';
-import MarketingPageLayout from '../layouts/MarketingPageLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import aboutPhoto from '../assets/about-photo.jpg';
 import { withBase } from '../lib/paths';
 ---
 
-<MarketingPageLayout title="About" description="About Elm City Photography.">
-  <section class="relative -mx-4 h-[60vh] overflow-hidden">
+<BaseLayout title="About — Elm City Photography" description="About Elm City Photography, based in New Haven, CT.">
+
+  <!-- Full-bleed hero image -->
+  <div class="relative h-[70vh] min-h-[420px] w-full overflow-hidden">
     <Image
       src={aboutPhoto}
-      alt="Couple on coastal cliffs for Elm City Photography"
-      width={853}
-      height={1280}
-      class="h-full w-full object-cover"
+      alt="Couple walking hand in hand along coastal cliffs at golden hour"
+      width={1280}
+      height={853}
+      class="h-full w-full object-cover object-center"
       loading="eager"
     />
-    <div class="absolute inset-0 bg-green-deep/35"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-green-deep/40 pointer-events-none"></div>
+  </div>
+
+  <!-- Bio section -->
+  <section class="bg-cream">
+    <div class="mx-auto max-w-2xl px-6 py-24 md:py-32">
+      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">About</p>
+      <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Our Story</h1>
+
+      <p class="mt-10 text-base font-semibold leading-8 text-ink">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam.
+      </p>
+
+      <div class="mt-8 space-y-6 text-sm leading-8 text-muted">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident.
+        </p>
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+        </p>
+        <p>
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+        </p>
+        <p>
+          Nam libero tempore cum soluta nobis eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint.
+        </p>
+      </div>
+
+      <div class="mt-14 border-t border-green-light/40 pt-10">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-muted">Ready to work together?</p>
+        <a
+          href={withBase('/contact/')}
+          class="mt-4 inline-flex items-center gap-2 font-serif text-xl italic text-ink transition-colors hover:text-green-mid"
+        >
+          Get in touch <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
   </section>
 
-  <section class="mx-auto mt-14 max-w-2xl px-4 pb-16">
-    <p class="text-sm uppercase tracking-[0.24em] text-muted">About Elm City Photography</p>
-    <h1 class="mt-2 text-5xl">OUR STORY</h1>
-    <p class="mt-6 text-lg leading-8 font-semibold">
-      Founded in New Haven, Elm City Photography is built around the belief that modern portraiture should feel graceful,
-      intimate, and deeply personal from first hello to final edit.
-    </p>
-    <div class="mt-6 space-y-5 text-sm leading-7 text-muted">
-      <p>
-        We are drawn to unguarded glances and quiet spaces — the moments in between the posed portrait and the candid smile.
-        Our sessions are guided by light, connection, and storytelling, with locations chosen to match each couple’s rhythm.
-      </p>
-      <p>
-        For each engagement and graduation session we keep the process calm and collaborative, allowing you to
-        move with the day instead of moving to the camera. That approach lets the photos reflect who you are, not just
-        how you looked in front of a lens.
-      </p>
-      <p>
-        We photograph what matters most: your laugh line, the glance at the same pace as the wind, and the way joy fills the
-        frame when people are present with one another. Every edited photo is handled with careful color, balanced contrast,
-        and a refined, editorial finish inspired by the natural landscape of New England.
-      </p>
-      <p>
-        Our work balances natural portraiture with elegant composition, offering timeless imagery that feels lived-in, cinematic,
-        and unmistakably yours.
-      </p>
-    </div>
-    <a
-      href={withBase('/contact/')}
-      class="mt-8 inline-flex text-sm uppercase tracking-[0.2em] text-green-deep underline decoration-green-mid underline-offset-4"
-    >
-      Get in Touch →
-    </a>
-  </section>
-</MarketingPageLayout>
+</BaseLayout>

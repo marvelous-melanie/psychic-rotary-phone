@@ -10,7 +10,10 @@ interface Props {
 const { galleries } = Astro.props;
 ---
 
-<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<div class:list={[
+  'grid gap-4',
+  galleries.length === 1 ? 'grid-cols-1 max-w-lg mx-auto' : 'sm:grid-cols-2',
+]}>
   {galleries.map((gallery) => {
     const cover = getGalleryCover(gallery.id, gallery.data.cover);
     return <GalleryCard gallery={gallery} cover={cover} />;
