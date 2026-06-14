@@ -8,18 +8,14 @@ const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/'
 const isActive = (path: string) => normalizePath(path) === currentPath;
 const isPortfolioActive = ['/engagements/', '/graduations/'].some((p) => isActive(p));
 
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about/', label: 'About' },
-  { href: '/pricing/', label: 'Pricing' },
-  { href: '/contact/', label: 'Contact' },
-];
+function linkClass(active: boolean) {
+  return ['px-3 py-1 transition-colors', active ? 'text-gold' : 'text-cream/80 hover:text-cream'].join(' ');
+}
 ---
 
 <header class="bg-green-deep text-cream">
   <div class="flex flex-col items-center px-4 pb-6 pt-8">
 
-    <!-- Logo -->
     <a href={withBase('/')} aria-label="Elm City Photography — home">
       <Image
         src={logo}
@@ -30,29 +26,22 @@ const navLinks = [
       />
     </a>
 
-    <!-- Business name -->
     <p class="mt-3 font-serif text-sm italic tracking-wide text-cream/80">Elm City Photography</p>
 
     <div class="mt-4 w-12 border-t border-gold/35"></div>
 
-    <!-- Nav -->
     <nav aria-label="Primary" class="mt-4">
       <ul class="flex flex-wrap items-center justify-center gap-x-1 text-[11px] font-medium uppercase tracking-[0.28em]">
-        {navLinks.map((link) => (
-          <li>
-            <a
-              href={withBase(link.href)}
-              class:list={[
-                'px-3 py-1 transition-colors',
-                isActive(link.href) ? 'text-gold' : 'text-cream/80 hover:text-cream',
-              ]}
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
 
-        <!-- Portfolio dropdown -->
+        <li>
+          <a href={withBase('/')} class={linkClass(isActive('/'))}>Home</a>
+        </li>
+
+        <li>
+          <a href={withBase('/about/')} class={linkClass(isActive('/about/'))}>About</a>
+        </li>
+
+        <!-- Portfolio dropdown — sits between About and Pricing -->
         <li class="relative group">
           <button
             type="button"
@@ -66,12 +55,7 @@ const navLinks = [
               <path d="M0 0l4 5 4-5z" />
             </svg>
           </button>
-          <!--
-            The dropdown uses pt-2 (padding) instead of mt-2 (margin) so there is
-            no gap between the button and the list — closing the dead zone that
-            caused the menu to vanish when mousing downward toward the items.
-          -->
-          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pt-2 pb-1 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
             <li>
               <a href={withBase('/engagements/')} class="block px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Engagements
@@ -84,6 +68,15 @@ const navLinks = [
             </li>
           </ul>
         </li>
+
+        <li>
+          <a href={withBase('/pricing/')} class={linkClass(isActive('/pricing/'))}>Pricing</a>
+        </li>
+
+        <li>
+          <a href={withBase('/contact/')} class={linkClass(isActive('/contact/'))}>Contact</a>
+        </li>
+
       </ul>
     </nav>
 
