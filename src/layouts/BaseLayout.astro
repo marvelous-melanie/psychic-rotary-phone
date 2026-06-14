@@ -1,0 +1,34 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SkipLink from '../components/SkipLink.astro';
+import Seo from '../components/Seo.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalUrl?: string;
+}
+
+const { title, description, image, canonicalUrl } = Astro.props;
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://elmcityphotography.com').toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Seo title={title} description={description} image={image} canonicalUrl={canonical} />
+  </head>
+  <body class="min-h-screen bg-cream text-ink">
+    <ClientRouter />
+    <SkipLink />
+    <SiteHeader />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

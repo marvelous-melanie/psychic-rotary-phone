@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/paths';
+import MarketingPageLayout from '../layouts/MarketingPageLayout.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+
+const collections = await getCollection('galleries');
+const featuredGalleries = collections
+  .filter((gallery) => gallery.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const categories = [
+  { href: '/weddings/', label: 'Weddings' },
+  { href: '/engagements/', label: 'Engagements' },
+  { href: '/about/', label: 'About' },
+];
+---
+
+<MarketingPageLayout title="Elm City Photography" description="Placeholder marketing homepage for Elm City Photography.">
+  <section class="py-10">
+    <p class="text-sm uppercase tracking-[0.25em] text-muted">Photography Portfolio</p>
+    <h1 class="mt-4 max-w-2xl text-4xl font-medium leading-tight md:text-5xl">Placeholder hero statement for weddings and engagements.</h1>
+    <p class="mt-4 max-w-2xl text-sm text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder copy while the gallery is being prepared.</p>
+  </section>
+
+  <section class="py-10">
+    <h2 class="text-2xl font-medium">Featured galleries</h2>
+    <div class="mt-6">
+      <GalleryGrid galleries={featuredGalleries} />
+    </div>
+  </section>
+
+  <section class="py-10">
+    <h2 class="text-2xl font-medium">Categories</h2>
+    <ul class="mt-4 flex flex-wrap gap-4">
+      {categories.map((category) => (
+        <li>
+          <a href={withBase(category.href)} class="underline">{category.label}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="py-10">
+    <h2 class="text-2xl font-medium">Contact</h2>
+    <p class="mt-2 max-w-2xl text-sm text-muted">
+      Lorem ipsum dolor sit amet. <a href={withBase('/contact/')} class="underline">Reach out</a> for next steps.
+    </p>
+  </section>
+</MarketingPageLayout>

@@ -1,0 +1,29 @@
+---
+import { buildSeoMeta, type BuiltSeoMeta } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalUrl: string;
+}
+
+const { title, description, image, canonicalUrl } = Astro.props;
+
+const seo: BuiltSeoMeta = buildSeoMeta({ title, description, image, canonicalUrl });
+---
+
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+<link rel="canonical" href={seo.canonicalUrl} />
+
+<meta property="og:title" content={seo.ogTitle} />
+<meta property="og:description" content={seo.ogDescription} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={seo.canonicalUrl} />
+{seo.ogImage ? <meta property="og:image" content={seo.ogImage} /> : null}
+
+<meta name="twitter:card" content={seo.twitterCard} />
+<meta name="twitter:title" content={seo.twitterTitle} />
+<meta name="twitter:description" content={seo.twitterDescription} />
+{seo.twitterImage ? <meta name="twitter:image" content={seo.twitterImage} /> : null}

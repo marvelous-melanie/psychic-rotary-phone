@@ -1,0 +1,26 @@
+---
+import { withBase } from '../lib/paths';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/weddings/', label: 'Weddings' },
+  { href: '/engagements/', label: 'Engagements' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
+---
+
+<header class="border-b border-black/10 bg-cream px-4 py-4">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between" aria-label="Primary">
+    <a class="text-lg font-semibold" href={withBase('/')}>
+      Elm City Photography
+    </a>
+    <ul class="flex items-center gap-4 text-sm">
+      {links.map((link) => (
+        <li>
+          <a href={withBase(link.href)}>{link.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import MarketingPageLayout from '../layouts/MarketingPageLayout.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+
+const galleries = (await getCollection('galleries'))
+  .filter((gallery) => gallery.data.type === 'engagement')
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<MarketingPageLayout title="Engagements" description="Engagement galleries.">
+  <h1 class="text-4xl font-medium">Engagements</h1>
+  <p class="mt-2 max-w-2xl text-sm text-muted">Lorem ipsum dolor sit amet.</p>
+  <div class="mt-8">
+    <GalleryGrid galleries={galleries} />
+  </div>
+</MarketingPageLayout>

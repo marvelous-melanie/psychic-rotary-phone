@@ -1,0 +1,24 @@
+---
+import { Picture } from 'astro:assets';
+import type { GalleryImage } from '../lib/galleries';
+
+interface Props {
+  image: GalleryImage;
+  loading?: 'eager' | 'lazy';
+}
+
+const { image, loading = 'lazy' } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-xl bg-black/5">
+  <Picture
+    src={image.image}
+    formats={['avif', 'webp']}
+    widths={[480, 768, 1024]}
+    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+    alt={image.alt}
+    loading={loading}
+    decoding="async"
+    class="h-auto w-full"
+  />
+</div>

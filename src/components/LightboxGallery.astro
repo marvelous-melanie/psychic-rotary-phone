@@ -1,0 +1,74 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import type { GalleryImage } from '../lib/galleries';
+
+interface Props {
+  images: GalleryImage[];
+  galleryId: string;
+}
+
+const { images, galleryId } = Astro.props;
+
+const prepared = await Promise.all(
+  images.map(async (item) => {
+    const lightbox = await getImage({
+      src: item.image,
+      width: Math.min(item.image.width, 2400),
+      format: 'webp',
+      quality: 85,
+    });
+
+    return { ...item, lightbox };
+  }),
+);
+---
+
+{images.length === 0 ? (
+  <div id={`gallery-${galleryId}`} class="mx-auto max-w-7xl px-4 pb-20 sm:columns-2 lg:columns-3"></div>
+) : (
+  <div id={`gallery-${galleryId}`} class="mx-auto max-w-7xl columns-1 gap-4 px-4 pb-20 sm:columns-2 lg:columns-3">
+    {prepared.map((item, index) => (
+      <a
+        href={item.lightbox.src}
+        data-pswp-width={item.lightbox.attributes.width}
+        data-pswp-height={item.lightbox.attributes.height}
+        class="mb-4 block break-inside-avoid overflow-hidden rounded-xl bg-neutral-100"
+        aria-label={`Open image: ${item.alt}`}
+      >
+        <Picture
+          src={item.image}
+          formats={['avif', 'webp']}
+          widths={[480, 768, 1024, 1440]}
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          alt={item.alt}
+          loading={index < 6 ? 'eager' : 'lazy'}
+          decoding="async"
+          class="h-auto w-full transition duration-500 hover:scale-[1.02]"
+        />
+      </a>
+    ))}
+  </div>
+)}
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  function initLightboxes() {
+    document.querySelectorAll('[id^="gallery-"]').forEach((gallery) => {
+      if (gallery instanceof HTMLElement && gallery.dataset.pswpInitialized !== 'true') {
+        const lightbox = new PhotoSwipeLightbox({
+          gallery,
+          children: 'a',
+          pswpModule: () => import('photoswipe'),
+        });
+
+        lightbox.init();
+        gallery.dataset.pswpInitialized = 'true';
+      }
+    });
+  }
+
+  initLightboxes();
+  document.addEventListener('astro:page-load', initLightboxes);
+</script>

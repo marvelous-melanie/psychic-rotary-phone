@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title desc" fill="none">
+  <title id="title">Elm City Photography favicon</title>
+  <desc id="desc">Placeholder circular camera icon</desc>
+  <circle cx="32" cy="32" r="30" fill="#161412"/>
+  <circle cx="32" cy="32" r="20" fill="#f8f4ef"/>
+  <circle cx="32" cy="32" r="10" fill="#161412"/>
+  <rect x="14" y="20" width="36" height="24" rx="4" stroke="#f8f4ef" stroke-width="3" fill="none"/>
+</svg>
