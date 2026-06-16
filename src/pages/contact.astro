@@ -9,9 +9,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="bg-cream">
 
     <div class="mx-auto max-w-2xl px-6 pb-8 pt-24">
-      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Get in Touch</p>
+      <p class="text-xs uppercase tracking-[0.38em] text-muted">Get in Touch</p>
       <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Let's talk.</h1>
-      <p class="mt-6 text-sm leading-8 text-muted">
+      <p class="mt-6 text-base leading-8 text-muted">
         Whether you're planning a wedding, an engagement session, or a graduation portrait —
         we'd love to hear about it. Fill out the form below or email us directly at{' '}
         <a href="mailto:hello@elmcityphotography.com" class="text-ink underline underline-offset-4 hover:text-green-mid transition-colors">
@@ -24,7 +24,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <form class="mx-auto max-w-2xl px-6 pb-24 pt-10" action="https://formspree.io/f/xlgkvkez" method="post">
       <div class="grid gap-6 sm:grid-cols-2">
         <div>
-          <label for="name" class="mb-2 block text-[10px] uppercase tracking-[0.28em] text-muted">Your Name</label>
+          <label for="name" class="mb-2 block text-xs uppercase tracking-[0.28em] text-muted">Your Name</label>
           <input
             id="name"
             name="name"
@@ -35,7 +35,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           />
         </div>
         <div>
-          <label for="email" class="mb-2 block text-[10px] uppercase tracking-[0.28em] text-muted">Email Address</label>
+          <label for="email" class="mb-2 block text-xs uppercase tracking-[0.28em] text-muted">Email Address</label>
           <input
             id="email"
             name="email"
@@ -49,7 +49,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="mt-8 grid gap-6 sm:grid-cols-2">
         <div>
-          <label for="event-type" class="mb-2 block text-[10px] uppercase tracking-[0.28em] text-muted">Type of Session</label>
+          <label for="event-type" class="mb-2 block text-xs uppercase tracking-[0.28em] text-muted">Type of Session</label>
           <select
             id="event-type"
             name="event-type"
@@ -64,7 +64,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </select>
         </div>
         <div>
-          <label for="event-date" class="mb-2 block text-[10px] uppercase tracking-[0.28em] text-muted">Date (if you have one)</label>
+          <label for="event-date" class="mb-2 block text-xs uppercase tracking-[0.28em] text-muted">Date (if you have one)</label>
           <input
             id="event-date"
             name="event-date"
@@ -76,7 +76,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <div class="mt-8">
-        <label for="message" class="mb-2 block text-[10px] uppercase tracking-[0.28em] text-muted">Tell Us About Your Day</label>
+        <label for="message" class="mb-2 block text-xs uppercase tracking-[0.28em] text-muted">Tell Us About Your Day</label>
         <textarea
           id="message"
           name="message"
@@ -89,7 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="mt-10">
         <button
           type="submit"
-          class="bg-green-deep px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
+          class="bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
         >
           Send Message
         </button>

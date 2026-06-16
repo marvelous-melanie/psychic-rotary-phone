@@ -66,7 +66,7 @@ const testimonials = [
     ))}
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-green-deep/15 via-transparent to-green-deep/60"></div>
     <div class="absolute inset-x-0 bottom-0 flex flex-col items-center pb-16 text-center">
-      <p class="text-[10px] uppercase tracking-[0.38em] text-cream/70">New Haven, Connecticut</p>
+      <p class="text-xs uppercase tracking-[0.38em] text-cream/70">New Haven, Connecticut</p>
       <h1 class="mt-3 font-serif text-4xl italic leading-snug text-cream md:text-6xl">
         Love captured in every light.
       </h1>
@@ -90,11 +90,11 @@ const testimonials = [
   <!-- ── INTRO ─────────────────────────────────────────────────────── -->
   <section class="bg-cream px-6 py-24 text-center">
     <div class="mx-auto max-w-xl">
-      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Elm City Photography</p>
+      <p class="text-xs uppercase tracking-[0.38em] text-muted">Elm City Photography</p>
       <h2 class="mt-5 font-serif text-3xl italic leading-relaxed text-ink md:text-4xl">
         We photograph weddings, engagements, and milestones for people who want images that feel real.
       </h2>
-      <p class="mt-6 text-sm leading-8 text-muted">
+      <p class="mt-6 text-base leading-8 text-muted">
         Based in New Haven, CT. Available for weddings and portrait sessions throughout Connecticut, New England, and beyond.
       </p>
     </div>
@@ -115,7 +115,7 @@ const testimonials = [
         )}
         <div class="absolute inset-0 bg-gradient-to-t from-green-deep/70 via-green-deep/10 to-transparent"></div>
         <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
-          <p class="text-[10px] uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
+          <p class="text-xs uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
           <h3 class="mt-1 font-serif text-3xl italic text-cream md:text-4xl">Engagements</h3>
         </div>
       </a>
@@ -132,7 +132,7 @@ const testimonials = [
         )}
         <div class="absolute inset-0 bg-gradient-to-t from-green-deep/70 via-green-deep/10 to-transparent"></div>
         <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
-          <p class="text-[10px] uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
+          <p class="text-xs uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
           <h3 class="mt-1 font-serif text-3xl italic text-cream md:text-4xl">Graduations</h3>
         </div>
       </a>
@@ -160,22 +160,22 @@ const testimonials = [
         />
       </div>
       <div class="px-10 py-16 md:px-16 md:py-24">
-        <p class="text-[10px] uppercase tracking-[0.35em] text-muted">About Us</p>
+        <p class="text-xs uppercase tracking-[0.35em] text-muted">About Us</p>
         <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
           We show up for<br />the small moments.
         </h2>
-        <p class="mt-6 max-w-prose text-sm leading-8 text-muted">
+        <p class="mt-6 max-w-prose text-base leading-8 text-muted">
           We're a New Haven-based photography team that believes the best images come from genuine connection —
           not direction. Our approach is calm, unhurried, and built around you. We'll follow the light,
           give you space to breathe, and capture the moments you'll actually want to remember.
         </p>
-        <p class="mt-4 max-w-prose text-sm leading-8 text-muted">
+        <p class="mt-4 max-w-prose text-base leading-8 text-muted">
           We photograph weddings, engagements, graduations, and portraits throughout Connecticut and New England.
           If you're planning something meaningful, we'd love to be there.
         </p>
         <a
           href={withBase('/about/')}
-          class="mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
+          class="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
         >
           Our Story <span aria-hidden="true">→</span>
         </a>
@@ -187,19 +187,19 @@ const testimonials = [
   <section class="bg-cream px-6 py-24" aria-labelledby="testimonials-heading">
     <div class="mx-auto max-w-5xl">
       <div class="text-center">
-        <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Kind Words</p>
+        <p class="text-xs uppercase tracking-[0.38em] text-muted">Kind Words</p>
         <h2 id="testimonials-heading" class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">What couples are saying.</h2>
       </div>
       <div class="mt-16 grid gap-8 md:grid-cols-3">
         {testimonials.map((t) => (
           <figure class="flex flex-col">
             <div class="mb-5 text-2xl text-green-light" aria-hidden="true">"</div>
-            <blockquote class="flex-1 text-sm leading-8 text-muted">
+            <blockquote class="flex-1 text-base leading-8 text-muted">
               <p>{t.quote}</p>
             </blockquote>
             <figcaption class="mt-8 border-t border-green-light/40 pt-6">
               <p class="font-serif italic text-ink">{t.name}</p>
-              <p class="mt-1 text-[10px] uppercase tracking-[0.22em] text-muted/70">{t.detail}</p>
+              <p class="mt-1 text-xs uppercase tracking-[0.22em] text-muted/70">{t.detail}</p>
             </figcaption>
           </figure>
         ))}
@@ -209,7 +209,7 @@ const testimonials = [
 
   <!-- ── INVESTMENT TEASER ─────────────────────────────────────────── -->
   <section class="bg-green-deep py-28 text-center" aria-labelledby="investment-heading">
-    <p class="text-[10px] uppercase tracking-[0.38em] text-green-light/70">Investment</p>
+    <p class="text-xs uppercase tracking-[0.38em] text-green-light/70">Investment</p>
     <h2 id="investment-heading" class="mt-5 font-serif text-5xl italic text-cream md:text-6xl">
       Wedding coverage from $1,400.
     </h2>
@@ -218,7 +218,7 @@ const testimonials = [
     </p>
     <a
       href={withBase('/pricing/')}
-      class="mt-10 inline-block border-b border-gold/60 pb-px text-[11px] uppercase tracking-[0.3em] text-gold transition-colors hover:border-gold"
+      class="mt-10 inline-block border-b border-gold/60 pb-px text-xs uppercase tracking-[0.3em] text-gold transition-colors hover:border-gold"
     >
       View Packages →
     </a>
@@ -226,11 +226,11 @@ const testimonials = [
 
   <!-- ── CONTACT CTA ───────────────────────────────────────────────── -->
   <section class="bg-cream py-32 text-center" aria-labelledby="contact-heading">
-    <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Let's Connect</p>
+    <p class="text-xs uppercase tracking-[0.38em] text-muted">Let's Connect</p>
     <h2 id="contact-heading" class="mt-5 font-serif text-5xl italic leading-tight text-ink md:text-6xl lg:text-7xl">
       Let's make<br />something beautiful.
     </h2>
-    <p class="mx-auto mt-6 max-w-sm text-sm leading-7 text-muted">
+    <p class="mx-auto mt-6 max-w-sm text-base leading-7 text-muted">
       We'd love to hear about your wedding, your engagement, or whatever milestone is coming up. Drop us a note — we get back to everyone.
     </p>
     <a
