@@ -7,6 +7,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/';
 const isActive = (path: string) => normalizePath(path) === currentPath;
 const isPortfolioActive = ['/engagements/', '/graduations/'].some((p) => isActive(p));
+const isPricingActive = ['/pricing/', '/engagement-pricing/'].some((p) => isActive(p));
 
 function linkClass(active: boolean) {
   return ['px-3 py-1 transition-colors', active ? 'text-gold' : 'text-cream/80 hover:text-cream'].join(' ');
@@ -69,8 +70,32 @@ function linkClass(active: boolean) {
           </ul>
         </li>
 
-        <li>
-          <a href={withBase('/pricing/')} class={linkClass(isActive('/pricing/'))}>Pricing</a>
+        <!-- Pricing dropdown -->
+        <li class="relative group">
+          <button
+            type="button"
+            class:list={[
+              'flex cursor-default items-center gap-1 px-3 py-1 uppercase transition-colors',
+              isPricingActive ? 'text-gold' : 'text-cream/80 group-hover:text-cream',
+            ]}
+          >
+            Pricing
+            <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor" aria-hidden="true">
+              <path d="M0 0l4 5 4-5z" />
+            </svg>
+          </button>
+          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+            <li>
+              <a href={withBase('/pricing/')} class="block px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+                Weddings
+              </a>
+            </li>
+            <li>
+              <a href={withBase('/engagement-pricing/')} class="block px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+                Engagements
+              </a>
+            </li>
+          </ul>
         </li>
 
         <li>

@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths';
+
+const packages = [
+  {
+    name: 'The Afternoon',
+    price: '$550',
+    tagline: 'One hour. One place. Pure connection.',
+    description: 'Great for couples who want beautiful engagement photos without a major time commitment. We find the light, you just have to show up.',
+    items: [
+      '1 hour of coverage',
+      '1 location',
+      '50+ edited digital images',
+      'Online gallery delivery (2–3 weeks)',
+      'Personal print release',
+    ],
+    featured: false,
+  },
+  {
+    name: 'The Chapter',
+    price: '$850',
+    tagline: 'Our most popular engagement experience.',
+    description: 'Time to breathe, move between spots, and let the session unfold naturally. Two hours gives us room to work — and the images show it.',
+    items: [
+      '2 hours of coverage',
+      'Up to 2 locations',
+      '100+ edited digital images',
+      'Online gallery delivery (2–3 weeks)',
+      'Personal print release',
+      '$75 fine-art print credit',
+    ],
+    featured: true,
+  },
+  {
+    name: 'The Experience',
+    price: '$1,200',
+    tagline: 'For the couples who want the whole story told.',
+    description: 'A full evening with multiple backdrops — city streets, a park, the shoreline at golden hour. Everything documented, nothing rushed.',
+    items: [
+      '3 hours of coverage',
+      'Multiple locations (up to 3)',
+      '150+ edited digital images',
+      'Online gallery delivery (2–3 weeks)',
+      'Personal print release',
+      'One 8×10 fine-art print',
+    ],
+    featured: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Engagement Session Pricing — Elm City Photography | New Haven, CT"
+  description="Engagement photography packages in New Haven, CT. Intimate sessions from $550. Natural light, honest moments, no awkward posing."
+>
+
+  <div class="bg-cream">
+
+    <!-- Page header -->
+    <div class="mx-auto max-w-2xl px-6 pb-16 pt-24 text-center">
+      <p class="text-[10px] uppercase tracking-[0.38em] text-muted">Investment</p>
+      <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Engagement Sessions</h1>
+      <p class="mx-auto mt-6 max-w-sm text-sm leading-7 text-muted">
+        No stiff posing. No props you didn't ask for. Just the two of you in a beautiful place, with a photographer who knows how to disappear into the background.
+      </p>
+    </div>
+
+    <!-- Package cards -->
+    <div class="mx-auto grid max-w-5xl gap-px bg-green-light/30 px-6 sm:grid-cols-3 sm:px-0">
+      {packages.map((pkg) => (
+        <article class:list={[
+          'relative flex flex-col bg-cream px-8 py-12',
+          pkg.featured && 'bg-green-deep text-cream',
+        ]}>
+          {pkg.featured && (
+            <p class="mb-6 self-start border border-gold/60 px-3 py-1 text-[9px] uppercase tracking-[0.3em] text-gold">
+              Most Popular
+            </p>
+          )}
+          <p class:list={[
+            'text-[10px] uppercase tracking-[0.28em]',
+            pkg.featured ? 'text-green-light/70' : 'text-muted',
+          ]}>
+            {pkg.name}
+          </p>
+          <p class:list={[
+            'mt-3 font-serif text-5xl italic',
+            pkg.featured ? 'text-cream' : 'text-ink',
+          ]}>
+            {pkg.price}
+          </p>
+          <p class:list={[
+            'mt-2 text-xs font-medium',
+            pkg.featured ? 'text-green-light/80' : 'text-green-mid',
+          ]}>
+            {pkg.tagline}
+          </p>
+          <p class:list={[
+            'mt-4 text-xs leading-7',
+            pkg.featured ? 'text-green-light/70' : 'text-muted',
+          ]}>
+            {pkg.description}
+          </p>
+          <ul class:list={[
+            'mt-8 space-y-3 text-xs',
+            pkg.featured ? 'text-green-light' : 'text-muted',
+          ]}>
+            {pkg.items.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class:list={['mt-px shrink-0 text-base leading-none', pkg.featured ? 'text-gold' : 'text-green-mid']}>·</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-auto pt-10">
+            <a
+              href={withBase('/contact/')}
+              class:list={[
+                'inline-block text-[10px] uppercase tracking-[0.28em] transition-colors',
+                pkg.featured
+                  ? 'border-b border-gold/60 pb-px text-gold hover:border-gold'
+                  : 'border-b border-ink/30 pb-px text-ink hover:border-ink',
+              ]}
+            >
+              Inquire →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- FAQ / note -->
+    <div class="mx-auto max-w-2xl px-6 py-20 text-center">
+      <p class="text-[10px] uppercase tracking-[0.35em] text-muted">A few things to know</p>
+      <div class="mt-8 space-y-6 text-sm leading-8 text-muted text-left">
+        <p><strong class="text-ink font-medium">Location.</strong> We know New Haven well — East Rock, Lighthouse Point, the Yale campus, the harbor, the Wooster Square neighborhood. If you have a place in mind, we'll make it work. If not, we'll recommend something that fits the time of year and light.</p>
+        <p><strong class="text-ink font-medium">Travel.</strong> Sessions within Connecticut are always included. Rhode Island, Massachusetts, and greater New York are available for a small flat travel fee — just ask.</p>
+        <p><strong class="text-ink font-medium">Timing.</strong> The best engagement photos happen in the last 60–90 minutes before sunset. We'll plan your session around the light.</p>
+        <p><strong class="text-ink font-medium">Already booked a wedding with us?</strong> The Story and Full Journey wedding packages include an engagement session at no extra cost. If you booked The Essential, you can add one at the discounted rate of $400.</p>
+      </div>
+      <a
+        href={withBase('/contact/')}
+        class="mt-12 inline-block bg-green-deep px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
+      >
+        Start the Conversation
+      </a>
+    </div>
+
+  </div>
+
+</BaseLayout>
