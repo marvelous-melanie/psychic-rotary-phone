@@ -13,6 +13,8 @@ const { title, description, image, canonicalUrl } = Astro.props;
 const seo: BuiltSeoMeta = buildSeoMeta({ title, description, image, canonicalUrl });
 ---
 
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{seo.title}</title>
 <meta name="description" content={seo.description} />
 <link rel="canonical" href={seo.canonicalUrl} />
