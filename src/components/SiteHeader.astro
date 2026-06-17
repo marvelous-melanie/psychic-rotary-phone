@@ -10,12 +10,101 @@ const isPortfolioActive = ['/engagements/', '/graduations/'].some((p) => isActiv
 const isPricingActive = ['/pricing/', '/engagement-pricing/'].some((p) => isActive(p));
 
 function linkClass(active: boolean) {
-  return ['px-3 py-1 transition-colors', active ? 'text-gold' : 'text-cream/80 hover:text-cream'].join(' ');
+  return ['px-3 py-1 transition-colors text-sm', active ? 'text-gold' : 'text-cream/80 hover:text-cream'].join(' ');
 }
 ---
 
-<header class="bg-green-deep text-cream">
-  <div class="flex flex-col items-center px-4 pb-6 pt-8">
+<header class="relative bg-green-deep text-cream" id="site-header">
+
+  <!-- ── MOBILE TOP BAR (hidden md+) ─────────────────────────────── -->
+  <div class="flex items-center justify-between px-6 py-4 md:hidden">
+    <a href={withBase('/')} class="flex items-center gap-3" aria-label="Elm City Photography home">
+      <Image
+        src={logo}
+        alt="Elm City Photography"
+        width={44}
+        height={44}
+        class="h-11 w-11 rounded-full object-cover ring-1 ring-gold/40"
+      />
+      <span class="font-serif text-sm italic text-cream/80">Elm City Photography</span>
+    </a>
+    <button
+      id="mobile-menu-toggle"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      class="flex h-10 w-10 items-center justify-center text-cream transition-colors hover:text-gold"
+    >
+      <svg id="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="2" y1="6"  x2="20" y2="6"/>
+        <line x1="2" y1="11" x2="20" y2="11"/>
+        <line x1="2" y1="16" x2="20" y2="16"/>
+      </svg>
+      <svg id="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" class="hidden">
+        <line x1="4" y1="4" x2="18" y2="18"/>
+        <line x1="18" y1="4" x2="4" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ── MOBILE NAV PANEL ──────────────────────────────────────────── -->
+  <nav
+    id="mobile-nav"
+    aria-label="Mobile navigation"
+    class="hidden border-t border-green-light/20 md:hidden"
+  >
+    <ul class="space-y-1 px-6 py-6">
+      <li>
+        <a href={withBase('/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/') ? 'text-gold' : 'text-cream hover:text-gold']}>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href={withBase('/about/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/about/') ? 'text-gold' : 'text-cream hover:text-gold']}>
+          About
+        </a>
+      </li>
+      <li>
+        <p class="py-3 text-xl uppercase tracking-[0.18em] text-cream/50">Portfolio</p>
+        <ul class="ml-1 space-y-1 border-l border-green-light/25 pl-5">
+          <li>
+            <a href={withBase('/engagements/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/engagements/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
+              Engagements
+            </a>
+          </li>
+          <li>
+            <a href={withBase('/graduations/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/graduations/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
+              Graduations
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p class="py-3 text-xl uppercase tracking-[0.18em] text-cream/50">Pricing</p>
+        <ul class="ml-1 space-y-1 border-l border-green-light/25 pl-5">
+          <li>
+            <a href={withBase('/pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
+              Weddings
+            </a>
+          </li>
+          <li>
+            <a href={withBase('/engagement-pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/engagement-pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
+              Engagements
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href={withBase('/contact/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/contact/') ? 'text-gold' : 'text-cream hover:text-gold']}>
+          Contact
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ── DESKTOP HEADER (hidden mobile) ──────────────────────────── -->
+  <div class="hidden md:flex flex-col items-center px-4 pb-6 pt-8">
 
     <a href={withBase('/')} aria-label="Elm City Photography home">
       <Image
@@ -32,7 +121,7 @@ function linkClass(active: boolean) {
     <div class="mt-4 w-12 border-t border-gold/35"></div>
 
     <nav aria-label="Primary" class="mt-4">
-      <ul class="flex flex-wrap items-center justify-center gap-x-1 text-xs font-medium uppercase tracking-[0.28em]">
+      <ul class="flex flex-wrap items-center justify-center gap-x-1 text-sm font-medium uppercase tracking-[0.22em]">
 
         <li>
           <a href={withBase('/')} class={linkClass(isActive('/'))}>Home</a>
@@ -42,12 +131,12 @@ function linkClass(active: boolean) {
           <a href={withBase('/about/')} class={linkClass(isActive('/about/'))}>About</a>
         </li>
 
-        <!-- Portfolio dropdown, sits between About and Pricing -->
+        <!-- Portfolio dropdown -->
         <li class="relative group">
           <button
             type="button"
             class:list={[
-              'flex cursor-default items-center gap-1 px-3 py-1 uppercase transition-colors',
+              'flex cursor-default items-center gap-1 px-3 py-1 text-sm uppercase tracking-[0.22em] transition-colors',
               isPortfolioActive ? 'text-gold' : 'text-cream/80 group-hover:text-cream',
             ]}
           >
@@ -56,14 +145,14 @@ function linkClass(active: boolean) {
               <path d="M0 0l4 5 4-5z" />
             </svg>
           </button>
-          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-48 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
             <li>
-              <a href={withBase('/engagements/')} class="block px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+              <a href={withBase('/engagements/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Engagements
               </a>
             </li>
             <li>
-              <a href={withBase('/graduations/')} class="block px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+              <a href={withBase('/graduations/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Graduations
               </a>
             </li>
@@ -75,7 +164,7 @@ function linkClass(active: boolean) {
           <button
             type="button"
             class:list={[
-              'flex cursor-default items-center gap-1 px-3 py-1 uppercase transition-colors',
+              'flex cursor-default items-center gap-1 px-3 py-1 text-sm uppercase tracking-[0.22em] transition-colors',
               isPricingActive ? 'text-gold' : 'text-cream/80 group-hover:text-cream',
             ]}
           >
@@ -84,14 +173,14 @@ function linkClass(active: boolean) {
               <path d="M0 0l4 5 4-5z" />
             </svg>
           </button>
-          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-48 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
             <li>
-              <a href={withBase('/pricing/')} class="block px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+              <a href={withBase('/pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Weddings
               </a>
             </li>
             <li>
-              <a href={withBase('/engagement-pricing/')} class="block px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+              <a href={withBase('/engagement-pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Engagements
               </a>
             </li>
@@ -107,3 +196,34 @@ function linkClass(active: boolean) {
 
   </div>
 </header>
+
+<script>
+  function initMenu() {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const nav = document.getElementById('mobile-nav');
+    const iconHamburger = document.getElementById('icon-hamburger');
+    const iconClose = document.getElementById('icon-close');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = !nav.classList.contains('hidden');
+      nav.classList.toggle('hidden', isOpen);
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      iconHamburger?.classList.toggle('hidden', !isOpen);
+      iconClose?.classList.toggle('hidden', isOpen);
+    });
+
+    // Close on nav link click
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.add('hidden');
+        toggle.setAttribute('aria-expanded', 'false');
+        iconHamburger?.classList.remove('hidden');
+        iconClose?.classList.add('hidden');
+      });
+    });
+  }
+
+  initMenu();
+  document.addEventListener('astro:page-load', initMenu);
+</script>
