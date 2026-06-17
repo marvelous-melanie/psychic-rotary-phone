@@ -5,18 +5,16 @@ import { withBase } from '../lib/paths';
 import { getGalleryCover } from '../lib/galleries';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import aboutPhoto from '../assets/about-photo.jpg';
+import hero0012 from '../assets/galleries/engagements-2026/0012.jpg';
 import hero0005 from '../assets/galleries/engagements-2026/0005.jpg';
-import hero0006 from '../assets/galleries/engagements-2026/0006.jpg';
-import hero0007 from '../assets/galleries/engagements-2026/0007.jpg';
-import hero0008 from '../assets/galleries/engagements-2026/0008.jpg';
-import hero0011 from '../assets/galleries/engagements-2026/0011.jpg';
+import hero0004 from '../assets/galleries/engagements-2026/0004.jpg';
+import hero0002 from '../assets/galleries/engagements-2026/0002.jpg';
 
 const heroSlides = await Promise.all([
+  getImage({ src: hero0012, width: 2400, format: 'webp', quality: 85 }),
   getImage({ src: hero0005, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0008, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0006, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0011, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0007, width: 2400, format: 'webp', quality: 85 }),
+  getImage({ src: hero0004, width: 2400, format: 'webp', quality: 85 }),
+  getImage({ src: hero0002, width: 2400, format: 'webp', quality: 85 }),
 ]);
 
 const galleries = await getCollection('galleries');
