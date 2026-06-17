@@ -1,3 +1,5 @@
+const DEFAULT_OG_IMAGE = 'https://elmcityphotography.com/og-default.jpg';
+
 interface SeoOptions {
   title: string;
   description: string;
@@ -11,24 +13,25 @@ export type BuiltSeoMeta = {
   canonicalUrl: string;
   ogTitle: string;
   ogDescription: string;
-  ogImage?: string;
-  twitterCard: 'summary' | 'summary_large_image';
+  ogImage: string;
+  twitterCard: 'summary_large_image';
   twitterTitle: string;
   twitterDescription: string;
-  twitterImage?: string;
+  twitterImage: string;
 };
 
 export function buildSeoMeta({ title, description, image, canonicalUrl }: SeoOptions): BuiltSeoMeta {
+  const ogImage = image ?? DEFAULT_OG_IMAGE;
   return {
     title,
     description,
     canonicalUrl,
     ogTitle: title,
     ogDescription: description,
-    ogImage: image,
-    twitterCard: image ? 'summary_large_image' : 'summary',
+    ogImage,
+    twitterCard: 'summary_large_image',
     twitterTitle: title,
     twitterDescription: description,
-    twitterImage: image,
+    twitterImage: ogImage,
   };
 }

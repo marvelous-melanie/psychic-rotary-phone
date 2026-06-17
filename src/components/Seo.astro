@@ -23,9 +23,11 @@ const seo: BuiltSeoMeta = buildSeoMeta({ title, description, image, canonicalUrl
 <meta property="og:description" content={seo.ogDescription} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={seo.canonicalUrl} />
-{seo.ogImage ? <meta property="og:image" content={seo.ogImage} /> : null}
+<meta property="og:image" content={seo.ogImage} />
+<meta property="og:site_name" content="Elm City Photography" />
+<meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content={seo.twitterCard} />
 <meta name="twitter:title" content={seo.twitterTitle} />
 <meta name="twitter:description" content={seo.twitterDescription} />
-{seo.twitterImage ? <meta name="twitter:image" content={seo.twitterImage} /> : null}
+<meta name="twitter:image" content={seo.twitterImage} />

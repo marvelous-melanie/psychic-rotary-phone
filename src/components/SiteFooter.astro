@@ -3,9 +3,15 @@ import { Instagram, Mail } from 'lucide-astro';
 ---
 
 <footer class="bg-green-deep px-6 py-12 text-cream">
-  <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center sm:flex-row sm:justify-between sm:text-left">
-    <p class="font-serif text-sm italic text-green-light">Elm City Photography</p>
-    <div class="flex flex-col items-center gap-3 sm:flex-row sm:gap-8">
+  <div class="mx-auto max-w-6xl space-y-6 text-center sm:space-y-0 sm:flex sm:items-start sm:justify-between sm:text-left">
+
+    <div>
+      <p class="font-serif text-sm italic text-green-light">Elm City Photography</p>
+      <p class="mt-1 text-xs text-cream/50">New Haven, CT</p>
+      <p class="mt-0.5 text-xs text-cream/40">Serving Connecticut, Rhode Island &amp; beyond</p>
+    </div>
+
+    <div class="flex flex-col items-center gap-3 sm:items-end sm:gap-2">
       <a
         href="mailto:hello@elmcityphotography.com"
         class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cream/60 transition-colors hover:text-cream"
@@ -24,6 +30,8 @@ import { Instagram, Mail } from 'lucide-astro';
         @elm.city.photography
       </a>
     </div>
-    <p class="text-xs text-cream/40">&copy; {new Date().getFullYear()}</p>
+
+    <p class="text-xs text-cream/40 sm:self-end">&copy; {new Date().getFullYear()} Elm City Photography</p>
+
   </div>
 </footer>

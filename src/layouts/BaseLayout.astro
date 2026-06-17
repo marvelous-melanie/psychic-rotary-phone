@@ -14,7 +14,8 @@ interface Props {
 }
 
 const { title, description, image, canonicalUrl } = Astro.props;
-  const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site ?? 'https://elmcityphotography.com').toString();
+if (!Astro.site) throw new Error('Astro.site is not set — check astro.config.mjs');
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -27,6 +28,24 @@ const { title, description, image, canonicalUrl } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Elm City Photography",
+    "url": "https://elmcityphotography.com",
+    "logo": "https://elmcityphotography.com/og-default.jpg",
+    "image": "https://elmcityphotography.com/og-default.jpg",
+    "description": "Wedding, engagement, and portrait photography based in New Haven, CT.",
+    "email": "hello@elmcityphotography.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "New Haven",
+      "addressRegion": "CT",
+      "addressCountry": "US"
+    },
+    "areaServed": ["New Haven County", "Connecticut", "New England"],
+    "priceRange": "$$$"
+  })} />
   </head>
   <body class="min-h-screen bg-cream text-ink">
     <ClientRouter />
