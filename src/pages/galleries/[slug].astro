@@ -39,8 +39,17 @@ const canonicalUrl = new URL(`/galleries/${gallery.id}/`, 'https://elmcityphotog
 
   <LightboxGallery images={images} galleryId={gallery.id} />
 
-  <section class="mx-auto max-w-5xl px-4 pb-16">
-    <h2 class="text-2xl">Contact</h2>
-    <p class="mt-3 text-sm text-muted">Placeholder contact CTA.</p>
+  <section class="bg-cream px-6 py-24 text-center">
+    <p class="text-xs uppercase tracking-[0.35em] text-muted">Work together</p>
+    <h2 class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">Like what you see?</h2>
+    <p class="mx-auto mt-5 max-w-sm text-base leading-7 text-muted">
+      We'd love to hear about your plans. Drop us a note and we'll get back to you within 48 hours.
+    </p>
+    <a
+      href="/contact/"
+      class="mt-8 inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
+    >
+      Get in Touch
+    </a>
   </section>
 </GalleryLayout>
