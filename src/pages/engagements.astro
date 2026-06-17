@@ -1,15 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GalleryGrid from '../components/GalleryGrid.astro';
+import LightboxGallery from '../components/LightboxGallery.astro';
+import { getGalleryImages } from '../lib/galleries';
 
-const galleries = (await getCollection('galleries'))
+const galleries = await getCollection('galleries');
+const gallery = galleries
   .filter((g) => g.data.type === 'engagement')
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort((a, b) => a.data.order - b.data.order)[0];
+
+const images = gallery ? getGalleryImages(gallery.id) : [];
 ---
 
 <BaseLayout
-  title="Engagements — Elm City Photography"
+  title="Engagements | Elm City Photography"
   description="Engagement photography from New Haven, CT. Natural light, honest moments, and images you'll keep for a lifetime."
 >
 
@@ -18,14 +22,12 @@ const galleries = (await getCollection('galleries'))
     <h1 class="mt-4 font-serif text-5xl italic text-cream md:text-6xl">Engagements</h1>
     <p class="mx-auto mt-5 max-w-sm text-sm leading-7 text-green-light/70">
       Intimate, unhurried sessions in Connecticut's parks, coastlines, and city streets.
-      No stiff posing — just the two of you, in the light.
+      No stiff posing. Just the two of you, in the light.
     </p>
   </div>
 
-  <div class="bg-cream px-6 py-16">
-    <div class="mx-auto max-w-5xl">
-      <GalleryGrid galleries={galleries} />
-    </div>
+  <div class="bg-cream pt-12">
+    <LightboxGallery images={images} galleryId={gallery?.id ?? 'engagements'} />
   </div>
 
 </BaseLayout>

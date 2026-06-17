@@ -1,15 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GalleryGrid from '../components/GalleryGrid.astro';
+import LightboxGallery from '../components/LightboxGallery.astro';
+import { getGalleryImages } from '../lib/galleries';
 
-const galleries = (await getCollection('galleries'))
+const galleries = await getCollection('galleries');
+const gallery = galleries
   .filter((g) => g.data.type === 'graduation')
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort((a, b) => a.data.order - b.data.order)[0];
+
+const images = gallery ? getGalleryImages(gallery.id) : [];
 ---
 
 <BaseLayout
-  title="Graduations — Elm City Photography"
+  title="Graduations | Elm City Photography"
   description="Graduation portrait photography in New Haven, CT. Milestone portraits celebrating the class of 2026."
 >
 
@@ -17,15 +21,13 @@ const galleries = (await getCollection('galleries'))
     <p class="text-xs uppercase tracking-[0.38em] text-green-light/70">Portfolio</p>
     <h1 class="mt-4 font-serif text-5xl italic text-cream md:text-6xl">Graduations</h1>
     <p class="mx-auto mt-5 max-w-sm text-sm leading-7 text-green-light/70">
-      You worked for this. Let's make sure you have the photos to prove it — portraits that feel
+      You worked for this. Let's make sure you have the photos to prove it. Portraits that feel
       like you, on one of the best days of your life.
     </p>
   </div>
 
-  <div class="bg-cream px-6 py-16">
-    <div class="mx-auto max-w-5xl">
-      <GalleryGrid galleries={galleries} />
-    </div>
+  <div class="bg-cream pt-12">
+    <LightboxGallery images={images} galleryId={gallery?.id ?? 'graduations'} />
   </div>
 
 </BaseLayout>

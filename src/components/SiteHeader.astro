@@ -17,7 +17,7 @@ function linkClass(active: boolean) {
 <header class="bg-green-deep text-cream">
   <div class="flex flex-col items-center px-4 pb-6 pt-8">
 
-    <a href={withBase('/')} aria-label="Elm City Photography — home">
+    <a href={withBase('/')} aria-label="Elm City Photography home">
       <Image
         src={logo}
         alt="Elm City Photography"
@@ -42,7 +42,7 @@ function linkClass(active: boolean) {
           <a href={withBase('/about/')} class={linkClass(isActive('/about/'))}>About</a>
         </li>
 
-        <!-- Portfolio dropdown — sits between About and Pricing -->
+        <!-- Portfolio dropdown, sits between About and Pricing -->
         <li class="relative group">
           <button
             type="button"
