@@ -11,9 +11,10 @@ interface Props {
   description: string;
   image?: string;
   canonicalUrl?: string;
+  heroPreload?: string;
 }
 
-const { title, description, image, canonicalUrl } = Astro.props;
+const { title, description, image, canonicalUrl, heroPreload } = Astro.props;
 if (!Astro.site) throw new Error('Astro.site is not set — check astro.config.mjs');
 const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
 ---
@@ -22,6 +23,7 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
 <html lang="en">
   <head>
     <Seo title={title} description={description} image={image} canonicalUrl={canonical} />
+    {heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
