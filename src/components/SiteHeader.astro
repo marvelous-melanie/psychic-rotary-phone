@@ -14,7 +14,7 @@ function linkClass(active: boolean) {
 }
 ---
 
-<header class="relative bg-green-deep text-cream" id="site-header">
+<header class="sticky top-0 z-50 bg-green-deep text-cream" id="site-header">
 
   <!-- ── MOBILE TOP BAR (hidden md+) ─────────────────────────────── -->
   <div class="flex items-center justify-between px-6 py-4 md:hidden">
@@ -97,7 +97,7 @@ function linkClass(active: boolean) {
       </li>
       <li>
         <a href={withBase('/contact/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/contact/') ? 'text-gold' : 'text-cream hover:text-gold']}>
-          Contact
+          Book with Us
         </a>
       </li>
     </ul>
@@ -188,7 +188,7 @@ function linkClass(active: boolean) {
         </li>
 
         <li>
-          <a href={withBase('/contact/')} class={linkClass(isActive('/contact/'))}>Contact</a>
+          <a href={withBase('/contact/')} class={linkClass(isActive('/contact/'))}>Book with Us</a>
         </li>
 
       </ul>
