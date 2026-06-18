@@ -139,38 +139,36 @@ const testimonials = [
 
   <!-- ── ABOUT TEASER ──────────────────────────────────────────────── -->
   <section class="bg-cream" aria-labelledby="about-heading">
-    <div class="mx-auto grid max-w-7xl items-center md:grid-cols-[5fr_6fr]">
-      <div class="aspect-[3/4] overflow-hidden md:max-h-[640px]">
-        <Image
-          src={aboutPhoto}
-          alt="Two photographers reviewing a shot together on camera"
-          width={680}
-          height={900}
-          class="h-full w-full object-cover"
-          loading="lazy"
-        />
-      </div>
-      <div class="px-10 py-16 md:px-16 md:py-24">
-        <p class="text-xs uppercase tracking-[0.35em] text-muted">About Us</p>
-        <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
-          We show up for<br />the small moments.
-        </h2>
-        <p class="mt-6 max-w-prose text-base leading-8 text-muted">
-          We're a New Haven-based photography team that believes the best images come from genuine connection,
-          not direction. Our approach is calm, unhurried, and built around you. We'll follow the light,
-          give you space to breathe, and capture the moments you'll actually want to remember.
-        </p>
-        <p class="mt-4 max-w-prose text-base leading-8 text-muted">
-          We photograph weddings, engagements, graduations, and portraits throughout Connecticut and New England.
-          If you're planning something meaningful, we'd love to be there.
-        </p>
-        <a
-          href={withBase('/about/')}
-          class="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
-        >
-          Our Story <span aria-hidden="true">→</span>
-        </a>
-      </div>
+    <div class="h-[55vh] min-h-[360px] w-full overflow-hidden">
+      <Image
+        src={aboutPhoto}
+        alt="Two photographers reviewing a shot together on camera"
+        width={1600}
+        height={900}
+        class="h-full w-full object-cover object-center"
+        loading="lazy"
+      />
+    </div>
+    <div class="mx-auto max-w-2xl px-6 py-16 text-center md:py-24">
+      <p class="text-xs uppercase tracking-[0.35em] text-muted">About Us</p>
+      <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
+        We show up for the small moments.
+      </h2>
+      <p class="mt-6 text-base leading-8 text-muted">
+        We're a New Haven-based photography team that believes the best images come from genuine connection,
+        not direction. Our approach is calm, unhurried, and built around you. We'll follow the light,
+        give you space to breathe, and capture the moments you'll actually want to remember.
+      </p>
+      <p class="mt-4 text-base leading-8 text-muted">
+        We photograph weddings, engagements, graduations, and portraits throughout Connecticut and New England.
+        If you're planning something meaningful, we'd love to be there.
+      </p>
+      <a
+        href={withBase('/about/')}
+        class="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
+      >
+        Our Story <span aria-hidden="true">→</span>
+      </a>
     </div>
   </section>
 
