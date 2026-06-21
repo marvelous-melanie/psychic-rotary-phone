@@ -139,22 +139,22 @@ const testimonials = [
 
   <!-- ── ABOUT TEASER ──────────────────────────────────────────────── -->
   <section class="bg-cream" aria-labelledby="about-heading">
-    <div class="mx-auto aspect-[3/2] w-full max-w-3xl overflow-hidden">
-      <Image
-        src={aboutPhoto}
-        alt="Two photographers reviewing a shot together on camera"
-        width={1600}
-        height={900}
-        class="h-full w-full object-cover object-center"
-        loading="lazy"
-      />
-    </div>
     <div class="mx-auto max-w-2xl px-6 py-16 text-center md:py-24">
       <p class="text-xs uppercase tracking-[0.35em] text-muted">About Us</p>
       <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
         We show up for the small moments.
       </h2>
-      <p class="mt-6 text-base leading-8 text-muted">
+      <div class="mt-10 aspect-[3/2] w-full overflow-hidden">
+        <Image
+          src={aboutPhoto}
+          alt="Two photographers reviewing a shot together on camera"
+          width={1600}
+          height={900}
+          class="h-full w-full object-cover object-center"
+          loading="lazy"
+        />
+      </div>
+      <p class="mt-8 text-base leading-8 text-muted">
         We're a New Haven-based photography team focused on two things: capturing what's real, and editing
         with colors that stay true to life. No heavy filters, no trending presets — just images that look
         the way the day actually looked.

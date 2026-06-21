@@ -10,22 +10,21 @@ import { withBase } from '../lib/paths';
   description="Meet Elm City Photography — a wedding and portrait studio based in New Haven, CT, serving couples across Connecticut and New England."
 >
 
-  <div class="relative h-[72vh] min-h-[440px] w-full overflow-hidden">
-    <Image
-      src={aboutPhoto}
-      alt="Two photographers reviewing a shot together on camera"
-      width={1600}
-      height={900}
-      class="h-full w-full object-cover object-center"
-      loading="eager"
-    />
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-green-deep/40"></div>
-  </div>
-
   <section class="bg-cream">
     <div class="mx-auto max-w-2xl px-6 py-24 md:py-32">
       <p class="text-xs uppercase tracking-[0.38em] text-muted">About</p>
       <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Our Story</h1>
+
+      <div class="mt-10 aspect-[3/2] w-full overflow-hidden">
+        <Image
+          src={aboutPhoto}
+          alt="Two photographers reviewing a shot together on camera"
+          width={1600}
+          height={900}
+          class="h-full w-full object-cover object-center"
+          loading="eager"
+        />
+      </div>
 
       <p class="mt-10 text-base font-medium leading-8 text-ink">
         We're a small wedding and portrait photography studio based in New Haven, Connecticut. We photograph honestly and edit to match — colors that look like life, not like a filter.
