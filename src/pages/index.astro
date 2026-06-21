@@ -56,7 +56,7 @@ const testimonials = [
         alt=""
         role="presentation"
         class:list={[
-          'absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out',
+          'absolute inset-0 h-full w-full object-cover',
           i === 0 ? 'opacity-100' : 'opacity-0',
         ]}
         data-hero-slide
@@ -235,6 +235,12 @@ const testimonials = [
 <script>
   const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-slide]'));
   const dots   = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-dot]'));
+
+  // Add transition classes after the initial paint so the opacity-0 setup
+  // doesn't animate on page load (which caused a flash to the last slide).
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    slides.forEach(s => s.classList.add('transition-opacity', 'duration-1000', 'ease-in-out'));
+  }));
 
   if (slides.length > 1) {
     let current = 0;
