@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://elmcityphotography.com',
-  base: '/psychic-rotary-phone',
   output: 'static',
   trailingSlash: 'always',
   integrations: [mdx(), sitemap()],
