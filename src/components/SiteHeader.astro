@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { withBase } from '../lib/paths';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/logo.svg';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/';
