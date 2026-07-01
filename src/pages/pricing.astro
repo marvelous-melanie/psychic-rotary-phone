@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/paths';
 
+// Wedding pricing is hidden until we have a wedding portfolio to back it up.
+// Flip this to true (and re-link it from SiteHeader.astro and index.astro)
+// once the wedding portfolio ships.
+const showWeddingPricing = false;
+
 const packages = [
   {
     name: 'The Essential',
@@ -67,7 +72,22 @@ const packages = [
       </p>
     </div>
 
+    {!showWeddingPricing && (
+      <div class="mx-auto max-w-2xl px-6 pb-24 text-center">
+        <p class="text-sm leading-7 text-muted">
+          Wedding pricing is being reworked while we build out our wedding portfolio. Check back soon, or reach out directly for a quote.
+        </p>
+        <a
+          href={withBase('/contact/')}
+          class="mt-8 inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
+        >
+          Get in Touch
+        </a>
+      </div>
+    )}
+
     <!-- Package cards -->
+    {showWeddingPricing && (
     <div class="mx-auto grid max-w-5xl gap-px bg-green-light/30 px-6 sm:grid-cols-3 sm:px-0">
       {packages.map((pkg) => (
         <article class:list={[
@@ -148,6 +168,7 @@ const packages = [
         Start the Conversation
       </a>
     </div>
+    )}
 
   </div>
 

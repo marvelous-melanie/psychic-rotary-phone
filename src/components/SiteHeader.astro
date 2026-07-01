@@ -83,11 +83,7 @@ function linkClass(active: boolean) {
       <li>
         <p class="py-3 text-xl uppercase tracking-[0.18em] text-cream/50">Pricing</p>
         <ul class="ml-1 space-y-1 border-l border-green-light/25 pl-5">
-          <li>
-            <a href={withBase('/pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
-              Weddings
-            </a>
-          </li>
+          {/* Weddings pricing link hidden until the wedding portfolio is added back; see /pricing/ */}
           <li>
             <a href={withBase('/engagement-pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/engagement-pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
               Engagements
@@ -174,11 +170,7 @@ function linkClass(active: boolean) {
             </svg>
           </button>
           <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-48 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
-            <li>
-              <a href={withBase('/pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
-                Weddings
-              </a>
-            </li>
+            {/* Weddings pricing link hidden until the wedding portfolio is added back; see /pricing/ */}
             <li>
               <a href={withBase('/engagement-pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Engagements
