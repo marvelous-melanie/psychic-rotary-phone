@@ -22,24 +22,6 @@ const engagements = galleries.find((g) => g.id === 'engagements-2026');
 const graduations = galleries.find((g) => g.id === 'graduations-2026');
 const engagementCover = engagements ? getGalleryCover(engagements.id, engagements.data.cover) : null;
 const graduationCover  = graduations  ? getGalleryCover(graduations.id,  graduations.data.cover)  : null;
-
-const testimonials = [
-  {
-    quote: "We had our engagement photos taken and honestly couldn't have asked for a better experience! They made us feel so comfortable the whole time, no awkward posing, just totally natural and fun. The whole process was easy from start to finish, and we absolutely loved the pictures. 10/10 recommend!",
-    name: "Ruben & Gabby",
-    detail: "Engagement Session",
-  },
-  {
-    quote: "I genuinely hate being photographed. Like, will leave the room hate it. But our engagement session felt like a walk with a friend who happened to have a camera. The photos don't look like us trying to look good. They just look like us.",
-    name: "Jamie & Tess",
-    detail: "Engagement Session, East Rock, New Haven",
-  },
-  {
-    quote: "From our first email to the gallery delivery, everything was thoughtful and professional. Our photos are hanging all over the house now. We get compliments on them constantly. People always ask who the photographer was.",
-    name: "Priya & Daniel",
-    detail: "Wedding, New Haven County",
-  },
-];
 ---
 
 <BaseLayout
@@ -169,30 +151,6 @@ const testimonials = [
       >
         Our Story <span aria-hidden="true">→</span>
       </a>
-    </div>
-  </section>
-
-  <!-- ── TESTIMONIALS ──────────────────────────────────────────────── -->
-  <section class="bg-cream px-6 py-24" aria-labelledby="testimonials-heading">
-    <div class="mx-auto max-w-5xl">
-      <div class="text-center">
-        <p class="text-xs uppercase tracking-[0.38em] text-muted">Kind Words</p>
-        <h2 id="testimonials-heading" class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">What couples are saying.</h2>
-      </div>
-      <div class="mt-16 grid gap-8 md:grid-cols-3">
-        {testimonials.map((t) => (
-          <figure class="flex flex-col">
-            <div class="mb-5 text-2xl text-green-light" aria-hidden="true">"</div>
-            <blockquote class="flex-1 text-base leading-8 text-muted">
-              <p>{t.quote}</p>
-            </blockquote>
-            <figcaption class="mt-8 border-t border-green-light/40 pt-6">
-              <p class="font-serif italic text-ink">{t.name}</p>
-              <p class="mt-1 text-xs uppercase tracking-[0.22em] text-muted/70">{t.detail}</p>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
     </div>
   </section>
 
