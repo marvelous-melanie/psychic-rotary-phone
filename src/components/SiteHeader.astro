@@ -7,7 +7,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/';
 const isActive = (path: string) => normalizePath(path) === currentPath;
 const isPortfolioActive = ['/engagements/', '/graduations/'].some((p) => isActive(p));
-const isPricingActive = ['/pricing/', '/engagement-pricing/'].some((p) => isActive(p));
+const isPricingActive = ['/pricing/', '/engagement-pricing/', '/graduation-pricing/'].some((p) => isActive(p));
 
 function linkClass(active: boolean) {
   return ['px-3 py-1 transition-colors text-sm', active ? 'text-gold' : 'text-cream/80 hover:text-cream'].join(' ');
@@ -87,6 +87,11 @@ function linkClass(active: boolean) {
           <li>
             <a href={withBase('/engagement-pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/engagement-pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
               Engagements
+            </a>
+          </li>
+          <li>
+            <a href={withBase('/graduation-pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/graduation-pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
+              Graduations
             </a>
           </li>
         </ul>
@@ -174,6 +179,11 @@ function linkClass(active: boolean) {
             <li>
               <a href={withBase('/engagement-pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
                 Engagements
+              </a>
+            </li>
+            <li>
+              <a href={withBase('/graduation-pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
+                Graduations
               </a>
             </li>
           </ul>
