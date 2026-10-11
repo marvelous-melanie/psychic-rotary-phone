@@ -11,11 +11,64 @@ const gallery = galleries
   .sort((a, b) => a.data.order - b.data.order)[0];
 
 const images = gallery ? getGalleryImages(gallery.id) : [];
+
+const packages = [
+  {
+    name: 'The Mini',
+    price: '$175',
+    tagline: 'Cap, gown, and done.',
+    description: 'A quick, focused session for the classic shots: cap and gown plus one more look. Perfect if you want the essentials without giving up your whole afternoon.',
+    items: [
+      '30 minutes of coverage',
+      'Cap & gown + 1 outfit',
+      '15+ edited digital images',
+      'Online gallery delivery (2–3 weeks)',
+      'Travel anywhere in CT included',
+    ],
+    featured: false,
+  },
+  {
+    name: 'The Portrait',
+    price: '$275',
+    tagline: 'Room to be yourself.',
+    description: 'A full hour to settle in, try a second look, and get portraits that feel like you, not just the robe. Family is welcome to jump in for a few shots.',
+    items: [
+      '1 hour of coverage',
+      'Up to 2 outfits',
+      '30+ edited digital images',
+      'Online gallery delivery (2–3 weeks)',
+      'Travel anywhere in CT included',
+    ],
+    featured: true,
+  },
+  {
+    name: 'The Celebration',
+    price: '$395',
+    tagline: 'The whole milestone, start to finish.',
+    description: 'Ninety unhurried minutes for every look you want, the campus spots that mattered, and the people who got you here. Family is welcome for a few shots.',
+    items: [
+      '90 minutes of coverage',
+      'Up to 3 outfits',
+      '50+ edited digital images',
+      'Online gallery delivery (2–3 weeks)',
+      'Travel anywhere in CT included',
+    ],
+    featured: false,
+  },
+];
+
+const addOns = [
+  { name: 'Add a graduate', price: '+$125 each', note: 'Celebrating together? Add another graduate to The Portrait or The Celebration.' },
+  { name: 'Group sessions', price: '$175 / person', note: 'Groups of 3 or more graduates, 90 minutes. Each graduate gets their own images.' },
+  { name: 'Rush gallery', price: '$75', note: 'Your edited gallery delivered within 7 days.' },
+  { name: 'Extra edited images', price: '$10 each', note: 'Love more than your package includes? Add as many as you like.' },
+  { name: 'Family photos', price: 'Included', note: 'Family is welcome for a few shots on The Portrait and The Celebration.' },
+];
 ---
 
 <BaseLayout
   title="Graduation Portrait Photographer New Haven CT | Elm City Photography"
-  description="Graduation portrait photography in New Haven, CT. Milestone portraits that feel like you, on one of the best days of your life."
+  description="Graduation portrait photography in New Haven, CT. Milestone portraits that feel like you, on one of the best days of your life. Sessions from $175."
 >
 
   <div class="bg-green-deep px-6 py-12 text-center">
@@ -31,18 +84,106 @@ const images = gallery ? getGalleryImages(gallery.id) : [];
     <LightboxGallery images={images} galleryId={gallery?.id ?? 'graduations'} />
   </div>
 
-  <section class="bg-cream px-6 py-24 text-center">
-    <p class="text-xs uppercase tracking-[0.35em] text-muted">Graduation Sessions</p>
-    <h2 class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">Starting at $275</h2>
-    <p class="mx-auto mt-5 max-w-sm text-base leading-7 text-muted">
-      Sessions typically run 1–2 hours at a location of your choice. Edited gallery delivered within 2–3 weeks. Reach out and we'll put together the right package for you.
-    </p>
-    <a
-      href={withBase('/contact/')}
-      class="mt-8 inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
-    >
-      Inquire About Graduation Pricing
-    </a>
+  <section class="bg-cream pb-24 pt-12">
+
+    <!-- Section header -->
+    <div class="mx-auto max-w-2xl px-6 pb-16 text-center">
+      <p class="text-xs uppercase tracking-[0.35em] text-muted">Graduation Sessions</p>
+      <h2 class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">Packages from $175</h2>
+      <p class="mx-auto mt-5 max-w-sm text-base leading-7 text-muted">
+        Every package includes an online gallery delivered within 2–3 weeks and travel anywhere in Connecticut.
+      </p>
+    </div>
+
+    <!-- Package cards -->
+    <div class="mx-auto grid max-w-5xl gap-px bg-green-light/30 px-6 sm:grid-cols-3 sm:px-0">
+      {packages.map((pkg) => (
+        <article class:list={[
+          'relative flex flex-col bg-cream px-8 py-12',
+          pkg.featured && 'bg-green-deep text-cream',
+        ]}>
+          {pkg.featured && (
+            <p class="mb-6 self-start border border-gold/60 px-3 py-1 text-xs uppercase tracking-[0.3em] text-gold">
+              Most Popular
+            </p>
+          )}
+          <p class:list={[
+            'text-xs uppercase tracking-[0.28em]',
+            pkg.featured ? 'text-green-light/70' : 'text-muted',
+          ]}>
+            {pkg.name}
+          </p>
+          <p class:list={[
+            'mt-3 font-serif text-5xl italic',
+            pkg.featured ? 'text-cream' : 'text-ink',
+          ]}>
+            {pkg.price}
+          </p>
+          <p class:list={[
+            'mt-2 text-xs font-medium',
+            pkg.featured ? 'text-green-light/80' : 'text-green-mid',
+          ]}>
+            {pkg.tagline}
+          </p>
+          <p class:list={[
+            'mt-4 text-sm leading-7',
+            pkg.featured ? 'text-green-light/70' : 'text-muted',
+          ]}>
+            {pkg.description}
+          </p>
+          <ul class:list={[
+            'mt-8 space-y-3 text-xs',
+            pkg.featured ? 'text-green-light' : 'text-muted',
+          ]}>
+            {pkg.items.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class:list={['mt-px shrink-0 text-base leading-none', pkg.featured ? 'text-gold' : 'text-green-mid']}>·</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-auto pt-10">
+            <a
+              href={withBase('/contact/')}
+              class:list={[
+                'inline-block text-xs uppercase tracking-[0.28em] transition-colors',
+                pkg.featured
+                  ? 'border-b border-gold/60 pb-px text-gold hover:border-gold'
+                  : 'border-b border-ink/30 pb-px text-ink hover:border-ink',
+              ]}
+            >
+              Inquire →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Add-ons -->
+    <div class="mx-auto max-w-2xl px-6 pt-20">
+      <p class="text-center text-xs uppercase tracking-[0.35em] text-muted">Add-ons</p>
+      <ul class="mt-8 divide-y divide-green-light/30 border-y border-green-light/30">
+        {addOns.map((addOn) => (
+          <li class="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+            <div>
+              <p class="font-serif text-xl italic text-ink">{addOn.name}</p>
+              <p class="mt-1 text-sm leading-6 text-muted">{addOn.note}</p>
+            </div>
+            <p class="shrink-0 text-xs uppercase tracking-[0.2em] text-green-mid">{addOn.price}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="px-6 pt-16 text-center">
+      <a
+        href={withBase('/contact/')}
+        class="inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
+      >
+        Book Your Graduation Session
+      </a>
+    </div>
+
   </section>
 
 </BaseLayout>
