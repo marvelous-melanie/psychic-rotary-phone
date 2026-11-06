@@ -1,0 +1,109 @@
+---
+// Fades content up into view as it scrolls in. Content already on screen at load is left alone,
+// except inside a [data-reveal-intro] block (page heroes, galleries), which plays a staggered entrance.
+// Nothing is hidden if JavaScript is off or the visitor prefers reduced motion.
+---
+
+<script>
+  // Blocks that fade in as one unit. Only the outermost match is used, so a grid card fades
+  // as a whole instead of its heading and paragraph separately.
+  const SELECTOR = [
+    '[id^="gallery-"] a',
+    '.grid > *',
+    'li',
+    'h1', 'h2', 'h3',
+    'p',
+    'form',
+    'figure',
+    'img',
+    '.btn-pill',
+  ].join(',');
+
+  function initReveal() {
+    (document as any)._revealIO?.disconnect();
+    (window as any).__revealReady = true;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const main = document.getElementById('main-content');
+    if (!main) return;
+
+    const candidates = Array.from(main.querySelectorAll<HTMLElement>(SELECTOR));
+    const set = new Set(candidates);
+    const outermost = candidates.filter((el) => {
+      for (let p = el.parentElement; p && p !== main; p = p.parentElement) if (set.has(p)) return false;
+      return true;
+    });
+
+    const fold = window.innerHeight * 0.92;
+    const visible = outermost.filter((el) => el.offsetParent !== null);
+    const intro = visible.filter((el) => el.getBoundingClientRect().top <= fold && el.closest('[data-reveal-intro]'));
+    const targets = visible.filter((el) => el.getBoundingClientRect().top > fold);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entering = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
+        entering.forEach((el) => io.unobserve(el));
+        play(entering, 80, 5);
+      },
+      { rootMargin: '0px 0px -6% 0px', threshold: 0.08 },
+    );
+    (document as any)._revealIO = io;
+
+    targets.forEach((el) => {
+      el.setAttribute('data-reveal', '');
+      io.observe(el);
+    });
+
+    // Entrance for on-screen hero and gallery content: hide, then play on the next frame.
+    intro.forEach((el) => el.setAttribute('data-reveal', ''));
+    requestAnimationFrame(() => requestAnimationFrame(() => play(intro, 90, 10, 120)));
+  }
+
+  function play(els: HTMLElement[], step: number, cap: number, offset = 0) {
+    els
+      .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top || a.getBoundingClientRect().left - b.getBoundingClientRect().left)
+      .forEach((el, i) => {
+            el.style.setProperty('--reveal-delay', `${offset + Math.min(i, cap) * step}ms`);
+            el.classList.add('is-in');
+            // Hand the element back to its own styles (hover transitions etc.) once it has settled.
+            const done = (e: TransitionEvent) => {
+              if (e.target !== el || e.propertyName !== 'transform') return;
+              el.removeEventListener('transitionend', done);
+              el.removeAttribute('data-reveal');
+              el.classList.add('revealed');
+              el.classList.remove('is-in');
+              el.style.removeProperty('--reveal-delay');
+            };
+            el.addEventListener('transitionend', done);
+      });
+  }
+
+  // ClientRouter fires astro:page-load on the first load and after every navigation.
+  document.addEventListener('astro:page-load', initReveal);
+</script>
+
+<style is:global>
+  /* Pre-hide intro content before first paint so the entrance doesn't flash (class set in BaseLayout <head>). */
+  .reveal-js [data-reveal-intro] > :is(p, h1):not(.revealed):not(.is-in),
+  .reveal-js [id^='gallery-'] a:not(.revealed):not(.is-in) {
+    opacity: 0;
+  }
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.8s ease var(--reveal-delay, 0ms),
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+  }
+  /* Photos also settle from a touch smaller, which reads as more polished than a plain slide. */
+  [id^='gallery-'] a[data-reveal] {
+    transform: translateY(36px) scale(0.96);
+    transition:
+      opacity 0.9s ease var(--reveal-delay, 0ms),
+      transform 1.1s cubic-bezier(0.16, 0.8, 0.2, 1) var(--reveal-delay, 0ms);
+  }
+  [data-reveal].is-in,
+  [id^='gallery-'] a[data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+</style>

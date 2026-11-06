@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+  /** Color of "ELM CITY" ("PHOTOGRAPHY" always uses the gold token). */
+  tone?: 'light' | 'dark';
+}
+
+const { class: className = '', tone = 'light' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 220 78"
+  class={className}
+  role="img"
+  aria-label="Elm City Photography"
+>
+  <text
+    x="110"
+    y="46"
+    text-anchor="middle"
+    class:list={['font-display', tone === 'light' ? 'fill-cream' : 'fill-forest']}
+    style="font-size: 40px; font-weight: 800; letter-spacing: 1px;"
+  >
+    ELM CITY
+  </text>
+  <text x="110" y="70" text-anchor="middle" class="fill-gold" style="font-family: var(--font-sans); font-size: 13px; font-weight: 700; letter-spacing: 5.5px;">
+    PHOTOGRAPHY
+  </text>
+</svg>

@@ -1,37 +1,62 @@
 ---
+import { Image } from 'astro:assets';
 import { Instagram, Mail } from 'lucide-astro';
+import { withBase } from '../lib/paths';
+import Wordmark from './Wordmark.astro';
+import ig1 from '../assets/galleries/engagements-2026/0006.jpg';
+import ig2 from '../assets/galleries/graduations-2026/0012.jpg';
+import ig3 from '../assets/galleries/engagements-2026/0007.jpg';
+import ig4 from '../assets/galleries/graduations-2026/0003.jpg';
+import ig5 from '../assets/galleries/engagements-2026/0010.jpg';
+import ig6 from '../assets/galleries/graduations-2026/0013.jpg';
+
+const igPhotos = [ig1, ig2, ig3, ig4, ig5, ig6];
+const instagram = 'https://www.instagram.com/elm.city.photography';
 ---
 
-<footer class="bg-green-deep px-6 py-12 text-cream">
-  <div class="mx-auto max-w-6xl space-y-6 text-center sm:space-y-0 sm:flex sm:items-start sm:justify-between sm:text-left">
+<footer>
+  <div class="bg-paper px-5 py-14 md:px-10">
+    <div class="mx-auto grid max-w-[1440px] items-center gap-12 md:grid-cols-3">
+      <div class="order-2 text-center md:order-1 md:text-left">
+        <div class="flex justify-center gap-4 md:justify-start">
+          <a href={instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-forest hover:text-moss">
+            <Instagram size={22} aria-hidden="true" />
+          </a>
+          <a href="mailto:hello@elmcityphotography.com" aria-label="Email us" class="text-forest hover:text-moss">
+            <Mail size={22} aria-hidden="true" />
+          </a>
+        </div>
+        <ul class="mt-6 space-y-1 text-forest">
+          <li><a href={withBase('/')} class="hover:underline">home</a></li>
+          <li><a href={withBase('/engagements/')} class="hover:underline">engagements</a></li>
+          <li><a href={withBase('/graduations/')} class="hover:underline">graduations</a></li>
+          <li><a href={withBase('/engagement-pricing/')} class="hover:underline">engagement pricing</a></li>
+          <li><a href={withBase('/graduation-pricing/')} class="hover:underline">graduation pricing</a></li>
+          <li><a href={withBase('/about/')} class="hover:underline">about</a></li>
+          <li><a href={withBase('/contact/')} class="hover:underline">contact</a></li>
+        </ul>
+      </div>
 
-    <div>
-      <p class="font-serif text-sm italic text-green-light">Elm City Photography</p>
-      <p class="mt-1 text-xs text-cream/50">New Haven, CT</p>
-      <p class="mt-0.5 text-xs text-cream/40">Serving Connecticut, New England, and beyond</p>
-    </div>
+      <div class="order-1 flex flex-col items-center text-center md:order-2">
+        <Wordmark tone="dark" class="h-20 w-auto" />
+        <p class="mt-4 text-sm text-forest/80">New Haven, CT · Serving Connecticut, New England, and beyond</p>
+        <p class="mt-1 text-sm text-forest/60">&copy; {new Date().getFullYear()} Elm City Photography</p>
+      </div>
 
-    <div class="flex flex-col items-center gap-3 sm:items-end sm:gap-2">
       <a
-        href="mailto:hello@elmcityphotography.com"
-        class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cream/60 transition-colors hover:text-cream"
-      >
-        <Mail size={14} aria-hidden="true" />
-        hello@elmcityphotography.com
-      </a>
-      <a
-        href="https://www.instagram.com/elm.city.photography"
+        href={instagram}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cream/60 transition-colors hover:text-cream"
+        class="group order-3 mx-auto block w-full max-w-sm md:ml-auto md:mr-0"
         aria-label="Follow @elm.city.photography on Instagram"
       >
-        <Instagram size={14} aria-hidden="true" />
-        @elm.city.photography
+        <div class="grid grid-cols-3 gap-1 overflow-hidden rounded-xl">
+          {igPhotos.map((src) => (
+            <Image src={src} alt="" width={240} height={240} class="aspect-square h-full w-full object-cover transition-opacity group-hover:opacity-90" loading="lazy" />
+          ))}
+        </div>
+        <p class="mt-3 text-center text-sm font-bold text-forest md:text-right">@elm.city.photography →</p>
       </a>
     </div>
-
-    <p class="text-xs text-cream/40 sm:self-end">&copy; {new Date().getFullYear()} Elm City Photography</p>
-
   </div>
 </footer>

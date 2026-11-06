@@ -1,0 +1,44 @@
+---
+import { withBase } from '../lib/paths';
+import type { Pkg } from '../data/pricing';
+
+interface Props {
+  packages: Pkg[];
+}
+
+const { packages } = Astro.props;
+---
+
+<div class="grid gap-6 md:grid-cols-3">
+  {packages.map((pkg) => (
+    <article
+      class:list={[
+        'relative flex flex-col rounded-3xl p-8 md:p-9',
+        pkg.featured ? 'bg-forest text-cream md:-my-4 md:py-12' : 'bg-paper text-ink',
+      ]}
+    >
+      {pkg.featured && (
+        <p class="absolute -top-4 left-8 rounded-full bg-gold px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-forest">
+          Most popular
+        </p>
+      )}
+      <h3 class:list={['eyebrow', pkg.featured ? 'text-gold' : 'text-moss']}>{pkg.name}</h3>
+      <p class="font-display mt-3 text-6xl leading-none">{pkg.price}</p>
+      <p class:list={['mt-4 font-bold', pkg.featured ? 'text-cream' : 'text-forest']}>{pkg.tagline}</p>
+      <p class:list={['mt-3 leading-relaxed', pkg.featured ? 'text-cream/75' : 'text-ink/75']}>{pkg.description}</p>
+      <ul class="mt-6 space-y-2.5">
+        {pkg.items.map((item) => (
+          <li class="flex items-start gap-3 text-[0.95rem]">
+            <span class:list={['mt-2 h-2 w-2 shrink-0 rounded-full', pkg.featured ? 'bg-gold' : 'bg-sage']} aria-hidden="true"></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <div class="mt-auto pt-8">
+        <a href={withBase('/contact/')} class:list={['btn-pill w-full !py-3.5', pkg.featured ? 'btn-gold' : 'btn-dark']}>
+          Book {pkg.name.replace('The ', '')}
+        </a>
+      </div>
+    </article>
+  ))}
+</div>

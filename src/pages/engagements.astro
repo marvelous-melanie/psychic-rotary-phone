@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LightboxGallery from '../components/LightboxGallery.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
 import { getGalleryImages } from '../lib/galleries';
-import { withBase } from '../lib/paths';
 
 const galleries = await getCollection('galleries');
 const gallery = galleries
@@ -11,38 +12,34 @@ const gallery = galleries
   .sort((a, b) => a.data.order - b.data.order)[0];
 
 const images = gallery ? getGalleryImages(gallery.id) : [];
+
+// Curated rows: each row shares one height. New photos not listed here are appended at the end.
+const rows = [
+  ['0011.jpg', '0008.jpg', '0001.jpg'],
+  ['0004.jpg', '0009.jpg'],
+  ['0003.jpg', '0005.jpg', '0016.jpg'],
+  ['0013.jpg', '0010.jpg', '0015.jpg'],
+  ['0007.jpg', '0006.jpg', '0014.jpg'],
+  ['0002.jpg', '0012.jpg'],
+];
 ---
 
 <BaseLayout
   title="Engagement Photographer New Haven CT | Portfolio | Elm City Photography"
   description="Engagement session photography in New Haven, CT. Natural light, honest moments. View our portfolio of Connecticut couples."
 >
+  <PageHero
+    eyebrow="Portfolio"
+    title="Engagements"
+  />
 
-  <div class="bg-green-deep px-6 py-12 text-center">
-    <p class="text-xs uppercase tracking-[0.38em] text-green-light/70">Portfolio</p>
-    <h1 class="mt-4 font-serif text-5xl italic text-cream md:text-6xl">Engagements</h1>
-    <p class="mx-auto mt-5 max-w-sm text-sm leading-7 text-green-light/70">
-      Intimate, unhurried sessions in Connecticut's parks, coastlines, and city streets.
-      No stiff posing. Just the two of you, in the light.
-    </p>
+  <div class="pt-14">
+    <LightboxGallery images={images} rows={rows} galleryId={gallery?.id ?? 'engagements'} />
   </div>
 
-  <div class="bg-cream pt-12">
-    <LightboxGallery images={images} galleryId={gallery?.id ?? 'engagements'} />
-  </div>
-
-  <section class="bg-cream px-6 py-24 text-center">
-    <p class="text-xs uppercase tracking-[0.35em] text-muted">Work together</p>
-    <h2 class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">Ready to book?</h2>
-    <p class="mx-auto mt-5 max-w-sm text-base leading-7 text-muted">
-      Tell us about your plans and we'll get back to you within 48 hours.
-    </p>
-    <a
-      href={withBase('/contact/')}
-      class="mt-8 inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
-    >
-      Book with Us
-    </a>
-  </section>
-
+  <CtaBand
+    title="Let's plan your session."
+    body="Sessions start at $375. Tell us about your plans and we'll get back to you within 48 hours."
+    secondary={{ href: '/engagement-pricing/', label: 'See pricing' }}
+  />
 </BaseLayout>

@@ -1,66 +1,71 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
 import aboutPhoto from '../assets/about-photo.jpg';
-import { withBase } from '../lib/paths';
 ---
 
 <BaseLayout
-  title="Wedding Photographer New Haven CT | Our Story | Elm City Photography"
-  description="Meet Elm City Photography, a wedding and portrait studio based in New Haven, CT, serving couples across Connecticut and New England."
+  title="About | Photographers in New Haven CT | Elm City Photography"
+  description="Meet Elm City Photography, a small engagement and graduation photography studio based in New Haven, CT, serving Connecticut, New England, and beyond."
 >
-
-  <section class="bg-cream">
-    <div class="mx-auto max-w-2xl px-6 py-24 md:py-32">
-      <p class="text-xs uppercase tracking-[0.38em] text-muted">About</p>
-      <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Our Story</h1>
-
-      <div class="mt-10 aspect-[3/2] w-full overflow-hidden">
+  <section class="bg-forest px-5 pb-16 pt-12 text-cream md:px-10 md:pb-24 md:pt-16">
+    <div class="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-16">
+      <div>
+        <p class="eyebrow !text-base text-gold md:!text-lg">About us</p>
+        <h1 class="mt-5 text-[clamp(2.6rem,5.6vw,4.75rem)] leading-[1.02]"><span class="block">hi, we're</span><span class="block">elm city</span><span class="block">photography.</span></h1>
+        <p class="mt-8 max-w-md text-lg leading-relaxed text-cream/80">
+          A small studio based in New Haven, Connecticut. We photograph honestly and edit to match: colors that look like life, not like a filter.
+        </p>
+      </div>
+      <div class="relative">
         <Image
           src={aboutPhoto}
-          alt="Two photographers reviewing a shot together on camera"
-          width={1600}
-          height={900}
-          class="h-full w-full object-cover object-center"
+          alt="The two Elm City photographers sitting at the foot of a red lighthouse by the river"
+          widths={[640, 960, 1400]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="aspect-[2/3] w-full rounded-[2rem] object-cover"
           loading="eager"
         />
-      </div>
-
-      <p class="mt-10 text-base font-medium leading-8 text-ink">
-        We're a small wedding and portrait photography studio based in New Haven, Connecticut. We photograph honestly and edit to match: colors that look like life, not like a filter.
-      </p>
-
-      <div class="mt-8 space-y-6 text-base leading-8 text-muted">
-        <p>
-          We started Elm City Photography because we believe the moments that matter most deserve to be preserved accurately.
-          Not stiffly posed, not over-processed. Just real, the way your wedding actually looked, felt, and sounded
-          when you were in the middle of it.
-        </p>
-        <p>
-          Our editing approach is built around accurate, timeless color. We don't chase trends. Skin tones that look
-          like your skin. Greens that look like the park you got married in. Images that won't feel dated when you
-          pull them out in twenty years.
-        </p>
-        <p>
-          We work mostly in available light and love locations with character: coastlines, city parks, old architecture,
-          golden fields. We're based in New Haven and know every corner of this city and the surrounding Connecticut landscape.
-        </p>
-        <p>
-          If you want photos that feel timeless but still look exactly like you, with true colors and honest moments, we're
-          probably the right fit.
-        </p>
-      </div>
-
-      <div class="mt-14 border-t border-green-light/40 pt-10">
-        <p class="text-xs uppercase tracking-[0.35em] text-muted">Ready to work together?</p>
-        <a
-          href={withBase('/contact/')}
-          class="mt-4 inline-flex items-center gap-2 font-serif text-xl italic text-ink transition-colors hover:text-green-mid"
-        >
-          Get in touch <span aria-hidden="true">→</span>
-        </a>
       </div>
     </div>
   </section>
 
+
+  <section class="px-5 pt-20 md:px-10 md:pt-28">
+    <div class="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
+      <div>
+        <h2 class="text-[clamp(2.2rem,4.5vw,3.4rem)] leading-none text-forest">Why we started.</h2>
+      </div>
+      <div class="space-y-6 text-lg leading-relaxed text-ink/85">
+        <p>
+          We started Elm City Photography because we believe the moments that matter most deserve to be preserved accurately.
+          Not stiffly posed or over-editorialized. Just real, the way the day actually looked, felt, and sounded when you were in the middle of it.
+        </p>
+        <p>
+          Our editing approach is built around accurate, timeless color. We don't chase trends. Skin tones that look like your skin.
+          Greens that look like the park you were standing in. Images that won't feel dated when you pull them out in twenty years.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-5 pt-20 md:px-10 md:pt-24">
+    <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-3 md:gap-0">
+      <div class="leading-relaxed text-ink/85 md:pr-10">
+        <p class="font-display text-2xl text-forest">Available light.</p>
+        <p class="mt-3">We work mostly with natural light and plan sessions around the golden hour, when everything looks its best.</p>
+      </div>
+      <div class="border-gold leading-relaxed text-ink/85 md:border-l-2 md:px-10">
+        <p class="font-display text-2xl text-forest">Places with character.</p>
+        <p class="mt-3">Coastlines, city parks, old architecture, golden fields. We know every corner of New Haven and the Connecticut landscape around it.</p>
+      </div>
+      <div class="border-gold leading-relaxed text-ink/85 md:border-l-2 md:pl-10">
+        <p class="font-display text-2xl text-forest">Exactly like you.</p>
+        <p class="mt-3">If you want photos that feel timeless but still look like you, with true colors and honest moments, we're probably the right fit.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Let's make something honest." secondary={{ href: '/engagement-pricing/', label: 'See pricing' }} />
 </BaseLayout>

@@ -1,207 +1,133 @@
 ---
-import { Image } from 'astro:assets';
 import { withBase } from '../lib/paths';
-import logo from '../assets/logo.jpg';
+import Wordmark from './Wordmark.astro';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const normalizePath = (path: string) => withBase(path).replace(/\/$/, '') || '/';
-const isActive = (path: string) => normalizePath(path) === currentPath;
-const isPortfolioActive = ['/engagements/', '/graduations/'].some((p) => isActive(p));
-const isPricingActive = ['/pricing/', '/engagement-pricing/', '/graduation-pricing/'].some((p) => isActive(p));
+const isActive = (path: string) => (withBase(path).replace(/\/$/, '') || '/') === currentPath;
 
-function linkClass(active: boolean) {
-  return ['px-3 py-1 transition-colors text-sm', active ? 'text-gold' : 'text-cream/80 hover:text-cream'].join(' ');
-}
+type NavLink = { href: string; label: string; children?: { href: string; label: string }[] };
+const isLinkActive = (link: NavLink) => (link.children ? link.children.some((c) => isActive(c.href)) : isActive(link.href));
+
+const links: NavLink[] = [
+  { href: '/', label: 'Home' },
+  { href: '/engagements/', label: 'Engagements' },
+  { href: '/graduations/', label: 'Graduations' },
+  {
+    href: '/engagement-pricing/',
+    label: 'Pricing',
+    children: [
+      { href: '/engagement-pricing/', label: 'Engagement pricing' },
+      { href: '/graduation-pricing/', label: 'Graduation pricing' },
+    ],
+  },
+  { href: '/about/', label: 'About' },
+];
 ---
 
-<header class="sticky top-0 z-50 bg-green-deep text-cream" id="site-header">
-
-  <!-- ── MOBILE TOP BAR (hidden md+) ─────────────────────────────── -->
-  <div class="flex items-center justify-between px-6 py-4 md:hidden">
-    <a href={withBase('/')} class="flex items-center gap-3" aria-label="Elm City Photography home">
-      <Image
-        src={logo}
-        alt="Elm City Photography"
-        width={44}
-        height={44}
-        class="h-11 w-11 rounded-full object-cover ring-1 ring-gold/40"
-      />
-      <span class="font-serif text-sm italic text-cream/80">Elm City Photography</span>
-    </a>
-    <button
-      id="mobile-menu-toggle"
-      type="button"
-      aria-label="Open menu"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-      class="flex h-10 w-10 items-center justify-center text-cream transition-colors hover:text-gold"
-    >
-      <svg id="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-        <line x1="2" y1="6"  x2="20" y2="6"/>
-        <line x1="2" y1="11" x2="20" y2="11"/>
-        <line x1="2" y1="16" x2="20" y2="16"/>
-      </svg>
-      <svg id="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" class="hidden">
-        <line x1="4" y1="4" x2="18" y2="18"/>
-        <line x1="18" y1="4" x2="4" y2="18"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- ── MOBILE NAV PANEL ──────────────────────────────────────────── -->
-  <nav
-    id="mobile-nav"
-    aria-label="Mobile navigation"
-    class="hidden border-t border-green-light/20 md:hidden"
-  >
-    <ul class="space-y-1 px-6 py-6">
-      <li>
-        <a href={withBase('/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/') ? 'text-gold' : 'text-cream hover:text-gold']}>
-          Home
-        </a>
-      </li>
-      <li>
-        <a href={withBase('/about/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/about/') ? 'text-gold' : 'text-cream hover:text-gold']}>
-          About
-        </a>
-      </li>
-      <li>
-        <p class="py-3 text-xl uppercase tracking-[0.18em] text-cream/50">Portfolio</p>
-        <ul class="ml-1 space-y-1 border-l border-green-light/25 pl-5">
-          <li>
-            <a href={withBase('/engagements/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/engagements/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
-              Engagements
-            </a>
-          </li>
-          <li>
-            <a href={withBase('/graduations/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/graduations/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
-              Graduations
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <p class="py-3 text-xl uppercase tracking-[0.18em] text-cream/50">Pricing</p>
-        <ul class="ml-1 space-y-1 border-l border-green-light/25 pl-5">
-          {/* Weddings pricing link hidden until the wedding portfolio is added back; see /pricing/ */}
-          <li>
-            <a href={withBase('/engagement-pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/engagement-pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
-              Engagements
-            </a>
-          </li>
-          <li>
-            <a href={withBase('/graduation-pricing/')} class:list={['block py-2.5 text-base uppercase tracking-[0.16em] transition-colors', isActive('/graduation-pricing/') ? 'text-gold' : 'text-cream/80 hover:text-cream']}>
-              Graduations
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href={withBase('/contact/')} class:list={['block py-3 text-xl uppercase tracking-[0.18em] transition-colors', isActive('/contact/') ? 'text-gold' : 'text-cream hover:text-gold']}>
-          Book with Us
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- ── DESKTOP HEADER (hidden mobile) ──────────────────────────── -->
-  <div class="hidden md:flex flex-col items-center px-4 pb-6 pt-8">
-
-    <a href={withBase('/')} aria-label="Elm City Photography home">
-      <Image
-        src={logo}
-        alt="Elm City Photography"
-        width={88}
-        height={88}
-        class="h-22 w-22 rounded-full object-cover ring-2 ring-gold/40 transition-opacity hover:opacity-85"
-      />
-    </a>
-
-    <p class="mt-3 font-serif text-lg italic tracking-wide text-cream/80">Elm City Photography</p>
-
-    <div class="mt-4 w-12 border-t border-gold/35"></div>
-
-    <nav aria-label="Primary" class="mt-4">
-      <ul class="flex flex-wrap items-center justify-center gap-x-1 text-sm font-medium uppercase tracking-[0.22em]">
-
-        <li>
-          <a href={withBase('/')} class={linkClass(isActive('/'))}>Home</a>
-        </li>
-
-        <li>
-          <a href={withBase('/about/')} class={linkClass(isActive('/about/'))}>About</a>
-        </li>
-
-        <!-- Portfolio dropdown -->
-        <li class="relative group">
-          <button
-            type="button"
-            class:list={[
-              'flex cursor-default items-center gap-1 px-3 py-1 text-sm uppercase tracking-[0.22em] transition-colors',
-              isPortfolioActive ? 'text-gold' : 'text-cream/80 group-hover:text-cream',
-            ]}
-          >
-            Portfolio
-            <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor" aria-hidden="true">
-              <path d="M0 0l4 5 4-5z" />
-            </svg>
-          </button>
-          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-48 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+<header class="relative z-50 bg-forest text-cream" id="site-header">
+  <div class="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 py-4 md:px-10 md:py-5">
+    <!-- Left: primary nav (desktop) -->
+    <nav aria-label="Primary" class="hidden flex-1 lg:block">
+      <ul class="flex items-center gap-6 text-[0.8rem] font-bold uppercase tracking-[0.14em]">
+        {links.map((link) =>
+          link.children ? (
+            <li class="group relative">
+              <a
+                href={withBase(link.href)}
+                aria-haspopup="true"
+                class:list={[
+                  'inline-flex items-center gap-1.5 border-b-2 pb-1 transition-colors',
+                  isLinkActive(link) ? 'border-gold text-cream' : 'border-transparent text-cream/80 hover:text-gold',
+                ]}
+              >
+                {link.label}
+                <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" class="transition-transform group-hover:rotate-180 group-focus-within:rotate-180"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </a>
+              <div class="invisible absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <ul class="overflow-hidden rounded-2xl bg-cream p-2 text-forest shadow-xl">
+                  {link.children.map((c) => (
+                    <li>
+                      <a
+                        href={withBase(c.href)}
+                        aria-current={isActive(c.href) ? 'page' : undefined}
+                        class:list={['block rounded-xl px-4 py-3 transition-colors hover:bg-mint', isActive(c.href) && 'bg-mint']}
+                      >
+                        {c.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ) : (
             <li>
-              <a href={withBase('/engagements/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
-                Engagements
+              <a
+                href={withBase(link.href)}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                class:list={[
+                  'inline-flex items-center border-b-2 pb-1 transition-colors',
+                  isActive(link.href) ? 'border-gold text-cream' : 'border-transparent text-cream/80 hover:text-gold',
+                ]}
+              >
+                {link.label}
               </a>
             </li>
-            <li>
-              <a href={withBase('/graduations/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
-                Graduations
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Pricing dropdown -->
-        <li class="relative group">
-          <button
-            type="button"
-            class:list={[
-              'flex cursor-default items-center gap-1 px-3 py-1 text-sm uppercase tracking-[0.22em] transition-colors',
-              isPricingActive ? 'text-gold' : 'text-cream/80 group-hover:text-cream',
-            ]}
-          >
-            Pricing
-            <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor" aria-hidden="true">
-              <path d="M0 0l4 5 4-5z" />
-            </svg>
-          </button>
-          <ul class="pointer-events-none absolute left-1/2 top-full z-50 w-48 -translate-x-1/2 rounded border border-green-light/20 bg-green-deep pb-1 pt-2 opacity-0 shadow-xl transition-all duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
-            {/* Weddings pricing link hidden until the wedding portfolio is added back; see /pricing/ */}
-            <li>
-              <a href={withBase('/engagement-pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
-                Engagements
-              </a>
-            </li>
-            <li>
-              <a href={withBase('/graduation-pricing/')} class="block px-4 py-3 text-sm uppercase tracking-[0.18em] text-cream/80 hover:bg-green-mid/50 hover:text-cream">
-                Graduations
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <li>
-          <a href={withBase('/contact/')} class={linkClass(isActive('/contact/'))}>Book with Us</a>
-        </li>
-
+          ),
+        )}
       </ul>
     </nav>
 
+    <!-- Center: wordmark -->
+    <a href={withBase('/')} class="shrink-0 transition-opacity hover:opacity-90" aria-label="Elm City Photography home">
+      <Wordmark class="h-14 w-auto md:h-[4.5rem]" />
+    </a>
+
+    <!-- Right: CTA (desktop) + menu toggle (mobile) -->
+    <div class="flex flex-1 items-center justify-end gap-4">
+      <a href={withBase('/contact/')} class="btn-pill hidden bg-cream !px-7 !py-3 text-forest hover:bg-gold sm:inline-flex">
+        Book with us
+      </a>
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="flex h-11 w-11 items-center justify-center rounded-full bg-cream/10 text-cream transition-colors hover:bg-cream/20 lg:hidden"
+      >
+        <svg id="icon-hamburger" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="7" x2="19" y2="7" /><line x1="3" y1="15" x2="19" y2="15" />
+        </svg>
+        <svg id="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="hidden">
+          <line x1="5" y1="5" x2="17" y2="17" /><line x1="17" y1="5" x2="5" y2="17" />
+        </svg>
+      </button>
+    </div>
   </div>
+
+  <!-- Mobile panel -->
+  <nav id="mobile-nav" aria-label="Mobile navigation" class="hidden border-t border-cream/10 lg:hidden">
+    <ul class="space-y-1 px-5 py-6">
+      {links.flatMap((link) => link.children ?? [link]).map((link) => (
+        <li>
+          <a
+            href={withBase(link.href)}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class:list={['font-display block py-2 text-3xl', isActive(link.href) ? 'text-gold' : 'text-cream hover:text-gold']}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li class="pt-4">
+        <a href={withBase('/contact/')} class="btn-pill btn-gold w-full">Book with us</a>
+      </li>
+    </ul>
+  </nav>
 </header>
 
 <script>
   function initMenu() {
-    // Abort any listeners from a previous initMenu call to prevent stacking
     (document as any)._menuAC?.abort();
     const ac = new AbortController();
     (document as any)._menuAC = ac;
@@ -213,22 +139,16 @@ function linkClass(active: boolean) {
     const iconClose = document.getElementById('icon-close');
     if (!toggle || !nav) return;
 
-    toggle.addEventListener('click', () => {
-      const isOpen = !nav.classList.contains('hidden');
-      nav.classList.toggle('hidden', isOpen);
-      toggle.setAttribute('aria-expanded', String(!isOpen));
-      iconHamburger?.classList.toggle('hidden', !isOpen);
-      iconClose?.classList.toggle('hidden', isOpen);
-    }, { signal });
+    const setOpen = (open: boolean) => {
+      nav.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      iconHamburger?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+    };
 
-    nav.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        nav.classList.add('hidden');
-        toggle.setAttribute('aria-expanded', 'false');
-        iconHamburger?.classList.remove('hidden');
-        iconClose?.classList.add('hidden');
-      }, { signal });
-    });
+    toggle.addEventListener('click', () => setOpen(nav.classList.contains('hidden')), { signal });
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false), { signal }));
   }
 
   initMenu();

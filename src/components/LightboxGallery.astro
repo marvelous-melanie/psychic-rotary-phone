@@ -5,9 +5,11 @@ import type { GalleryImage } from '../lib/galleries';
 interface Props {
   images: GalleryImage[];
   galleryId: string;
+  /** Curated layout: rows of filenames. Images not listed are appended in rows of three. */
+  rows?: string[][];
 }
 
-const { images, galleryId } = Astro.props;
+const { images, galleryId, rows = [] } = Astro.props;
 
 const prepared = await Promise.all(
   images.map(async (item) => {
@@ -18,40 +20,55 @@ const prepared = await Promise.all(
       quality: 85,
     });
 
-    return { ...item, lightbox };
+    return { ...item, lightbox, ratio: item.image.width / item.image.height };
   }),
 );
+
+type Prepared = (typeof prepared)[number];
+const byName = new Map(prepared.map((p) => [p.filename, p]));
+const used = new Set<string>();
+const layout: Prepared[][] = rows
+  .map((row) => row.map((name) => byName.get(name)).filter((p): p is Prepared => !!p && !used.has(p.filename) && !!used.add(p.filename)))
+  .filter((row) => row.length > 0);
+const rest = prepared.filter((p) => !used.has(p.filename));
+for (let i = 0; i < rest.length; i += 3) layout.push(rest.slice(i, i + 3));
+let index = 0;
 ---
 
-{images.length === 0 ? (
-  <div id={`gallery-${galleryId}`} class="mx-auto max-w-7xl px-4 pb-20 sm:columns-2 lg:columns-3"></div>
-) : (
-  <div id={`gallery-${galleryId}`} class="mx-auto max-w-7xl columns-1 gap-4 px-4 pb-20 sm:columns-2 lg:columns-3">
-    {prepared.map((item, index) => (
-      <a
-        href={item.lightbox.src}
-        data-pswp-width={item.lightbox.attributes.width}
-        data-pswp-height={item.lightbox.attributes.height}
-        class="mb-4 block break-inside-avoid overflow-hidden rounded-xl bg-neutral-100"
-        aria-label={`Open image: ${item.alt}`}
-      >
-        <Picture
-          src={item.image}
-          formats={['avif', 'webp']}
-          widths={[480, 768, 1024, 1440]}
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          alt={item.alt}
-          loading={index < 6 ? 'eager' : 'lazy'}
-          decoding="async"
-          class="h-auto w-full transition duration-500 hover:scale-[1.02]"
-        />
-      </a>
-    ))}
-  </div>
-)}
+<div id={`gallery-${galleryId}`} data-reveal-intro class="mx-auto max-w-7xl space-y-3 px-4 pb-20 md:space-y-4">
+  {layout.map((row) => (
+    <div class="space-y-3 sm:flex sm:gap-3 sm:space-y-0 md:gap-4">
+      {row.map((item) => {
+        const i = index++;
+        return (
+          <a
+            href={item.lightbox.src}
+            data-pswp-width={item.lightbox.attributes.width}
+            data-pswp-height={item.lightbox.attributes.height}
+            class="block overflow-hidden rounded-xl bg-paper sm:[flex:var(--ar)_1_0%]"
+            style={`--ar: ${item.ratio.toFixed(4)}; aspect-ratio: ${item.ratio.toFixed(4)};`}
+            aria-label={`Open image: ${item.alt}`}
+          >
+            <Picture
+              src={item.image}
+              formats={['avif', 'webp']}
+              widths={[480, 768, 1024, 1440]}
+              sizes={`(min-width: 640px) ${Math.round(Math.min(100, (item.ratio / row.reduce((a, r) => a + r.ratio, 0)) * 100 + 5))}vw, 100vw`}
+              alt={item.alt}
+              loading={i < 6 ? 'eager' : 'lazy'}
+              decoding="async"
+              class="h-full w-full object-cover transition duration-500 hover:scale-[1.02]"
+            />
+          </a>
+        );
+      })}
+    </div>
+  ))}
+</div>
 
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import PhotoSwipe from 'photoswipe';
   import 'photoswipe/style.css';
 
   function initLightboxes() {
@@ -60,7 +77,11 @@ const prepared = await Promise.all(
         const lightbox = new PhotoSwipeLightbox({
           gallery,
           children: 'a',
-          pswpModule: () => import('photoswipe'),
+          pswpModule: PhotoSwipe,
+          preload: [1, 2],
+          bgOpacity: 0.94,
+          showHideAnimationType: 'zoom',
+          wheelToZoom: false,
         });
 
         lightbox.init();

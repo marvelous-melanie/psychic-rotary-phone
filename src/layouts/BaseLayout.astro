@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SkipLink from '../components/SkipLink.astro';
 import Seo from '../components/Seo.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -24,10 +25,20 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
   <head>
     <Seo title={title} description={description} image={image} canonicalUrl={canonical} />
     {heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
+    <script is:inline>
+      (function () {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var add = function () { document.documentElement.classList.add('reveal-js'); };
+        add();
+        document.addEventListener('astro:after-swap', add);
+        // Safety net: never leave content hidden if the reveal script fails to load.
+        setTimeout(function () { if (!window.__revealReady) document.documentElement.classList.remove('reveal-js'); }, 3000);
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,0..100;1,9..144,400..900,0..100&family=DM+Sans:opsz,wght@9..40,400..700&display=swap"
       rel="stylesheet"
     />
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -49,7 +60,7 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
     "priceRange": "$$$"
   })} />
   </head>
-  <body class="min-h-screen bg-cream text-ink">
+  <body class="min-h-screen overflow-x-clip bg-cream text-ink">
     <ClientRouter />
     <SkipLink />
     <SiteHeader />
@@ -57,5 +68,6 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
       <slot />
     </main>
     <SiteFooter />
+    <ScrollReveal />
   </body>
 </html>

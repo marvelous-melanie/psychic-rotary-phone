@@ -1,175 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import PackageCards from '../components/PackageCards.astro';
+import GoodToKnow from '../components/GoodToKnow.astro';
+import CtaBand from '../components/CtaBand.astro';
 import { withBase } from '../lib/paths';
-
-const packages = [
-  {
-    name: 'The Afternoon',
-    price: '$375',
-    tagline: 'An hour is more than you think.',
-    description: 'One focused hour with a single beautiful backdrop. Less logistics, more presence. You show up; we handle the rest.',
-    items: [
-      '1 hour of coverage',
-      '25+ edited digital images',
-      'Online gallery delivery (2–3 weeks)',
-    ],
-    featured: false,
-  },
-  {
-    name: 'The Chapter',
-    price: '$450',
-    tagline: 'When one place isn\'t the whole picture.',
-    description: 'Some couples have a spot they love. Others want variety. This gives you room for both: a longer session to settle into, time to change up the scenery, and a finished print sent straight to your door.',
-    items: [
-      '2 hours of coverage',
-      '60+ edited digital images',
-      'Online gallery delivery (2–3 weeks)',
-      'One 5×7 fine-art print',
-    ],
-    featured: true,
-  },
-  {
-    name: 'The Experience',
-    price: '$600',
-    tagline: 'For the couples who want the whole story told.',
-    description: 'A full evening across multiple backdrops: city streets, a park, the shoreline at golden hour. Everything documented, nothing rushed.',
-    items: [
-      '3 hours of coverage',
-      '100+ edited digital images',
-      'Online gallery delivery (2–3 weeks)',
-      'One 11×14 fine-art print',
-    ],
-    featured: false,
-  },
-];
+import { engagement } from '../data/pricing';
 ---
 
 <BaseLayout
-  title="Engagement Session Pricing | Elm City Photography | New Haven, CT"
-  description="Engagement photography packages in New Haven, CT. Sessions from $375. Natural light, honest moments, no awkward posing."
+  title="Engagement Pricing | New Haven CT | Elm City Photography"
+  description="Engagement session pricing from Elm City Photography in New Haven, CT. Sessions from $375. Travel anywhere in Connecticut included."
 >
-
-  <div class="bg-cream">
-
-    <!-- Page header -->
-    <div class="mx-auto max-w-2xl px-6 pb-16 pt-24 text-center">
-      <p class="text-xs uppercase tracking-[0.38em] text-muted">Pricing</p>
-      <h1 class="mt-4 font-serif text-5xl italic leading-tight text-ink md:text-6xl">Engagement Sessions</h1>
-      <p class="mx-auto mt-6 max-w-sm text-base leading-7 text-muted">
-        No stiff posing. No props you didn't ask for. Just the two of you in a beautiful place, with a photographer who knows how to disappear into the background.
-      </p>
+  <PageHero
+    eyebrow="Engagement pricing"
+    title="Just the two of you."
+    intro="No stiff posing and no props you didn't ask for. Every session includes a fully edited online gallery and travel anywhere in Connecticut."
+  >
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href={withBase('/graduation-pricing/')} class="inline-block rounded-full border-2 border-cream/30 px-5 py-2 text-sm font-bold text-cream transition-colors hover:border-gold hover:text-gold">Graduation pricing →</a>
     </div>
+  </PageHero>
 
-    <!-- Package cards -->
-    <div class="mx-auto grid max-w-5xl gap-px bg-green-light/30 px-6 sm:grid-cols-3 sm:px-0">
-      {packages.map((pkg) => (
-        <article class:list={[
-          'relative flex flex-col bg-cream px-8 py-12',
-          pkg.featured && 'bg-green-deep text-cream',
-        ]}>
-          {pkg.featured && (
-            <p class="mb-6 self-start border border-gold/60 px-3 py-1 text-xs uppercase tracking-[0.3em] text-gold">
-              Most Popular
-            </p>
-          )}
-          <p class:list={[
-            'text-xs uppercase tracking-[0.28em]',
-            pkg.featured ? 'text-green-light/70' : 'text-muted',
-          ]}>
-            {pkg.name}
-          </p>
-          <p class:list={[
-            'mt-3 font-serif text-5xl italic',
-            pkg.featured ? 'text-cream' : 'text-ink',
-          ]}>
-            {pkg.price}
-          </p>
-          <p class:list={[
-            'mt-2 text-xs font-medium',
-            pkg.featured ? 'text-green-light/80' : 'text-green-mid',
-          ]}>
-            {pkg.tagline}
-          </p>
-          <p class:list={[
-            'mt-4 text-sm leading-7',
-            pkg.featured ? 'text-green-light/70' : 'text-muted',
-          ]}>
-            {pkg.description}
-          </p>
-          <ul class:list={[
-            'mt-8 space-y-3 text-xs',
-            pkg.featured ? 'text-green-light' : 'text-muted',
-          ]}>
-            {pkg.items.map((item) => (
-              <li class="flex items-start gap-3">
-                <span class:list={['mt-px shrink-0 text-base leading-none', pkg.featured ? 'text-gold' : 'text-green-mid']}>·</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div class="mt-auto pt-10">
-            <a
-              href={withBase('/contact/')}
-              class:list={[
-                'inline-block text-xs uppercase tracking-[0.28em] transition-colors',
-                pkg.featured
-                  ? 'border-b border-gold/60 pb-px text-gold hover:border-gold'
-                  : 'border-b border-ink/30 pb-px text-ink hover:border-ink',
-              ]}
-            >
-              Inquire →
-            </a>
-          </div>
-        </article>
-      ))}
+  <section class="px-5 pt-20 md:px-10 md:pt-24">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="sr-only">Engagement sessions</h2>
+      <PackageCards packages={engagement} />
     </div>
+  </section>
 
-    <!-- Proposal mini-shoot -->
-    <div class="mx-auto max-w-5xl px-6 pt-px sm:px-0">
-      <div class="bg-cream px-8 py-12 sm:flex sm:items-start sm:gap-16">
-        <div class="shrink-0">
-          <p class="text-xs uppercase tracking-[0.28em] text-muted">Proposal Sessions</p>
-          <p class="mt-3 font-serif text-5xl italic text-ink">$225</p>
-          <p class="mt-2 text-xs font-medium text-green-mid">The Moment</p>
-        </div>
-        <div class="mt-8 sm:mt-0">
-          <h2 class="font-serif text-2xl italic text-ink">Proposal Sessions</h2>
-          <p class="mt-4 text-base leading-8 text-muted">
-            You plan it. We learn the location with you first, walk the space, figure out where the light will be. Then on the day we disappear completely. What you get back is the real thing: their face when they realize what's happening, the yes, the moment right after.
-          </p>
-          <ul class="mt-6 space-y-3 text-xs text-muted">
-            <li class="flex items-start gap-3"><span class="mt-px shrink-0 text-base leading-none text-green-mid">·</span>Hidden throughout. No reveals until after the proposal</li>
-            <li class="flex items-start gap-3"><span class="mt-px shrink-0 text-base leading-none text-green-mid">·</span>30+ edited digital images</li>
-            <li class="flex items-start gap-3"><span class="mt-px shrink-0 text-base leading-none text-green-mid">·</span>Online gallery delivery (1–2 weeks)</li>
-            <li class="flex items-start gap-3"><span class="mt-px shrink-0 text-base leading-none text-green-mid">·</span>Personal print release</li>
-            <li class="flex items-start gap-3"><span class="mt-px shrink-0 text-base leading-none text-green-mid">·</span>Location scouting call included</li>
-          </ul>
-          <a
-            href={withBase('/contact/')}
-            class="mt-8 inline-block border-b border-ink/30 pb-px text-xs uppercase tracking-[0.28em] text-ink transition-colors hover:border-ink"
-          >
-            Plan Your Proposal →
-          </a>
-        </div>
-      </div>
-    </div>
+  <GoodToKnow />
 
-    <!-- FAQ / note -->
-    <div class="mx-auto max-w-2xl px-6 py-20 text-center">
-      <p class="text-xs uppercase tracking-[0.35em] text-muted">A few things to know</p>
-      <div class="mt-8 space-y-6 text-base leading-8 text-muted text-left">
-        <p><strong class="text-ink font-medium">Location.</strong> We know New Haven well: East Rock, Lighthouse Point, the Yale campus, the harbor, the Wooster Square neighborhood. If you have a place in mind, we'll make it work. If not, we'll recommend something that fits the time of year and light.</p>
-        <p><strong class="text-ink font-medium">Travel.</strong> Sessions within Connecticut are always included. Rhode Island, Massachusetts, and greater New York are available for a small flat travel fee. Just ask.</p>
-        <p><strong class="text-ink font-medium">Timing.</strong> The best engagement photos happen in the last 60–90 minutes before sunset. We'll plan your session around the light.</p>
-      </div>
-      <a
-        href={withBase('/contact/')}
-        class="mt-12 inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
-      >
-        Start the Conversation
-      </a>
-    </div>
-
-  </div>
-
+  <CtaBand title="Let's plan your session." secondary={{ href: '/engagements/', label: 'See the portfolio' }} />
 </BaseLayout>

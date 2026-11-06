@@ -1,207 +1,191 @@
 ---
 import { Image, getImage } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import { withBase } from '../lib/paths';
-import { getGalleryCover } from '../lib/galleries';
+import { getGalleryImages } from '../lib/galleries';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import aboutPhoto from '../assets/about-photo.jpg';
-import hero0012 from '../assets/galleries/engagements-2026/0012.jpg';
-import hero0005 from '../assets/galleries/engagements-2026/0005.jpg';
-import hero0004 from '../assets/galleries/engagements-2026/0004.jpg';
-import hero0002 from '../assets/galleries/engagements-2026/0002.jpg';
+import heroLeft from '../assets/galleries/engagements-2026/0011.jpg';
+import heroRight from '../assets/galleries/engagements-2026/0016.jpg';
 
-const heroSlides = await Promise.all([
-  getImage({ src: hero0012, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0005, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0004, width: 2400, format: 'webp', quality: 85 }),
-  getImage({ src: hero0002, width: 2400, format: 'webp', quality: 85 }),
-]);
+const heroLeftImg = await getImage({ src: heroLeft, width: 1400, format: 'webp', quality: 82 });
+const heroRightImg = await getImage({ src: heroRight, width: 1400, format: 'webp', quality: 82 });
 
-const galleries = await getCollection('galleries');
-const engagements = galleries.find((g) => g.id === 'engagements-2026');
-const graduations = galleries.find((g) => g.id === 'graduations-2026');
-const engagementCover = engagements ? getGalleryCover(engagements.id, engagements.data.cover) : null;
-const graduationCover  = graduations  ? getGalleryCover(graduations.id,  graduations.data.cover)  : null;
+const eng = getGalleryImages('engagements-2026');
+const grad = getGalleryImages('graduations-2026');
+const pick = (list: typeof eng, names: string[]) => names.map((n) => list.find((i) => i.filename === n)).filter((i) => !!i);
+const portfolio = [
+  ...pick(eng, ['0001.jpg']),
+  ...pick(grad, ['0003.jpg']),
+  ...pick(eng, ['0008.jpg']),
+  ...pick(grad, ['0011.jpg']),
+  ...pick(eng, ['0015.jpg']),
+  ...pick(grad, ['0001.jpg']),
+  ...pick(eng, ['0006.jpg']),
+  ...pick(grad, ['0014.jpg']),
+  ...pick(eng, ['0010.jpg']),
+  ...pick(grad, ['0017.jpg']),
+];
+
+const bigLinks = [
+  { href: '/about/', label: 'Get to know us' },
+  { href: '/engagement-pricing/', label: 'Sessions & pricing' },
+  { href: '/engagements/', label: 'See the portfolio' },
+  { href: '/contact/', label: 'Book your session' },
+];
+
 ---
 
 <BaseLayout
-  title="Elm City Photography | Wedding & Portrait Photographer, New Haven CT"
-  description="Wedding, engagement, and portrait photography rooted in New Haven, CT. Natural light, honest moments, and images you'll keep for a lifetime."
-  heroPreload={heroSlides[0].src}
+  title="Elm City Photography | Engagement & Graduation Photographer, New Haven CT"
+  description="Engagement, proposal, and graduation photography rooted in New Haven, CT. True-to-life color, honest moments, and photos that still look like you in twenty years."
+  heroPreload={heroLeftImg.src}
 >
-
   <!-- ── HERO ─────────────────────────────────────────────────────── -->
-  <section class="relative w-full overflow-hidden h-[67vw] sm:h-screen sm:min-h-[560px]" aria-label="Hero">
-    {heroSlides.map((slide, i) => (
-      <img
-        src={slide.src}
-        alt=""
-        role="presentation"
-        class:list={[
-          'absolute inset-0 h-full w-full object-cover',
-          i === 0 ? 'opacity-100' : 'opacity-0',
-        ]}
-        data-hero-slide
-        loading={i === 0 ? 'eager' : 'lazy'}
-      />
-    ))}
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-green-deep/15 via-transparent to-green-deep/60"></div>
-    <div class="absolute inset-x-0 bottom-0 flex flex-col items-center pb-4 sm:pb-16 text-center">
-      <h1 class="whitespace-nowrap font-serif text-[min(6vw,3.75rem)] italic leading-snug text-cream">
-        Love captured in every light.
-      </h1>
-      <div class="mt-8 flex gap-2" role="tablist" aria-label="Hero slides">
-        {heroSlides.map((_, i) => (
-          <button
-            type="button"
-            role="tab"
-            aria-label={`Slide ${i + 1}`}
-            data-hero-dot={i}
-            class:list={[
-              'h-0.5 rounded-full transition-all duration-300',
-              i === 0 ? 'w-8 bg-cream' : 'w-4 bg-cream/40',
-            ]}
-          />
+  <section class="bg-forest px-3 pb-3 pt-6 md:px-10 md:pb-10 md:pt-8">
+    <h1 id="hero-type" aria-label="your story, in true color" class="mx-auto max-w-6xl px-2 text-center text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] text-cream">
+      <span aria-hidden="true" data-type>your story, </span><span aria-hidden="true" data-type class="whitespace-nowrap text-gold">in true color</span>
+    </h1>
+    <div class="mx-auto mt-8 grid max-w-[min(1440px,calc(120vh+0.75rem))] grid-cols-2 gap-2 md:mt-12 md:gap-3">
+      <img src={heroLeftImg.src} alt="A couple sharing a kiss at golden hour" class="aspect-[2/3] w-full rounded-2xl object-cover md:aspect-[4/5] object-[50%_35%] md:rounded-3xl" fetchpriority="high" />
+      <img src={heroRightImg.src} alt="A couple embracing between tall stone columns" class="aspect-[2/3] w-full rounded-2xl object-cover md:aspect-[4/5] object-[68%_78%] md:rounded-3xl" loading="eager" />
+    </div>
+  </section>
+
+  <!-- ── HELLO ────────────────────────────────────────────────────── -->
+  <section class="relative px-5 pb-24 pt-20 md:px-10 md:pt-28">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="mx-auto max-w-3xl text-center text-[clamp(2.2rem,4.6vw,3.75rem)] leading-[1.05] text-forest">
+        Hi friends! We're the two people behind Elm City Photography.
+      </h2>
+
+      <div class="relative mt-16 grid items-start gap-10 md:grid-cols-[1fr_1.05fr_1fr] md:gap-12">
+        <div class="space-y-5 text-[1.05rem] leading-relaxed text-ink/85 md:pt-10">
+          <p><strong class="text-forest">We're a small New Haven photography team</strong> who started Elm City Photography because the moments that matter deserve to be documented accurately in images.</p>
+          <p><strong class="text-forest">Not stiffly posed or over-editorialized.</strong> Just real: the way your day actually looked, felt, and sounded while you were in the middle of it.</p>
+        </div>
+
+        <div class="relative mt-6 md:mt-0">
+          <div class="overflow-hidden rounded-2xl">
+            <Image src={aboutPhoto} alt="The two Elm City photographers sitting at the foot of a red lighthouse by the river" width={900} height={1350} class="aspect-[2/3] h-full w-full object-cover" />
+          </div>
+        </div>
+
+        <div class="relative space-y-5 text-[1.05rem] leading-relaxed text-ink/85 md:pt-10">
+          <p><strong class="text-forest">Our editing is built around honest, timeless color.</strong> Skin tones that look like your skin. Greens that look like the park you were standing in.</p>
+          <p><strong class="text-forest">No trendy presets, no awkward posing.</strong> Just photos that won't feel dated when you pull them out in twenty years.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BIG LINKS ─────────────────────────────────────── -->
+  <section class="relative bg-forest px-5 py-20 md:py-28">
+    <ul class="relative mx-auto max-w-3xl space-y-5 md:space-y-7">
+      {bigLinks.map((link) => (
+        <li>
+          <a
+            href={withBase(link.href)}
+            class="group flex items-center justify-between rounded-full bg-cream px-7 py-3 text-forest shadow-lg transition hover:bg-gold md:px-12 md:py-4"
+          >
+            <span class="font-display text-2xl md:text-[2.6rem] md:leading-tight">{link.label.split(' & ').map((part, j) => (<>{j > 0 && <> <span class="amp">&amp;</span> </>}{part}</>))}</span>
+            <span class="text-2xl transition-transform group-hover:translate-x-1 md:text-3xl" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ── PORTFOLIO ────────────────────────────────────────────────── -->
+  <section class="px-3 pb-20 pt-20 md:px-10">
+    <div class="mx-auto max-w-[1440px]">
+      <div class="flex items-center justify-center">
+        <a href={withBase('/engagements/')} class="group text-center">
+          <h2 class="text-[clamp(2.4rem,5vw,4rem)] text-forest">
+            Our Portfolio <span class="inline-block transition-transform group-hover:translate-x-2" aria-hidden="true">→</span>
+          </h2>
+        </a>
+      </div>
+      <div class="mt-12 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-5">
+        {portfolio.map((img, i) => (
+          <a
+            href={withBase(i % 2 === 0 ? '/engagements/' : '/graduations/')}
+            class="group block overflow-hidden rounded-xl"
+          >
+            <Image
+              src={img.image}
+              alt={img.alt || (i % 2 === 0 ? 'Engagement session' : 'Graduation session')}
+              width={600}
+              height={600}
+              class="aspect-square h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ── INTRO ─────────────────────────────────────────────────────── -->
-  <section class="bg-cream px-6 py-24 text-center">
-    <div class="mx-auto max-w-xl">
-      <p class="text-xs uppercase tracking-[0.38em] text-muted">Elm City Photography</p>
-      <h2 class="mt-5 font-serif text-3xl italic leading-relaxed text-ink md:text-4xl">
-        We photograph weddings, engagements, and milestones for people who want images that feel real.
-      </h2>
-      <p class="mt-6 text-base leading-8 text-muted">
-        Based in New Haven, CT. Available for weddings and portrait sessions throughout Connecticut, New England, and beyond.
-      </p>
+  <!-- ── CTA ──────────────────────────────────────────────────────── -->
+  <section class="px-5 pb-24 md:px-10">
+    <div class="text-center">
+      <a href={withBase('/contact/')} class="btn-pill btn-dark md:!px-16 md:!py-5">Get in touch to save your date</a>
     </div>
   </section>
-
-  <!-- ── PORTFOLIO SPREAD ──────────────────────────────────────────── -->
-  <section>
-    <div class="flex h-[65vh] min-h-[360px] w-full">
-      <a href={withBase('/engagements/')} class="group relative flex-1 overflow-hidden">
-        {engagementCover && (
-          <Image
-            src={engagementCover.image}
-            alt="Engagement photography by Elm City Photography"
-            width={1200}
-            height={900}
-            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          />
-        )}
-        <div class="absolute inset-0 bg-gradient-to-t from-green-deep/70 via-green-deep/10 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
-          <p class="text-xs uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
-          <h3 class="mt-1 font-serif text-3xl italic text-cream md:text-4xl">Engagements</h3>
-        </div>
-      </a>
-      <div class="w-px bg-cream/10"></div>
-      <a href={withBase('/graduations/')} class="group relative flex-1 overflow-hidden">
-        {graduationCover && (
-          <Image
-            src={graduationCover.image}
-            alt="Graduation portrait photography by Elm City Photography"
-            width={1200}
-            height={900}
-            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          />
-        )}
-        <div class="absolute inset-0 bg-gradient-to-t from-green-deep/70 via-green-deep/10 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 p-8 md:p-12">
-          <p class="text-xs uppercase tracking-[0.3em] text-green-light/80">Portfolio</p>
-          <h3 class="mt-1 font-serif text-3xl italic text-cream md:text-4xl">Graduations</h3>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── ABOUT TEASER ──────────────────────────────────────────────── -->
-  <section class="bg-cream" aria-labelledby="about-heading">
-    <div class="mx-auto max-w-2xl px-6 py-16 text-center md:py-24">
-      <p class="text-xs uppercase tracking-[0.35em] text-muted">About Us</p>
-      <h2 id="about-heading" class="mt-4 font-serif text-4xl italic leading-tight text-ink md:text-5xl">
-        We show up for the small moments.
-      </h2>
-      <div class="mt-10 aspect-[3/2] w-full overflow-hidden">
-        <Image
-          src={aboutPhoto}
-          alt="Two photographers reviewing a shot together on camera"
-          width={1600}
-          height={900}
-          class="h-full w-full object-cover object-center"
-          loading="lazy"
-        />
-      </div>
-      <p class="mt-8 text-base leading-8 text-muted">
-        We're a New Haven-based photography team focused on two things: capturing what's real, and editing
-        with colors that stay true to life. No heavy filters, no trending presets; just images that look
-        the way the day actually looked.
-      </p>
-      <p class="mt-4 text-base leading-8 text-muted">
-        We photograph weddings, engagements, graduations, and portraits throughout Connecticut and New England.
-        If you're planning something meaningful, we'd love to be there.
-      </p>
-      <a
-        href={withBase('/about/')}
-        class="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.26em] text-ink transition-colors hover:text-green-mid"
-      >
-        Our Story <span aria-hidden="true">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── INVESTMENT TEASER ─────────────────────────────────────────── -->
-  {/* Wedding pricing teaser hidden until the wedding portfolio is added back; see src/pages/pricing.astro */}
-
-  <!-- ── CONTACT CTA ───────────────────────────────────────────────── -->
-  <section class="bg-cream py-32 text-center" aria-labelledby="contact-heading">
-    <p class="text-xs uppercase tracking-[0.38em] text-muted">Let's Connect</p>
-    <h2 id="contact-heading" class="mt-5 font-serif text-5xl italic leading-tight text-ink md:text-6xl lg:text-7xl">
-      Let's make<br />something beautiful.
-    </h2>
-    <p class="mx-auto mt-6 max-w-sm text-base leading-7 text-muted">
-      We'd love to hear about your wedding, your engagement, or whatever milestone is coming up. Drop us a note. We get back to everyone.
-    </p>
-    <a
-      href="mailto:hello@elmcityphotography.com"
-      class="mt-8 inline-block text-sm text-muted underline underline-offset-4 transition-colors hover:text-ink"
-    >
-      hello@elmcityphotography.com
-    </a>
-  </section>
-
 </BaseLayout>
 
-<script>
-  const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-slide]'));
-  const dots   = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-dot]'));
-
-  // Add transition classes after the initial paint so the opacity-0 setup
-  // doesn't animate on page load (which caused a flash to the last slide).
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    slides.forEach(s => s.classList.add('transition-opacity', 'duration-1000', 'ease-in-out'));
-  }));
-
-  if (slides.length > 1) {
-    let current = 0;
-
-    function goTo(next: number) {
-      slides[current].classList.replace('opacity-100', 'opacity-0');
-      dots[current].classList.replace('w-8', 'w-4');
-      dots[current].classList.replace('bg-cream', 'bg-cream/40');
-
-      slides[next].classList.replace('opacity-0', 'opacity-100');
-      dots[next].classList.replace('w-4', 'w-8');
-      dots[next].classList.replace('bg-cream/40', 'bg-cream');
-
-      current = next;
-    }
-
-    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-    setInterval(() => goTo((current + 1) % slides.length), 5000);
+<style is:global>
+  #hero-type .ch { visibility: hidden; }
+  #hero-type .ch.on { visibility: visible; }
+  #hero-type .caret {
+    display: inline-block;
+    width: 0.06em;
+    height: 0.9em;
+    margin-left: 0.04em;
+    margin-right: -0.1em;
+    vertical-align: -0.08em;
+    background: var(--color-gold);
+    animation: caret-blink 1s steps(1) infinite;
   }
+  @keyframes caret-blink { 50% { opacity: 0; } }
+</style>
+
+<script>
+  function typeHero() {
+    const h1 = document.getElementById('hero-type');
+    if (!h1 || h1.dataset.typed) return;
+    h1.dataset.typed = '1';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Wrap every character so the full line keeps its final layout while hidden (no reflow while typing).
+    const chars: HTMLSpanElement[] = [];
+    h1.querySelectorAll<HTMLElement>('[data-type]').forEach((part) => {
+      const text = part.textContent ?? '';
+      part.textContent = '';
+      for (const c of text) {
+        const span = document.createElement('span');
+        span.className = 'ch';
+        span.textContent = c;
+        part.appendChild(span);
+        chars.push(span);
+      }
+    });
+
+    const caret = document.createElement('span');
+    caret.className = 'caret';
+    chars[0]?.before(caret);
+
+    let i = 0;
+    const step = () => {
+      if (i >= chars.length) return;
+      const c = chars[i++];
+      c.classList.add('on');
+      c.after(caret);
+      const pause = c.textContent === ',' ? 380 : c.textContent === ' ' ? 90 : 55 + Math.random() * 45;
+      setTimeout(step, pause);
+    };
+    setTimeout(step, 450);
+  }
+
+  typeHero();
+  document.addEventListener('astro:page-load', typeHero);
 </script>

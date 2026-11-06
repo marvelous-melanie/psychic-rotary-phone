@@ -7,6 +7,9 @@ export default defineConfig({
   site: 'https://elmcityphotography.com',
   output: 'static',
   trailingSlash: 'always',
+  redirects: {
+    '/pricing/': '/engagement-pricing/',
+  },
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

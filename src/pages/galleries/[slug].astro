@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import GalleryLayout from '../../layouts/GalleryLayout.astro';
 import LightboxGallery from '../../components/LightboxGallery.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
 import { getGalleryImages, getGalleryCover } from '../../lib/galleries';
 
 export async function getStaticPaths() {
@@ -26,30 +28,17 @@ const canonicalUrl = new URL(`/galleries/${gallery.id}/`, 'https://elmcityphotog
   image={cover?.path}
   canonicalUrl={canonicalUrl}
 >
-  <header class="mx-auto max-w-5xl px-4 py-16">
-    <p class="text-sm uppercase tracking-[0.25em] text-muted">{gallery.data.type}</p>
-    <h1 class="mt-3 text-4xl font-medium tracking-tight md:text-6xl">{gallery.data.title}</h1>
-    <p class="mt-4 max-w-2xl text-muted">{gallery.data.description}</p>
-    <p class="mt-2 text-sm text-muted">{gallery.data.location}</p>
-  </header>
+  <PageHero eyebrow={gallery.data.location ?? gallery.data.type} title={gallery.data.title} intro={gallery.data.description} />
 
-  <section class="mx-auto max-w-5xl px-4 pb-10 prose prose-neutral">
-    <Content />
-  </section>
+  {gallery.body?.trim() && (
+    <section class="prose prose-neutral mx-auto max-w-3xl px-5 pt-14 text-lg">
+      <Content />
+    </section>
+  )}
 
-  <LightboxGallery images={images} galleryId={gallery.id} />
+  <div class="pt-14">
+    <LightboxGallery images={images} galleryId={gallery.id} />
+  </div>
 
-  <section class="bg-cream px-6 py-24 text-center">
-    <p class="text-xs uppercase tracking-[0.35em] text-muted">Work together</p>
-    <h2 class="mt-4 font-serif text-4xl italic text-ink md:text-5xl">Like what you see?</h2>
-    <p class="mx-auto mt-5 max-w-sm text-base leading-7 text-muted">
-      We'd love to hear about your plans. Drop us a note and we'll get back to you within 48 hours.
-    </p>
-    <a
-      href="/contact/"
-      class="mt-8 inline-block bg-green-deep px-10 py-3.5 text-xs uppercase tracking-[0.28em] text-cream transition-colors hover:bg-green-mid"
-    >
-      Get in Touch
-    </a>
-  </section>
+  <CtaBand title="Like what you see?" secondary={{ href: gallery.data.type === 'graduation' ? '/graduation-pricing/' : '/engagement-pricing/', label: 'See pricing' }} />
 </GalleryLayout>
