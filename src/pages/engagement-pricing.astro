@@ -1,10 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import PackageCards from '../components/PackageCards.astro';
 import GoodToKnow from '../components/GoodToKnow.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { withBase } from '../lib/paths';
 import { engagement } from '../data/pricing';
 ---
 
@@ -12,19 +10,9 @@ import { engagement } from '../data/pricing';
   title="Engagement Pricing | New Haven CT | Elm City Photography"
   description="Engagement session pricing from Elm City Photography in New Haven, CT. Sessions from $375. Travel anywhere in Connecticut included."
 >
-  <PageHero
-    eyebrow="Engagement pricing"
-    title="Just the two of you."
-    intro="No stiff posing and no props you didn't ask for. Every session includes a fully edited online gallery and travel anywhere in Connecticut."
-  >
-    <div class="mt-10 flex flex-wrap justify-center gap-3">
-      <a href={withBase('/graduation-pricing/')} class="inline-block rounded-full border-2 border-cream/30 px-5 py-2 text-sm font-bold text-cream transition-colors hover:border-gold hover:text-gold">Graduation pricing →</a>
-    </div>
-  </PageHero>
-
   <section class="px-5 pt-20 md:px-10 md:pt-24">
     <div class="mx-auto max-w-6xl">
-      <h2 class="sr-only">Engagement sessions</h2>
+      <h1 class="sr-only">Engagement sessions</h1>
       <PackageCards packages={engagement} />
     </div>
   </section>

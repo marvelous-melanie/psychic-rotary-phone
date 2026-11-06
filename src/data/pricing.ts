@@ -13,11 +13,11 @@ export const engagement: Pkg[] = [
     price: '$375',
     tagline: 'An hour is more than you think.',
     description: 'One focused hour with a single beautiful backdrop. Less logistics, more presence. You show up; we handle the rest.',
-    items: ['1 hour of coverage', '25+ edited digital images', 'Online gallery in 2–3 weeks'],
+    items: ['1 hour of coverage', '40+ edited digital images', 'Online gallery in 2–3 weeks'],
   },
   {
     name: 'The Chapter',
-    price: '$450',
+    price: '$695',
     tagline: "When one place isn't the whole picture.",
     description: 'A longer session to settle into, time to change up the scenery, and a finished print sent straight to your door.',
     items: ['2 hours of coverage', '60+ edited digital images', 'Online gallery in 2–3 weeks', 'One 5×7 fine-art print'],
@@ -25,7 +25,7 @@ export const engagement: Pkg[] = [
   },
   {
     name: 'The Experience',
-    price: '$600',
+    price: '$995',
     tagline: 'For couples who want the whole story told.',
     description: 'A full evening across multiple backdrops: city streets, a park, the shoreline at golden hour. Everything documented, nothing rushed.',
     items: ['3 hours of coverage', '100+ edited digital images', 'Online gallery in 2–3 weeks', 'One 11×14 fine-art print'],

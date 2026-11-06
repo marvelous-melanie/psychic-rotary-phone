@@ -1,17 +1,18 @@
 ---
 import { withBase } from '../lib/paths';
 import Wordmark from './Wordmark.astro';
+import NavItems from './NavItems.astro';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (path: string) => (withBase(path).replace(/\/$/, '') || '/') === currentPath;
 
 type NavLink = { href: string; label: string; children?: { href: string; label: string }[] };
-const isLinkActive = (link: NavLink) => (link.children ? link.children.some((c) => isActive(c.href)) : isActive(link.href));
 
 const links: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/engagements/', label: 'Engagements' },
   { href: '/graduations/', label: 'Graduations' },
+  { href: '/wildlife/', label: 'Wildlife' },
   {
     href: '/engagement-pricing/',
     label: 'Pricing',
@@ -22,69 +23,34 @@ const links: NavLink[] = [
   },
   { href: '/about/', label: 'About' },
 ];
+
+// Portfolio on the left, business links on the right, wordmark centered between them.
+const leftLinks = links.slice(0, 4);
+const rightLinks = links.slice(4);
 ---
 
 <header class="relative z-50 bg-forest text-cream" id="site-header">
-  <div class="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 py-4 md:px-10 md:py-5">
-    <!-- Left: primary nav (desktop) -->
-    <nav aria-label="Primary" class="hidden flex-1 lg:block">
-      <ul class="flex items-center gap-6 text-[0.8rem] font-bold uppercase tracking-[0.14em]">
-        {links.map((link) =>
-          link.children ? (
-            <li class="group relative">
-              <a
-                href={withBase(link.href)}
-                aria-haspopup="true"
-                class:list={[
-                  'inline-flex items-center gap-1.5 border-b-2 pb-1 transition-colors',
-                  isLinkActive(link) ? 'border-gold text-cream' : 'border-transparent text-cream/80 hover:text-gold',
-                ]}
-              >
-                {link.label}
-                <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" class="transition-transform group-hover:rotate-180 group-focus-within:rotate-180"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </a>
-              <div class="invisible absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <ul class="overflow-hidden rounded-2xl bg-cream p-2 text-forest shadow-xl">
-                  {link.children.map((c) => (
-                    <li>
-                      <a
-                        href={withBase(c.href)}
-                        aria-current={isActive(c.href) ? 'page' : undefined}
-                        class:list={['block rounded-xl px-4 py-3 transition-colors hover:bg-mint', isActive(c.href) && 'bg-mint']}
-                      >
-                        {c.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ) : (
-            <li>
-              <a
-                href={withBase(link.href)}
-                aria-current={isActive(link.href) ? 'page' : undefined}
-                class:list={[
-                  'inline-flex items-center border-b-2 pb-1 transition-colors',
-                  isActive(link.href) ? 'border-gold text-cream' : 'border-transparent text-cream/80 hover:text-gold',
-                ]}
-              >
-                {link.label}
-              </a>
-            </li>
-          ),
-        )}
+  <div class="mx-auto grid max-w-[1440px] grid-cols-[1fr_auto] items-center gap-6 px-5 py-4 md:px-10 md:py-5 lg:grid-cols-[1fr_auto_1fr]">
+    <!-- Left: portfolio links (desktop) -->
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-6 text-[0.8rem] font-bold uppercase tracking-[0.14em] xl:gap-8">
+        <NavItems links={leftLinks} />
       </ul>
     </nav>
 
     <!-- Center: wordmark -->
-    <a href={withBase('/')} class="shrink-0 transition-opacity hover:opacity-90" aria-label="Elm City Photography home">
+    <a href={withBase('/')} class="justify-self-center transition-opacity hover:opacity-90 max-lg:col-start-1 max-lg:justify-self-start" aria-label="Elm City Photography home">
       <Wordmark class="h-14 w-auto md:h-[4.5rem]" />
     </a>
 
-    <!-- Right: CTA (desktop) + menu toggle (mobile) -->
-    <div class="flex flex-1 items-center justify-end gap-4">
-      <a href={withBase('/contact/')} class="btn-pill hidden bg-cream !px-7 !py-3 text-forest hover:bg-gold sm:inline-flex">
+    <!-- Right: pricing, about, CTA (desktop) + menu toggle (mobile) -->
+    <div class="flex items-center justify-end gap-6 xl:gap-8">
+      <nav aria-label="Secondary" class="hidden lg:block">
+        <ul class="flex items-center gap-6 text-[0.8rem] font-bold uppercase tracking-[0.14em] xl:gap-8">
+          <NavItems links={rightLinks} />
+        </ul>
+      </nav>
+      <a href={withBase('/contact/')} class="btn-pill hidden whitespace-nowrap bg-cream !px-7 !py-3 text-forest hover:bg-gold sm:inline-flex lg:hidden xl:inline-flex">
         Book with us
       </a>
       <button

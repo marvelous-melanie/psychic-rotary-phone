@@ -1,0 +1,57 @@
+---
+import { withBase } from '../lib/paths';
+
+type NavLink = { href: string; label: string; children?: { href: string; label: string }[] };
+interface Props { links: NavLink[] }
+const { links } = Astro.props;
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (path: string) => (withBase(path).replace(/\/$/, '') || '/') === currentPath;
+const isLinkActive = (link: NavLink) => (link.children ? link.children.some((c) => isActive(c.href)) : isActive(link.href));
+---
+
+{links.map((link) =>
+  link.children ? (
+    <li class="group relative">
+      <a
+        href={withBase(link.href)}
+        aria-haspopup="true"
+        class:list={[
+          'inline-flex items-center gap-1.5 border-b-2 pb-1 transition-colors',
+          isLinkActive(link) ? 'border-gold text-cream' : 'border-transparent text-cream/80 hover:text-gold',
+        ]}
+      >
+        {link.label}
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" class="transition-transform group-hover:rotate-180 group-focus-within:rotate-180"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </a>
+      <div class="invisible absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <ul class="overflow-hidden rounded-2xl bg-cream p-2 text-forest shadow-xl">
+          {link.children.map((c) => (
+            <li>
+              <a
+                href={withBase(c.href)}
+                aria-current={isActive(c.href) ? 'page' : undefined}
+                class:list={['block rounded-xl px-4 py-3 transition-colors hover:bg-mint', isActive(c.href) && 'bg-mint']}
+              >
+                {c.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  ) : (
+    <li>
+      <a
+        href={withBase(link.href)}
+        aria-current={isActive(link.href) ? 'page' : undefined}
+        class:list={[
+          'inline-flex items-center border-b-2 pb-1 transition-colors',
+          isActive(link.href) ? 'border-gold text-cream' : 'border-transparent text-cream/80 hover:text-gold',
+        ]}
+      >
+        {link.label}
+      </a>
+    </li>
+  ),
+)}

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LightboxGallery from '../components/LightboxGallery.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getGalleryImages } from '../lib/galleries';
+
+const images = getGalleryImages('wildlife');
+
+// Curated rows (each row shares one height): puffins first, then the other birds, foxes last.
+// Photos not listed here are appended at the end.
+const byNumber = (n: number) => images.find((i) => i.filename.startsWith(String(n).padStart(4, '0')))?.filename ?? '';
+const rows = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8],
+  [9, 10, 11, 12],
+  [13, 14, 15],
+].map((row) => row.map(byNumber));
+---
+
+<BaseLayout
+  title="Wildlife & Bird Photography | Elm City Photography"
+  description="Puffins, plovers, woodpeckers, foxes and more: wildlife and bird photography by Elm City Photography."
+>
+  <PageHero eyebrow="Portfolio" title="If you are a bird, we will take your picture for free!" />
+
+  <div class="pt-14">
+    <LightboxGallery images={images} rows={rows} galleryId="wildlife" />
+  </div>
+
+  <CtaBand
+    title="Not a bird?"
+    body="We also photograph engagements and graduations. Tell us about your plans and we'll get back to you within 48 hours."
+    secondary={{ href: '/engagements/', label: 'See the portfolio' }}
+  />
+</BaseLayout>

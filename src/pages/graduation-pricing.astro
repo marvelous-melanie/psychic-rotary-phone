@@ -1,10 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import PackageCards from '../components/PackageCards.astro';
 import GoodToKnow from '../components/GoodToKnow.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { withBase } from '../lib/paths';
 import { graduation } from '../data/pricing';
 ---
 
@@ -12,19 +10,9 @@ import { graduation } from '../data/pricing';
   title="Graduation Photo Pricing | New Haven CT | Elm City Photography"
   description="Graduation portrait pricing from Elm City Photography in New Haven, CT. Sessions from $175, add another graduate for $125. Travel anywhere in Connecticut included."
 >
-  <PageHero
-    eyebrow="Graduation pricing"
-    title="You did it. Let's celebrate."
-    intro="Cap-and-gown classics, the campus spots that mattered, and room for the people who got you here. Every session includes a fully edited online gallery."
-  >
-    <div class="mt-10 flex flex-wrap justify-center gap-3">
-      <a href={withBase('/engagement-pricing/')} class="inline-block rounded-full border-2 border-cream/30 px-5 py-2 text-sm font-bold text-cream transition-colors hover:border-gold hover:text-gold">Engagement pricing →</a>
-    </div>
-  </PageHero>
-
   <section class="px-5 pt-20 md:px-10 md:pt-24">
     <div class="mx-auto max-w-6xl">
-      <h2 class="sr-only">Graduation sessions</h2>
+      <h1 class="sr-only">Graduation sessions</h1>
       <PackageCards packages={graduation} />
       <div class="mx-auto mt-12 flex max-w-3xl flex-col gap-2 rounded-3xl bg-mint px-8 py-5 text-forest sm:flex-row sm:items-center sm:justify-between sm:rounded-full">
         <p><strong>Celebrating together?</strong> Add another graduate to The Portrait or The Celebration.</p>
