@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro';
+import { altText } from '../data/alt';
 
 export type GalleryImage = {
   path: string;
@@ -35,7 +36,7 @@ export function getGalleryImages(slug: string): GalleryImage[] {
         path,
         filename,
         image: mod.default,
-        alt: altFromFilename(filename),
+        alt: altText[slug]?.[filename] ?? altFromFilename(filename),
       };
     });
 }

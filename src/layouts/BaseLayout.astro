@@ -6,6 +6,7 @@ import SkipLink from '../components/SkipLink.astro';
 import Seo from '../components/Seo.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
 import '../styles/global.css';
+import { engagement, graduation, type Pkg } from '../data/pricing';
 
 interface Props {
   title: string;
@@ -18,12 +19,69 @@ interface Props {
 const { title, description, image, canonicalUrl, heroPreload } = Astro.props;
 if (!Astro.site) throw new Error('Astro.site is not set — check astro.config.mjs');
 const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
+
+const SITE = 'https://elmcityphotography.com';
+const offer = (category: string, pkgs: Pkg[], path: string) => ({
+  '@type': 'OfferCatalog',
+  name: category,
+  url: `${SITE}${path}`,
+  itemListElement: pkgs.map((p) => ({
+    '@type': 'Offer',
+    name: `${p.name} (${category})`,
+    description: p.items.join(', '),
+    price: p.price.replace(/[^0-9.]/g, ''),
+    priceCurrency: 'USD',
+    url: `${SITE}${path}`,
+  })),
+});
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['LocalBusiness', 'ProfessionalService'],
+      '@id': `${SITE}/#business`,
+      name: 'Elm City Photography',
+      url: SITE,
+      logo: `${SITE}/og-default.jpg`,
+      image: `${SITE}/og-default.jpg`,
+      description: 'Engagement, proposal, and graduation portrait photography based in New Haven, CT. Travel anywhere in Connecticut is included.',
+      email: 'hello@elmcityphotography.com',
+      address: { '@type': 'PostalAddress', addressLocality: 'New Haven', addressRegion: 'CT', addressCountry: 'US' },
+      areaServed: [
+        { '@type': 'City', name: 'New Haven, CT' },
+        { '@type': 'City', name: 'Hamden, CT' },
+        { '@type': 'City', name: 'West Haven, CT' },
+        { '@type': 'AdministrativeArea', name: 'New Haven County, CT' },
+        { '@type': 'State', name: 'Connecticut' },
+      ],
+      knowsAbout: ['Engagement photography', 'Proposal photography', 'Graduation photography', 'Portrait photography'],
+      priceRange: '$175–$995',
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Photography sessions',
+        itemListElement: [
+          offer('Engagement session', engagement, '/engagement-pricing/'),
+          offer('Graduation session', graduation, '/graduation-pricing/'),
+        ],
+      },
+      sameAs: ['https://www.instagram.com/elm.city.photography'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      name: 'Elm City Photography',
+      url: SITE,
+      publisher: { '@id': `${SITE}/#business` },
+    },
+  ],
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <Seo title={title} description={description} image={image} canonicalUrl={canonical} />
+    <slot name="head" />
     {heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
     <script is:inline>
       (function () {
@@ -41,25 +99,7 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,0..100;1,9..144,400..900,0..100&family=DM+Sans:opsz,wght@9..40,400..700&display=swap"
       rel="stylesheet"
     />
-  <script type="application/ld+json" is:inline set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "ProfessionalService"],
-    "name": "Elm City Photography",
-    "url": "https://elmcityphotography.com",
-    "logo": "https://elmcityphotography.com/og-default.jpg",
-    "image": "https://elmcityphotography.com/og-default.jpg",
-    "description": "Engagement and graduation portrait photography based in New Haven, CT.",
-    "email": "hello@elmcityphotography.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "New Haven",
-      "addressRegion": "CT",
-      "addressCountry": "US"
-    },
-    "areaServed": ["New Haven County", "Connecticut", "New England"],
-    "priceRange": "$175–$995",
-    "sameAs": ["https://www.instagram.com/elm.city.photography"]
-  })} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="min-h-screen overflow-x-clip bg-cream text-ink">
     <ClientRouter />

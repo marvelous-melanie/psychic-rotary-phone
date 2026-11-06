@@ -10,7 +10,7 @@ export default defineConfig({
   redirects: {
     '/pricing/': '/engagement-pricing/',
   },
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/galleries/') })],
   vite: {
     plugins: [tailwindcss()],
   },

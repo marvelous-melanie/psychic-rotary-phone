@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { withBase } from '../lib/paths';
+---
+
+<BaseLayout title="Page not found | Elm City Photography" description="This page doesn't exist. Find engagement and graduation photography from Elm City Photography in New Haven, CT.">
+  <meta name="robots" content="noindex" slot="head" />
+  <PageHero eyebrow="404" title="This page wandered off." intro="It may have moved. Try one of these instead.">
+    <div class="mt-9 flex flex-wrap justify-center gap-3">
+      <a href={withBase('/')} class="btn-pill btn-gold">Home</a>
+      <a href={withBase('/engagements/')} class="btn-pill btn-gold">Engagements</a>
+      <a href={withBase('/graduations/')} class="btn-pill btn-gold">Graduations</a>
+      <a href={withBase('/contact/')} class="btn-pill btn-gold">Contact</a>
+    </div>
+  </PageHero>
+</BaseLayout>

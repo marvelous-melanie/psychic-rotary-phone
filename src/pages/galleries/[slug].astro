@@ -19,7 +19,8 @@ const { gallery } = Astro.props;
 const { Content } = await render(gallery);
 const images = getGalleryImages(gallery.id);
 const cover = getGalleryCover(gallery.id, gallery.data.cover);
-const canonicalUrl = new URL(`/galleries/${gallery.id}/`, 'https://elmcityphotography.com').toString();
+// These pages repeat the main portfolio pages, so point search engines at those instead.
+const canonicalUrl = new URL(gallery.data.type === 'graduation' ? '/graduations/' : '/engagements/', 'https://elmcityphotography.com').toString();
 ---
 
 <GalleryLayout

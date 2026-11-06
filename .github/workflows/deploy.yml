@@ -34,3 +34,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  # Tell Bing (which feeds ChatGPT search) and other IndexNow engines that pages changed.
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping IndexNow
+        continue-on-error: true
+        run: |
+          KEY=3afb384566d87fb7e72638a15aeacb30
+          URLS=$(curl -fsSL https://elmcityphotography.com/sitemap-0.xml | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's#</loc>##' | jq -R . | jq -sc .)
+          curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"elmcityphotography.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://elmcityphotography.com/$KEY.txt\",\"urlList\":$URLS}" -w '%{http_code}\n'
