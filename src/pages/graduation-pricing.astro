@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PackageCards from '../components/PackageCards.astro';
 import GoodToKnow from '../components/GoodToKnow.astro';
 import CtaBand from '../components/CtaBand.astro';
+import PricingFaq from '../components/PricingFaq.astro';
+import { graduationFaq } from '../data/faq';
 import { graduation } from '../data/pricing';
 ---
 
@@ -22,6 +24,8 @@ import { graduation } from '../data/pricing';
   </section>
 
   <GoodToKnow />
+
+  <PricingFaq items={graduationFaq} />
 
   <CtaBand title="Book your grad session." secondary={{ href: '/graduations/', label: 'See the portfolio' }} />
 </BaseLayout>

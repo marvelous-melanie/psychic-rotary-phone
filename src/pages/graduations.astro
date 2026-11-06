@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LightboxGallery from '../components/LightboxGallery.astro';
+import { withBase } from '../lib/paths';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { getGalleryImages } from '../lib/galleries';
@@ -31,7 +32,12 @@ const rows = [
   <PageHero
     eyebrow="Portfolio"
     title="Graduations"
-  />
+  >
+    <a href={withBase('/contact/')} class="btn-pill btn-gold mt-9">Book with us</a>
+    <p class="mt-6 text-sm text-cream/75">
+      Yale, SCSU, Quinnipiac or UNH? <a href={withBase('/graduation-photos/')} class="font-bold text-cream underline-offset-4 hover:text-gold hover:underline">Find your campus →</a>
+    </p>
+  </PageHero>
 
   <div class="pt-14">
     <LightboxGallery images={images} rows={rows} galleryId={gallery?.id ?? 'graduations'} />

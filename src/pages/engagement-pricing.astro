@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PackageCards from '../components/PackageCards.astro';
 import GoodToKnow from '../components/GoodToKnow.astro';
 import CtaBand from '../components/CtaBand.astro';
+import PricingFaq from '../components/PricingFaq.astro';
+import { engagementFaq } from '../data/faq';
 import { engagement } from '../data/pricing';
 ---
 
@@ -18,6 +20,8 @@ import { engagement } from '../data/pricing';
   </section>
 
   <GoodToKnow />
+
+  <PricingFaq items={engagementFaq} />
 
   <CtaBand title="Let's plan your session." secondary={{ href: '/engagements/', label: 'See the portfolio' }} />
 </BaseLayout>

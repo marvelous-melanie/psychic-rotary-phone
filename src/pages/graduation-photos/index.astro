@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import GoodToKnow from '../../components/GoodToKnow.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { withBase } from '../../lib/paths';
+import { schools } from '../../data/schools';
+---
+
+<BaseLayout
+  title="Graduation Photographer in Connecticut | Elm City Photography"
+  description="Graduation portraits at Yale, Southern CT State, Quinnipiac, University of New Haven and campuses across Connecticut. Sessions from $175, travel anywhere in CT included."
+>
+  <PageHero
+    eyebrow="Graduation photos"
+    title="Graduation photos across Connecticut"
+    intro="Based in New Haven, with travel anywhere in Connecticut included. Pick your campus for the spots we'd shoot and when to book."
+  >
+    <a href={withBase('/contact/')} class="btn-pill btn-gold mt-9">Book with us</a>
+  </PageHero>
+
+  <section class="px-5 pt-20 md:px-10 md:pt-24">
+    <ul class="mx-auto max-w-5xl">
+      {schools.map((s, i) => (
+        <li class:list={[i > 0 && 'border-t-2 border-gold']}>
+          <a href={withBase(`/graduation-photos/${s.slug}/`)} class="group grid items-baseline gap-x-6 gap-y-1 px-1 py-6 md:grid-cols-[1fr_auto]">
+            <h2 class="text-[clamp(2rem,5vw,3.6rem)] leading-[1.02] text-forest transition-colors [text-wrap:balance] group-hover:text-[#b07f1c]">
+              {s.name} <span class="inline-block transition-transform group-hover:translate-x-1.5" aria-hidden="true">→</span>
+            </h2>
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-forest/60 md:text-right">{s.town}, CT</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mx-auto mt-12 max-w-2xl text-center text-lg leading-relaxed text-ink/85">
+      Graduating somewhere else? Travel anywhere in Connecticut is included, so any campus works. Tell us where and we'll scout the best spots.
+    </p>
+  </section>
+
+  <GoodToKnow />
+
+  <CtaBand title="Book your grad session." body="Sessions start at $175, and friends can join for $125 each. We'll get back to you within 48 hours." secondary={{ href: '/graduation-pricing/', label: 'See pricing' }} />
+</BaseLayout>

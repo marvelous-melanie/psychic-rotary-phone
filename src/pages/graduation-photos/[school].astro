@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import PackageCards from '../../components/PackageCards.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { withBase } from '../../lib/paths';
+import { getGalleryImages } from '../../lib/galleries';
+import { graduation } from '../../data/pricing';
+import { schools, type School } from '../../data/schools';
+
+export function getStaticPaths() {
+  return schools.map((school) => ({ params: { school: school.slug }, props: { school } }));
+}
+
+const { school } = Astro.props as { school: School };
+const others = schools.filter((s) => s.slug !== school.slug);
+
+const galleries = await getCollection('galleries');
+const gallery = galleries.filter((g) => g.data.type === 'graduation').sort((a, b) => a.data.order - b.data.order)[0];
+const all = gallery ? getGalleryImages(gallery.id) : [];
+// A different trio of recent graduation photos on each school page (picked from the portfolio rows).
+const trios = [
+  ['0017.jpg', '0007.jpg', '0001.jpg'],
+  ['0002.jpg', '0011.jpg', '0010.jpg'],
+  ['0015.jpg', '0013.jpg', '0006.jpg'],
+  ['0008.jpg', '0016.jpg', '0014.jpg'],
+];
+const pick = trios[schools.indexOf(school) % trios.length];
+const photos = pick.map((f) => all.find((img) => img.filename === f)).filter((img) => img !== undefined);
+
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Graduation photos', item: 'https://elmcityphotography.com/graduation-photos/' },
+    { '@type': 'ListItem', position: 2, name: school.short, item: `https://elmcityphotography.com/graduation-photos/${school.slug}/` },
+  ],
+};
+---
+
+<BaseLayout title={`${school.title} | ${school.town}, CT | Elm City Photography`} description={school.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs)} />
+
+  <PageHero eyebrow={`Graduation photos · ${school.town}, CT`} title={school.title} intro={school.intro}>
+    <a href={withBase('/contact/')} class="btn-pill btn-gold mt-9">Book with us</a>
+  </PageHero>
+
+  <section class="px-5 pt-20 md:px-10 md:pt-24">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-center text-[clamp(2.2rem,4.5vw,3.4rem)] leading-none text-forest [text-wrap:balance]">Where we'd shoot at {school.short}</h2>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2">
+        {school.spots.map((spot) => (
+          <div class="rounded-3xl bg-paper p-8">
+            <h3 class="font-display text-2xl text-forest">{spot.name}</h3>
+            <p class="mt-3 leading-relaxed text-ink/85">{spot.body}</p>
+          </div>
+        ))}
+        <div class="rounded-3xl bg-mint p-8 sm:col-span-2">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-forest/70">Just off campus</p>
+          <h3 class="mt-2 font-display text-2xl text-forest">{school.nearby.name}</h3>
+          <p class="mt-3 max-w-2xl leading-relaxed text-ink/85">{school.nearby.body}</p>
+        </div>
+      </div>
+      <p class="mx-auto mt-10 max-w-2xl text-center leading-relaxed text-ink/85">
+        Have your own favorite corner of campus? Tell us and we'll build the session around it.
+      </p>
+    </div>
+  </section>
+
+  {photos.length > 0 && (
+    <section class="px-5 pt-20 md:px-10">
+      <div class="mx-auto grid max-w-6xl grid-cols-3 gap-2 md:gap-4">
+        {photos.map((p) => (
+          <Image src={p.image} alt={p.alt || 'Graduation portrait by Elm City Photography'} widths={[400, 800]} sizes="(min-width: 1152px) 370px, 33vw" class="aspect-[4/5] w-full rounded-2xl object-cover" loading="lazy" />
+        ))}
+      </div>
+      <p class="mt-4 text-center text-sm text-ink/60">
+        Recent graduation sessions. <a href={withBase('/graduations/')} class="font-bold text-forest underline-offset-4 hover:underline">See the full portfolio →</a>
+      </p>
+    </section>
+  )}
+
+  <section class="px-5 pt-24 md:px-10">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-[clamp(2.2rem,4.5vw,3.4rem)] leading-none text-forest">When to book</h2>
+      <p class="mt-6 text-lg leading-relaxed text-ink/85">{school.timing}</p>
+      <p class="mt-4 leading-relaxed text-ink/85">
+        We usually shoot in the last 60–90 minutes before sunset, when the light is softest. Travel anywhere in Connecticut is included, so {school.town} costs nothing extra.
+      </p>
+    </div>
+  </section>
+
+  <section class="px-5 pt-24 md:px-10">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-center text-[clamp(2.2rem,4.5vw,3.4rem)] leading-none text-forest">Sessions &amp; pricing</h2>
+      <div class="mt-14"><PackageCards packages={graduation} /></div>
+      <div class="mx-auto mt-12 flex max-w-3xl flex-col gap-2 rounded-3xl bg-mint px-8 py-5 text-forest sm:flex-row sm:items-center sm:justify-between sm:rounded-full">
+        <p><strong>Graduating with friends?</strong> Add another graduate to The Portrait or The Celebration.</p>
+        <p class="shrink-0 font-bold">+$125 each</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-5 pt-20 md:px-10">
+    <div class="mx-auto max-w-6xl text-center">
+      <p class="eyebrow text-forest/70">Other schools we cover</p>
+      <ul class="mt-4 flex flex-wrap justify-center gap-3">
+        {others.map((s) => (
+          <li><a href={withBase(`/graduation-photos/${s.slug}/`)} class="inline-block rounded-full border-2 border-forest/20 px-5 py-2 text-sm font-bold text-forest transition-colors hover:border-forest">{s.short}</a></li>
+        ))}
+        <li><a href={withBase('/graduation-photos/')} class="inline-block rounded-full border-2 border-forest/20 px-5 py-2 text-sm font-bold text-forest transition-colors hover:border-forest">All of Connecticut</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title={`Book your ${school.short} session.`} body="Tell us your date and favorite spots, and we'll get back to you within 48 hours." secondary={{ href: '/graduation-pricing/', label: 'See pricing' }} />
+</BaseLayout>
