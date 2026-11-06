@@ -136,15 +136,21 @@ const bigLinks = [
 <style is:global>
   #hero-type .ch { visibility: hidden; }
   #hero-type .ch.on { visibility: visible; }
+  /* Zero-width box so the caret never changes line widths; the bar is drawn by ::after. */
   #hero-type .caret {
     display: inline-block;
-    width: 0.06em;
+    position: relative;
+    width: 0;
     height: 0.9em;
-    margin-left: 0.04em;
-    margin-right: -0.1em;
     vertical-align: -0.08em;
-    background: var(--color-gold);
     animation: caret-blink 1s steps(1) infinite;
+  }
+  #hero-type .caret::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0.04em;
+    width: 0.06em;
+    background: var(--color-gold);
   }
   @keyframes caret-blink { 50% { opacity: 0; } }
 </style>
@@ -179,7 +185,11 @@ const bigLinks = [
       if (i >= chars.length) return;
       const c = chars[i++];
       c.classList.add('on');
-      c.after(caret);
+      // Park the caret before a space, never after it. After the space that ends line one
+      // ("your story, "), the caret would stop that space from collapsing at the line end, so the
+      // centered line grows by a space and jumps sideways when the caret moves to line two.
+      if (c.textContent === ' ') c.before(caret);
+      else c.after(caret);
       const pause = c.textContent === ',' ? 380 : c.textContent === ' ' ? 90 : 55 + Math.random() * 45;
       setTimeout(step, pause);
     };
