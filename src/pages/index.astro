@@ -10,41 +10,23 @@ import heroRight from '../assets/galleries/engagements-2026/0016.jpg';
 const heroLeftImg = await getImage({ src: heroLeft, width: 1400, format: 'webp', quality: 82 });
 const heroRightImg = await getImage({ src: heroRight, width: 1400, format: 'webp', quality: 82 });
 
-const eng = getGalleryImages('engagements-2026');
-const grad = getGalleryImages('graduations-2026');
-const pick = (list: typeof eng, names: string[]) => names.map((n) => list.find((i) => i.filename === n)).filter((i) => !!i);
-const portfolio = [
-  ...pick(eng, ['0001.jpg']),
-  ...pick(grad, ['0003.jpg']),
-  ...pick(eng, ['0008.jpg']),
-  ...pick(grad, ['0011.jpg']),
-  ...pick(eng, ['0015.jpg']),
-  ...pick(grad, ['0001.jpg']),
-  ...pick(eng, ['0006.jpg']),
-  ...pick(grad, ['0014.jpg']),
-  ...pick(eng, ['0010.jpg']),
-  ...pick(grad, ['0017.jpg']),
-];
-
-const bigLinks = [
-  { href: '/about/', label: 'Get to know us' },
-  { href: '/engagement-pricing/', label: 'Sessions & pricing' },
-  { href: '/engagements/', label: 'See the portfolio' },
-  { href: '/contact/', label: 'Book your session' },
-];
+// Display order for the homepage column.
+const order = ['0005.jpg', '0006.jpg', '0007.jpg', '0008.jpg', '0009.jpg', '0002.jpg', '0003.jpg', '0004.jpg'];
+const all = getGalleryImages('home-engagements');
+const photos = order.map((f) => all.find((i) => i.filename === f)).filter((i) => !!i);
 
 ---
 
 <BaseLayout
-  title="Elm City Photography | Engagement & Graduation Photographer, New Haven CT"
-  description="Engagement, proposal, and graduation photography rooted in New Haven, CT. True-to-life color, honest moments, and photos that still look like you in twenty years."
+  title="Elm City Photography | Cinematic Wedding Photographer | New Haven CT"
+  description="Cinematic, documentary-style wedding and engagement photography based in New Haven, CT. Honest moments, true-to-life color, and photos that still feel like you in twenty years."
   heroPreload={heroLeftImg.src}
 >
   <!-- ── HERO ─────────────────────────────────────────────────────── -->
   <section class="bg-forest px-3 pb-3 pt-6 md:px-10 md:pb-10 md:pt-8">
-    <p class="eyebrow mb-3 text-center text-gold md:mb-4"><span class="block sm:inline">Engagement &amp; graduation photography</span><span class="hidden sm:inline"> · </span><span class="block sm:inline">New Haven, CT</span></p>
-    <h1 id="hero-type" aria-label="your story, in true color" class="mx-auto max-w-6xl px-2 text-center text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] text-cream">
-      <span aria-hidden="true" data-type>your story, </span><span aria-hidden="true" data-type class="whitespace-nowrap text-gold">in true color</span>
+    <p class="eyebrow mb-3 text-center text-gold md:mb-4"><span class="block sm:inline">Cinematic, documentary </span><span class="block sm:inline">weddings and engagements</span><span class="hidden sm:inline"> · </span><span class="block sm:inline">New Haven, CT</span></p>
+    <h1 id="hero-type" aria-label="your story, in cinematic light" class="mx-auto max-w-6xl px-2 text-center text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.04] text-cream">
+      <span aria-hidden="true" data-type>your story, </span><span aria-hidden="true" data-type class="whitespace-nowrap text-gold">in cinematic light</span>
     </h1>
     <div class="mx-auto mt-8 grid max-w-[min(1440px,calc(120vh+0.75rem))] grid-cols-2 gap-2 md:mt-12 md:gap-3">
       <img src={heroLeftImg.src} alt="A couple sharing a kiss at golden hour" class="aspect-[2/3] w-full rounded-2xl object-cover md:aspect-[4/5] object-[50%_35%] md:rounded-3xl" fetchpriority="high" />
@@ -53,86 +35,127 @@ const bigLinks = [
   </section>
 
   <!-- ── HELLO ────────────────────────────────────────────────────── -->
-  <section class="relative px-5 pb-24 pt-20 md:px-10 md:pt-28">
-    <div class="mx-auto max-w-6xl">
-      <h2 class="mx-auto max-w-3xl text-center text-[clamp(2.2rem,4.6vw,3.75rem)] leading-[1.05] text-forest">
-        Hi friends! We're the two people behind Elm City Photography.
-      </h2>
+  <section class="hello px-5 py-20 md:px-10 lg:px-[clamp(48px,5vw,128px)] lg:py-[clamp(96px,8vw,168px)]">
+    <div class="hello-grid mx-auto max-w-[1640px]">
+      <div class="hello-head">
+        <p class="eyebrow hello-kicker text-gold-deep">Hi friends!</p>
+        <h2 class="hello-title mt-4 text-forest">We're the two people behind the camera at Elm City Photography.</h2>
+      </div>
 
-      <div class="relative mt-16 grid items-start gap-10 md:grid-cols-[1fr_1.05fr_1fr] md:gap-12">
-        <div class="space-y-5 text-[1.05rem] leading-relaxed text-ink/85 md:pt-10">
-          <p><strong class="text-forest">We're a small New Haven photography team</strong> who started Elm City Photography because the moments that matter deserve to be documented accurately in images.</p>
-          <p><strong class="text-forest">Not stiffly posed or over-editorialized.</strong> Just real: the way your day actually looked, felt, and sounded while you were in the middle of it.</p>
+      <div class="hello-photo">
+        <div class="bg-white p-3 shadow-[0_1px_2px_rgba(29,42,32,0.14),0_22px_44px_-20px_rgba(29,42,32,0.4)] lg:p-[clamp(14px,1.3vw,24px)]">
+          <Image
+            src={aboutPhoto}
+            alt="The two Elm City photographers sitting at the foot of a red lighthouse by the river"
+            widths={[480, 720, 960, 1400]}
+            sizes="(min-width: 1024px) 38vw, 100vw"
+            class="block aspect-[2/3] h-auto w-full object-cover"
+          />
         </div>
+      </div>
 
-        <div class="relative mt-6 md:mt-0">
-          <div class="overflow-hidden rounded-2xl">
-            <Image src={aboutPhoto} alt="The two Elm City photographers sitting at the foot of a red lighthouse by the river" width={900} height={1350} class="aspect-[2/3] h-full w-full object-cover" />
-          </div>
-        </div>
-
-        <div class="relative space-y-5 text-[1.05rem] leading-relaxed text-ink/85 md:pt-10">
-          <p><strong class="text-forest">Our editing is built around honest, timeless color.</strong> Skin tones that look like your skin. Greens that look like the park you were standing in.</p>
-          <p><strong class="text-forest">No trendy presets, no awkward posing.</strong> Just photos that won't feel dated when you pull them out in twenty years.</p>
-        </div>
+      <div class="hello-points">
+        <p>If you feel awkward in photos, you're in good company, because we'll never ask you to stand still and smile. We'd much rather you wander around and laugh at each other's bad jokes while we tag along.</p>
+        <p class="hello-line"><span class="draw-line">We're there to document, not to direct.</span></p>
+        <p>Our favorite frames are the messy in-between ones, like hair blown sideways or a look you didn't know you gave, shot wide with plenty of sky so they feel like a movie.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── BIG LINKS ─────────────────────────────────────── -->
-  <section class="relative bg-forest px-5 py-20 md:py-28">
-    <ul class="relative mx-auto max-w-3xl space-y-5 md:space-y-7">
-      {bigLinks.map((link) => (
-        <li>
-          <a
-            href={withBase(link.href)}
-            class="group flex items-center justify-between rounded-full bg-cream px-7 py-3 text-forest shadow-lg transition hover:bg-gold md:px-12 md:py-4"
-          >
-            <span class="font-display text-2xl md:text-[2.6rem] md:leading-tight">{link.label.split(' & ').map((part, j) => (<>{j > 0 && <> <span class="amp">&amp;</span> </>}{part}</>))}</span>
-            <span class="text-2xl transition-transform group-hover:translate-x-1 md:text-3xl" aria-hidden="true">→</span>
-          </a>
+  <!-- ── ENGAGEMENT PHOTOS ────────────────────────────────────────── -->
+  <section class="bg-forest px-4 py-12 md:px-10 md:py-20">
+    <ul class="mx-auto flex max-w-5xl flex-col items-center gap-12 md:gap-20">
+      {photos.map((img) => (
+        <li class="photo-reveal flex w-full justify-center">
+          <div class="bg-[#fbfaf6] p-3 shadow-xl md:p-6">
+            <Image
+              src={img.image}
+              alt={img.alt}
+              widths={[640, 960, 1400, 2000]}
+              sizes="(min-width: 1104px) 1024px, 100vw"
+              class="block h-auto max-h-[calc(92vh-3rem)] w-auto max-w-full"
+              loading="lazy"
+            />
+          </div>
         </li>
       ))}
     </ul>
-  </section>
 
-  <!-- ── PORTFOLIO ────────────────────────────────────────────────── -->
-  <section class="px-3 pb-20 pt-20 md:px-10">
-    <div class="mx-auto max-w-[1440px]">
-      <div class="flex items-center justify-center">
-        <a href={withBase('/engagements/')} class="group text-center">
-          <h2 class="text-[clamp(2.4rem,5vw,4rem)] text-forest">
-            Our Portfolio <span class="inline-block transition-transform group-hover:translate-x-2" aria-hidden="true">→</span>
-          </h2>
-        </a>
-      </div>
-      <div class="mt-12 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-5">
-        {portfolio.map((img, i) => (
-          <a
-            href={withBase(i % 2 === 0 ? '/engagements/' : '/graduations/')}
-            class="group block overflow-hidden rounded-xl"
-          >
-            <Image
-              src={img.image}
-              alt={img.alt || (i % 2 === 0 ? 'Engagement session' : 'Graduation session')}
-              width={600}
-              height={600}
-              class="aspect-square h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CTA ──────────────────────────────────────────────────────── -->
-  <section class="px-5 pb-24 md:px-10">
-    <div class="text-center">
-      <a href={withBase('/contact/')} class="btn-pill btn-dark md:!px-16 md:!py-5">Get in touch to save your date</a>
+    <div class="mt-12 text-center md:mt-20">
+      <a href={withBase('/contact/')} class="btn-pill btn-gold md:!px-16 md:!py-5">Book your session</a>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  function armUnderlines() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const lines = document.querySelectorAll<HTMLElement>('.draw-line');
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('drawn');
+        io.unobserve(e.target);
+      }),
+      { rootMargin: '0px 0px -15% 0px', threshold: 1 },
+    );
+    lines.forEach((el) => { el.setAttribute('data-armed', ''); io.observe(el); });
+  }
+  document.addEventListener('astro:page-load', armUnderlines);
+</script>
+
+<style>
+  /* Hi friends: stacked on mobile (headline, photo, paragraph); editorial split on desktop. */
+  .hello-grid {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-areas: 'head' 'photo' 'points';
+  }
+  .hello-head { grid-area: head; }
+  .hello-photo { grid-area: photo; max-width: 30rem; width: 100%; justify-self: center; }
+  .hello-title {
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .hello-points {
+    grid-area: points;
+    margin: 0;
+    max-width: 38em;
+    border-top: 2px solid var(--color-ink);
+    padding-top: 1.1rem;
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--color-forest-2);
+  }
+  .hello-points p { margin: 0; }
+  .hello-points p + p { margin-top: 1em; }
+  .hello-line { color: var(--color-ink); }
+  /* Underline draws left to right once the line scrolls into view. Without JS it is simply shown. */
+  .draw-line {
+    background: linear-gradient(var(--color-gold-deep), var(--color-gold-deep)) no-repeat left bottom / 100% 2px;
+    padding-bottom: 3px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .draw-line[data-armed] { background-size: 0% 2px; transition: background-size 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.6s; }
+  .draw-line[data-armed].drawn { background-size: 100% 2px; }
+
+  @media (min-width: 1024px) {
+    .hello-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      grid-template-rows: 1fr auto auto 1fr;
+      grid-template-areas: '. photo' 'head photo' 'points photo' '. photo';
+      column-gap: clamp(56px, 6.5vw, 128px);
+      row-gap: 0;
+    }
+    .hello-photo { max-width: none; align-self: center; }
+    .hello-title { font-size: clamp(46px, 4.3vw, 76px); }
+    .hello-kicker { font-size: clamp(14px, 1.05vw, 18px); letter-spacing: 0.22em; }
+    .hello-points { margin-top: clamp(36px, 3.5vw, 64px); padding-top: clamp(18px, 1.5vw, 28px); font-size: clamp(20px, 1.5vw, 26px); }
+  }
+</style>
 
 <style is:global>
   #hero-type .ch { visibility: hidden; }

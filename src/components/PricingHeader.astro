@@ -1,0 +1,28 @@
+---
+import { withBase } from '../lib/paths';
+
+interface Props { current: 'wedding' | 'engagement'; title: string; intro: string }
+const { current, title, intro } = Astro.props;
+
+const tabs = [
+  { key: 'wedding', href: '/wedding-pricing/', label: 'Weddings' },
+  { key: 'engagement', href: '/engagement-pricing/', label: 'Engagements' },
+] as const;
+---
+
+<div class="mx-auto mb-16 max-w-2xl text-center md:mb-20">
+  <p class="eyebrow text-gold-deep">Pricing</p>
+  <h1 class="mt-4 text-[clamp(2.6rem,6vw,4.5rem)] leading-[1] text-forest">{title}</h1>
+  <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink/80 [text-wrap:balance]">{intro}</p>
+  <nav aria-label="Pricing type" class="mt-8 inline-flex rounded-full bg-paper p-1.5 text-sm font-bold uppercase tracking-[0.12em]">
+    {tabs.map((t) => (
+      <a
+        href={withBase(t.href)}
+        aria-current={t.key === current ? 'page' : undefined}
+        class:list={['rounded-full px-5 py-2.5 transition-colors', t.key === current ? 'bg-forest text-cream' : 'text-forest hover:text-moss']}
+      >
+        {t.label}
+      </a>
+    ))}
+  </nav>
+</div>

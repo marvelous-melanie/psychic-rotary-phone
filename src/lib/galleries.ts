@@ -40,8 +40,3 @@ export function getGalleryImages(slug: string): GalleryImage[] {
       };
     });
 }
-
-export function getGalleryCover(slug: string, coverFilename: string) {
-  const images = getGalleryImages(slug);
-  return images.find((image) => image.filename === coverFilename) ?? images[0];
-}

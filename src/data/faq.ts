@@ -1,9 +1,8 @@
-import { engagement, graduation } from './pricing';
+import { engagement, wedding } from './pricing';
 
 export type Faq = { q: string; a: string };
 
 const [afternoon, chapter, experience] = engagement;
-const [mini, portrait, celebration] = graduation;
 
 const travel = {
   q: 'Do you travel outside New Haven?',
@@ -34,26 +33,32 @@ export const engagementFaq: Faq[] = [
   travel,
 ];
 
-export const graduationFaq: Faq[] = [
+const [essential, story, journey] = wedding;
+
+export const weddingFaq: Faq[] = [
   {
-    q: 'How much does a graduation session cost?',
-    a: `There are three packages. ${mini.name} is ${mini.price} for 30 minutes, ${portrait.name} is ${portrait.price} for 1 hour, and ${celebration.name} is ${celebration.price} for 90 minutes.`,
+    q: 'How much does wedding photography cost?',
+    a: `There are three packages. ${essential.name} is ${essential.price} for 6 hours, ${story.name} is ${story.price} for 8 hours with a second photographer, and ${journey.name} is ${journey.price} for up to 12 hours, including rehearsal dinner coverage.`,
   },
   {
-    q: 'Can I bring more than one outfit?',
-    a: 'Yes. The Mini covers cap and gown plus 1 outfit. The Portrait allows up to 2 outfits, and The Celebration up to 3.',
+    q: 'How many photos will we get, and how soon?',
+    a: "You get 150+ edited photos with The Essential, 300+ with The Story, and 400+ with The Full Journey. Your full gallery arrives by private online link within 4–6 weeks, and you'll get a sneak peek of a handful of images within 48 hours of your wedding.",
   },
   {
-    q: 'Can we book a session for more than one graduate?',
-    a: 'Yes. You can add another graduate to The Portrait or The Celebration for $125 each.',
+    q: 'Is a second photographer included?',
+    a: "The Story and The Full Journey include a second photographer as standard. It isn't an add-on. It's built in, because weddings deserve two sets of eyes.",
   },
   {
-    q: 'Can my family be in the photos?',
-    a: 'Of course. Family is welcome to jump in during The Portrait, and The Celebration leaves time for the people who got you here.',
+    q: 'Is an engagement session included?',
+    a: `${story.name} and ${journey.name} include an engagement session. With ${essential.name}, you can add one. See our engagement pricing for the options.`,
   },
   {
-    q: 'How many photos will I get, and how soon?',
-    a: 'You get 15+ edited digital images with The Mini, 30+ with The Portrait, and 50+ with The Celebration. Every package comes with an online gallery in 2–3 weeks.',
+    q: 'How do we hold our date?',
+    a: 'After we confirm availability, a signed contract and a 25% retainer officially reserve your date. Dates are held on a first-come, first-served basis and are not held without both.',
+  },
+  {
+    q: 'Can we print our photos?',
+    a: `Every package includes a personal print release, so you can print your photos wherever you like. ${story.name} also includes a 5×7 fine-art print, and ${journey.name} includes an 8×10 framed fine-art print.`,
   },
   travel,
 ];

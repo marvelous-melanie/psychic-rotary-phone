@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PackageCards from '../components/PackageCards.astro';
+import PricingHeader from '../components/PricingHeader.astro';
+import GoodToKnow from '../components/GoodToKnow.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PricingFaq from '../components/PricingFaq.astro';
+import { weddingFaq } from '../data/faq';
+import { wedding } from '../data/pricing';
+---
+
+<BaseLayout
+  title="Wedding Pricing | New Haven CT | Elm City Photography"
+  description="Wedding photography packages from Elm City Photography in New Haven, CT. Cinematic, documentary coverage from $1,400, with travel anywhere in Connecticut included."
+>
+  <section class="px-5 pt-20 md:px-10 md:pt-24">
+    <div class="mx-auto max-w-6xl">
+      <PricingHeader current="wedding" title="Weddings" intro="Straightforward pricing with no hidden fees. Every package includes a fully edited online gallery and a personal print release." />
+      <PackageCards packages={wedding} />
+    </div>
+  </section>
+
+  <GoodToKnow
+    items={[
+      { title: 'Travel', body: 'Anywhere in Connecticut is always included. Rhode Island, Massachusetts, and greater New York are available for a small flat travel fee. Just ask.' },
+      { title: 'Sneak peek', body: "You'll get a handful of images within 48 hours of your wedding. The full gallery follows by private link within 4–6 weeks." },
+      { title: 'Holding your date', body: 'Once we confirm availability, a signed contract and a 25% retainer reserve your date. Dates go first come, first served.' },
+    ]}
+  />
+
+  <PricingFaq items={weddingFaq} />
+
+  <CtaBand title="Let's talk about your day." secondary={{ href: '/engagement-pricing/', label: 'Engagement pricing' }} />
+</BaseLayout>

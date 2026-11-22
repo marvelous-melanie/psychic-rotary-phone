@@ -6,7 +6,7 @@ import SkipLink from '../components/SkipLink.astro';
 import Seo from '../components/Seo.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
 import '../styles/global.css';
-import { engagement, graduation, type Pkg } from '../data/pricing';
+import { engagement, wedding, type Pkg } from '../data/pricing';
 
 interface Props {
   title: string;
@@ -44,7 +44,7 @@ const structuredData = {
       url: SITE,
       logo: `${SITE}/og-default.jpg`,
       image: `${SITE}/og-default.jpg`,
-      description: 'Engagement, proposal, and graduation portrait photography based in New Haven, CT. Travel anywhere in Connecticut is included.',
+      description: 'Cinematic, documentary-style wedding and engagement photography based in New Haven, CT. Travel anywhere in Connecticut is included.',
       email: 'hello@elmcityphotography.com',
       address: { '@type': 'PostalAddress', addressLocality: 'New Haven', addressRegion: 'CT', addressCountry: 'US' },
       areaServed: [
@@ -54,17 +54,17 @@ const structuredData = {
         { '@type': 'AdministrativeArea', name: 'New Haven County, CT' },
         { '@type': 'State', name: 'Connecticut' },
       ],
-      knowsAbout: ['Engagement photography', 'Proposal photography', 'Graduation photography', 'Portrait photography'],
-      priceRange: '$175–$995',
+      knowsAbout: ['Wedding photography', 'Documentary wedding photography', 'Cinematic photography', 'Engagement photography', 'Proposal photography'],
+      sameAs: ['https://www.instagram.com/elm.city.photography'],
+      priceRange: '$375–$3,200',
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Photography sessions',
         itemListElement: [
+          offer('Wedding photography', wedding, '/wedding-pricing/'),
           offer('Engagement session', engagement, '/engagement-pricing/'),
-          offer('Graduation session', graduation, '/graduation-pricing/'),
         ],
       },
-      sameAs: ['https://www.instagram.com/elm.city.photography'],
     },
     {
       '@type': 'WebSite',

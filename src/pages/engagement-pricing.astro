@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PackageCards from '../components/PackageCards.astro';
 import GoodToKnow from '../components/GoodToKnow.astro';
+import PricingHeader from '../components/PricingHeader.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PricingFaq from '../components/PricingFaq.astro';
 import { engagementFaq } from '../data/faq';
@@ -14,7 +15,7 @@ import { engagement } from '../data/pricing';
 >
   <section class="px-5 pt-20 md:px-10 md:pt-24">
     <div class="mx-auto max-w-6xl">
-      <h1 class="sr-only">Engagement sessions</h1>
+      <PricingHeader current="engagement" title="Engagement sessions" intro="Sessions from one relaxed hour to a full golden-hour evening. Travel anywhere in Connecticut is included." />
       <PackageCards packages={engagement} />
     </div>
   </section>
@@ -23,5 +24,5 @@ import { engagement } from '../data/pricing';
 
   <PricingFaq items={engagementFaq} />
 
-  <CtaBand title="Let's plan your session." secondary={{ href: '/engagements/', label: 'See the portfolio' }} />
+  <CtaBand title="Let's plan your session." secondary={{ href: '/', label: 'See the portfolio' }} />
 </BaseLayout>
