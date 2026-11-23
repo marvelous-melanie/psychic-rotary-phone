@@ -100,6 +100,29 @@ const structuredData = {
       rel="stylesheet"
     />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+    <!-- GoatCounter analytics. Automatic counting is off because ClientRouter swaps pages
+         without a full reload; we count on every astro:page-load (initial load + each navigation). -->
+    <script
+      is:inline
+      data-goatcounter="https://elmcityphotography.goatcounter.com/count"
+      data-goatcounter-settings='{"no_onload": true}'
+      async
+      src="https://gc.zgo.at/count.js"
+      id="goatcounter-script"></script>
+    <script is:inline>
+      (function () {
+        if (window.__gcBound) return;
+        window.__gcBound = true;
+        var count = function () {
+          window.goatcounter.count({ path: location.pathname + location.search });
+        };
+        document.addEventListener('astro:page-load', function () {
+          if (window.goatcounter && window.goatcounter.count) return count();
+          var s = document.getElementById('goatcounter-script');
+          if (s) s.addEventListener('load', count, { once: true });
+        });
+      })();
+    </script>
   </head>
   <body class="min-h-screen overflow-x-clip bg-cream text-ink">
     <ClientRouter />
