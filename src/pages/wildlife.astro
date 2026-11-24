@@ -7,12 +7,11 @@ import { getGalleryImages } from '../lib/galleries';
 
 const images = getGalleryImages('wildlife');
 
-// Curated rows (each row shares one height): puffins first, then the other birds, foxes last.
+// Curated rows (each row shares one height): puffin first, then the other birds, foxes last.
 // Photos not listed here are appended at the end.
 const byNumber = (n: number) => images.find((i) => i.filename.startsWith(String(n).padStart(4, '0')))?.filename ?? '';
 const rows = [
-  [1, 2, 3],
-  [4, 5, 6],
+  [3, 4, 5, 6],
   [7, 8],
   [9, 10, 11, 12],
   [13, 14, 15],
